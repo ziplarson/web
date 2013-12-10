@@ -11,5 +11,5 @@ draft version of HIRA will be published in the Spring of 2014.
 
 Most of the features implemented here are experimental and the system
 is not intended to be used. However, it is available in this open
-Github repository to provided transparency to and facilitate
+Github repository to provide transparency to and facilitate
 communication with collaborators.
