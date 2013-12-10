@@ -1,0 +1,97 @@
+/*
+ The MIT License (MIT)
+
+ Copyright (c) 2013 Ruben Kleiman
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+/** Sign-in Form **/
+
+div.horace {
+    height: 100%;
+}
+img.horace {
+    float: left;
+    margin-top: .3em;
+    margin-left: 2em
+}
+
+div.menubar {
+    font-size: 10px;
+    /*vertical-align: middle*/
+}
+
+table.branding {
+     font-size: 10px;
+    text-align: left
+ }
+
+div.small {
+    /*margin-top: -1em;*/
+    font-size: 10px;
+    text-align: right;
+}
+
+div.signinBox {
+    margin-left: 2em;
+    vertical-align: middle;
+}
+
+.signinField {
+    margin-top: .5em;
+    /*height: 24px;*/
+    width: 10em;
+    /*font-size: 16px;*/
+    vertical-align: middle;
+}
+
+.signupField {
+    margin-top: .5em;
+    /*height: 24px;*/
+    width: 80%;
+    /*width: 7em;*/
+    /*font-size: 16px;*/
+    vertical-align: middle;
+}
+
+.signinButton-false {
+    margin-top: .5em;
+    cursor: pointer;
+    font-size: 1.1em;
+    width: 100%;
+}
+.signinButton-true {
+    margin-top: .5em;
+    cursor: default;
+    font-size: 1.1em;
+    width: 100%;
+    color: lightgray;
+}
+
+.signinForm input.ng-invalid.ng-dirty {
+    background-color: red; /* red = #FA787E */
+}
+
+.signinForm input.ng-valid.ng-dirty {
+    background-color: #78FA89;
+}
+
+div.errorMsg {
+    color: red;
+}

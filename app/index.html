@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+ The MIT License (MIT)
+
+ Copyright (c) 2013 Ruben Kleiman
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy of
+ this software and associated documentation files (the "Software"), to deal in
+ the Software without restriction, including without limitation the rights to
+ use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ the Software, and to permit persons to whom the Software is furnished to do so,
+ subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in all
+ copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+
+<!--
+Created by Ruben Kleiman on 11/11/13.
+Purpose: Entry point to site allows sign-in and registration or access to unregistered searching and reading.
+Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserved for angularjs)
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Ruben Kleiman"/>
+    <meta name="keywords"
+          content="annotation, notes, document, publish, edit, learn, read, browse, search, latin, classics"/>
+    <meta name="description"
+          content="Horace application from Design for Literature lets people learn, edit, and publish Latin classics and documents in general."/>
+    <title>Design for Literature: Horace</title>
+
+    <!-- Enabling HTML5 support for Internet Explorer -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel='stylesheet' href='styles/style.css'/>
+    <link rel='stylesheet' href='styles/signin.css'/>
+    <link rel="stylesheet" href="styles/vendor/angularUI/bootstrap-3.0.2.css"> <!-- used by ui-bootstrap -->
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>-->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-route-segment/src/route-segment.js"></script>
+    <script src="bower_components/angular-route-segment/src/view-segment.js"></script>
+    <script src="scripts/vendor/angularUI/ui-bootstrap-0.7.0.js"></script>
+
+    <script src="scripts/controllers/app.js"></script>
+    <script src="scripts/controllers/signinCtrl.js"></script>
+    <script src="scripts/controllers/signupCtrl.js"></script>
+    <script src="scripts/controllers/homeCtrl.js"></script>
+    <script src="scripts/directives/general.js"></script>
+    <script src="scripts/directives/signupDirs.js"></script>
+</head>
+<body ng-app="horaceApp">
+
+<div class="defaultDivStyle">
+    <div ng-view></div>
+
+    <!--<div class="container" id="content">-->
+        <!--<div class="row anim" app-view-segment="0"></div>-->
+    <!--</div>-->
+
+</div>
+
+</body>
+</html>
