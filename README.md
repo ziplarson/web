@@ -1,4 +1,6 @@
 Design for Literature
+info@designforliterature.com
+
 
 HIRA Model RESTful web service and User Interface Reference Implementations
 ===========================================================================
