@@ -49,6 +49,10 @@ horaceApp.config(function ($routeProvider) {
             controller: 'HomeCtrl',
             templateUrl: '/views/home.html'
         })
+        .when('/browse/', {
+            controller: 'EditorCtrl',
+            templateUrl: '/views/browse.html'
+        })
         .otherwise({
             redirectTo: '/'
         });
