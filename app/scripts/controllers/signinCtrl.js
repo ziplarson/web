@@ -50,6 +50,7 @@ horaceApp.controller('SigninCtrl', function ($scope, $http, $location) {
             .error(function (res) {
                 $scope.signin.msg = 'Technical Problem: Please retry';
                 $scope.signin.error = true;
-            })
+            });
     };
 });
+/* End SigninCtrl */

@@ -22,79 +22,30 @@
 
 'use strict';
 
-// Signin controls username and password model
-horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
-
-    $scope.editor = {
-        hiliteAnnotation: {
-            name: 'Multi-hilite',
-            views: {
-                hilite: [
-                    {
-                        sids: [19], // selector ids
-                        method: 'sid', /* Find the text to hilite using the given sids */
-                        css: {'class': 'd_hy'}
-                    },
-                    {
-                        sids: [20, 21], // selector ids
-                        method: 'sid', /* Find the text to hilite using the given sids */
-                        css: {'class': 'd_hr'}
-                    }
-                ]
-            }, /* end views */
-            actions: {
-                hover: {
-                    text: ''
-                }
-            }, /* end actions */
-            context: {
-                parent: 'body'
-            } /* end context */
-        }
-    };
-});
-/* end EditorCtrl */
-
-
-var annotations =
-{
-    tagSelectionStart: 'D_SS',
-    tagSelectionEnd: 'D_SE',
-    selectorsXpath: ['//D_SS', '//D_SE'],
-    viewMethods: {
-
-        // Highlights text for annotation
-        hilite: function (anno) {
-            anno.views.hilite.map(function (hilite) {
-                hilite.sids.map(function (sid) {
-                    var claz = hilite.css['class'];
-                    var style = hilite.css.style;
-                    if (!claz && !style) {
-                        throw 'Annotation missing one of class or style';
-                    }
-                    var sels = d_getSelectorById(sid);
-                    if (sels) {
-                        d_processHilite(anno.context, sels[0], sels[1], claz, style);
-                    }
-                });
-            });
-        }
+var dbg = false;
+function l(msg) {
+    if (dbg) {
+        console.log(msg);
     }
-};
-
-// user preferences
-var annotationPrefs =
-{
-};
-
-// Application settings (e.g., CSS style definitions)
-var annotationSettings =
-{
-};
+}
+function pprint(obj) {
+    var hash = {};
+    var r = JSON.stringify(obj, function (key, value) {
+        if (key && key.length > 0 && typeof value === 'object') {
+            var count = hash[value];
+            if (count && count === 1) {
+                return '[Circularity]';
+            }
+            hash[value] = 1;
+        }
+        return value;
+    }, '\t');
+    console.log(r);
+}
 
 /**
  * Class d_SelectorNodeFilter is a NodeFilter that filters out
- * a node if it is not a text node, a D_SS or D_SE element.
+ * a node if it is not a text node, or a D_SS or D_SE element.
  */
 function d_SelectorNodeFilter(node) {
     if (node.nodeType === Node.TEXT_NODE || node.nodeName === 'D_SS' || node.nodeName === 'D_SE') {
@@ -103,108 +54,214 @@ function d_SelectorNodeFilter(node) {
     return NodeFilter.FILTER_SKIP;
 }
 
-// @return Returns an array whose elements are, in order, the start and corresponding end selector.
-//         Returns null if the selector pair were not found.
-function d_getSelectorById(id) {
-    var evaluator = new XPathEvaluator();
-    var selector = [];
+// Signin controls username and password model
+horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
 
-    annotations.selectorsXpath.map(function (i) {
-        i = i + "[@sid='" + id + "']";
-        var iter = evaluator.evaluate(i, document.documentElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-        var s = iter.iterateNext();
-        while (s) {
-            selector.push(s);
-            s = iter.iterateNext();
-        }
+    /* Execute after document loads */
+    $scope.$on('$viewContentLoaded', function () {
+        $scope.editor.activateSettings($scope.editor.settings.styles);
+        $("headline").innerHTML = 'Hello';
     });
 
-    if (selector.length === 2) {
-        return selector;
-    }
-    return null;
-}
+    $scope.editor = {
 
-/*
- FUNCTION: Navigates the DOM starting at the specified d_se element
- until it finds the corresponding d_se element. All text
- in between the two elements is is surrounded by span elements,
- as necessary, with the specified class and/or style.
- @param context The annotation's context
- @param startSel The d_ss element starting the selection
- @param endSel The d_se element ending the selection
- @param claz An optional CSS class to apply to the span element surrounding the
- text enclosed by the selection. May be null.
- @param style An optional style to apply to the span element. May be null.
- */
-function d_processHilite(context, startSel, endSel, claz, style) {
-    var root = document.getElementsByTagName(context.parent);
-    if (!root) {
-        throw 'Error: invalid context "' + context.parent + '"';
-    }
-    root = root[0];
-    var sid = startSel.attributes.sid.nodeValue;
-//    console.log('startSel=' + startSel + ' root=' + root + 'sid=' + sid);
-    var nodeFilter = null; // TODO one that ignores anything besides text, D_SS, D_SE nodes
-    var tw = document.createTreeWalker(root, NodeFilter.SHOW_ALL, d_SelectorNodeFilter, false);
-    d_processHilite1(tw, startSel, endSel, false, sid, claz, style);
-}
+        /**
+         * Activates styles from settings. Removes current styles.
+         */
+        activateSettings: function (settings) {
+            var styles = $('#d_styles');
+            if (!styles || styles.length === 0) {
+                throw 'Error: default styles (id d_styles) missing';
+            }
+            var html = '';
+            $.each(settings, function (clazName, style) {
+                html += '.' + clazName + ' {';
+                $.each(style, function (name, value) {
+                    html += name + ':' + value + ';';
+                });
+                html += '} ';
+            });
+            l('Style settings: ' + html);
+            styles[0].innerHTML = html;
+        },
 
-/*
- Walks the tree of the annotation's context and hilights the text fragments, as specified.
- @param context The annotation's context element
- @param doit If true, we are in the selection range and text nodes
- should be processed.
- @param sid The sid of the [start and end] selection elements.
- @param claz Optional CSS class to employ
- @param style Optional CSS style to employ
- */
-function d_processHilite1(tw, startSel, endSel, doit, sid, claz, style) {
-    var curr = tw.nextNode();
-    while (curr) {
-        if (curr.nodeName === annotations.tagSelectionStart && curr.attributes.sid.nodeValue === sid) {
-            doit = true; // we entered the selection range
-        } else if (curr.nodeName === annotations.tagSelectionEnd && curr.attributes.sid.nodeValue === sid) {
-            //doit = false;
-            console.log(curr.nodeName + ':' + sid);
-            return; // leaving the selection range
-        }
-        if (doit) {
-            console.log(curr.nodeName + ':' + sid);
-            if (curr.nodeType === Node.TEXT_NODE) {
-                d_hiliteText(curr, claz, style);
+        // stub function to do a test annotation
+        test: function () {
+            var viewMethName;
+            for (viewMethName in testAnnotation.views) {
+                var viewMeth = $scope.editor.engine.viewMethods[viewMethName];
+                if (viewMeth) {
+                    viewMeth(testAnnotation);
+                } else {
+                    throw 'Error: no view method named "' + viewMethName + '"';
+                }
+            }
+        },
+        // stub function to clear all annotation views
+        clearAnnotationViews: function () {
+            $($scope.editor.engine.tagSelectionSpan).each(function (i) {
+                var child = $(this)[0].firstChild;
+                $(this).replaceWith(child);
+
+            });
+        },
+
+        /* The default settings */
+        defaultSettings: {
+            styles: {
+                d_hy: {'background-color': '#ffff00'},
+                d_hr: {'background-color': '#ff767b'}
+            },
+            engine: {
+                tagSelectionStart: 'D_SS',
+                tagSelectionEnd: 'D_SE',
+                tagSelectionSpan: 'D_S',
+                selectorsXpath: ['//D_SS', '//D_SE'],
+                viewMethods: {
+                    // Highlights text for annotation
+                    hilite: function (anno) {
+                        var hiIndex;
+
+                        function makeStyle(ignore, sid) {
+                            var claz = hilite.css['class'];
+                            var style = hilite.css.style;
+                            if (!claz && !style) {
+                                throw 'Annotation missing one of class or style';
+                            }
+                            var sels = $scope.editor.engine.getSelectorById(anno, sid);
+                            if (sels) {
+                                $scope.editor.engine.processSelection(anno.context, sels[0], sels[1], claz, style);
+                            }
+                        }
+
+                        for (hiIndex in anno.views.hilite) {
+                            var hilite = anno.views.hilite[hiIndex];
+//                        var index;
+                            $.each(hilite.sids, makeStyle);
+                        }
+                    }
+                },
+                /* EDITOR METHODS TODO: move most of these to a service? */
+
+                /**
+                 *
+                 * @param anno  An annotation object
+                 * @param sid The annotation selector id
+                 * @returns Returns an array whose elements are, in order, the start and corresponding end selector.
+                 *          Returns null if the selector pair were not found.
+                 */
+                getSelectorById: function (anno, sid) {
+                    var evaluator = new XPathEvaluator();
+                    var selector = [];
+                    var index;
+                    for (index in $scope.editor.engine.selectorsXpath) {
+                        var i = $scope.editor.engine.selectorsXpath[index];
+                        i = i + "[@sid='" + sid + "']";
+                        var iter = evaluator.evaluate(i, document.documentElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+                        var s = iter.iterateNext();
+                        while (s) {
+                            selector.push(s);
+                            s = iter.iterateNext();
+                        }
+                    }
+                    if (selector.length === 2) {
+                        return selector;
+                    }
+                    return null;
+                },
+
+                /*
+                 Navigates the DOM starting at the specified d_se element
+                 until it finds the corresponding d_se element. All text
+                 in between the two elements is is surrounded by span elements,
+                 as necessary, with the specified class and/or style.
+                 @param context The annotation's context
+                 @param startSel The d_ss element starting the selection
+                 @param endSel The d_se element ending the selection
+                 @param claz An optional CSS class to apply to the span element surrounding the
+                 text enclosed by the selection. May be null.
+                 @param style An optional style to apply to the span element. May be null.
+                 */
+                processSelection: function (context, startSel, endSel, claz, style) {
+                    var root = document.getElementsByTagName(context.parent);
+                    if (!root) {
+                        throw 'Error: invalid context "' + context.parent + '"';
+                    }
+                    root = root[0];
+                    var sid = startSel.attributes.sid.nodeValue;
+                    l('startSel=' + startSel + ' root=' + root + 'sid=' + sid);
+                    var nodeFilter = null; // TODO one that ignores anything besides text, D_SS, D_SE nodes
+                    var tw = document.createTreeWalker(root, NodeFilter.SHOW_ALL, d_SelectorNodeFilter, false);
+                    $scope.editor.engine.hiliteSelection(tw, startSel, endSel, false, sid, claz, style);
+                },
+
+                /*
+                 Walks the tree of the annotation's context and hilights the text fragments, as specified.
+                 @param context The annotation's context element
+                 @param doit If true, we are in the selection range and text nodes
+                 should be processed.
+                 @param sid The sid of the [start and end] selection elements.
+                 @param claz Optional CSS class to employ
+                 @param style Optional CSS style to employ
+                 */
+                hiliteSelection: function (tw, startSel, endSel, doit, sid, claz, style) {
+                    var curr = tw.nextNode();
+                    while (curr) {
+                        if (curr.nodeName === $scope.editor.engine.tagSelectionStart && curr.attributes.sid.nodeValue === sid) {
+                            doit = true; // we entered the selection range
+                        } else if (curr.nodeName === $scope.editor.engine.tagSelectionEnd && curr.attributes.sid.nodeValue === sid) {
+                            //doit = false;
+//                    l(curr.nodeName + ':' + sid);
+                            return; // leaving the selection range
+                        }
+                        if (doit) {
+//                    l(curr.nodeName + ':' + sid);
+                            if (curr.nodeType === Node.TEXT_NODE) {
+                                $scope.editor.engine.applyHilite(curr, claz, style);
+
+                            }
+                        }
+                        curr = tw.nextNode();
+                    }
+                },
+
+                /**
+                 * Applies the CSS hilite style to the node (typically a text node).
+                 * @param node  The node.
+                 * @param claz Optional class to apply
+                 * @param style Optional local style to apply
+                 */
+                applyHilite: function (node, claz, style) {
+                    var hilite = document.createElement($scope.editor.engine.tagSelectionSpan);
+                    if (claz) {
+                        hilite.setAttribute('class', claz);
+                    }
+                    if (style) {
+                        hilite.setAttribute('style', style);
+                    }
+                    if (claz || style) {
+                        var parent = node.parentElement;
+                        parent.replaceChild(hilite, node);
+                        hilite.appendChild(node);
+                    }
+                }
 
             }
         }
-        curr = tw.nextNode();
-    }
-}
 
-function d_hiliteText(textNode, claz, style) {
-    var hilite = document.createElement('d_h');
-    if (claz) {
-        hilite.setAttribute('class', claz);
-    }
-    if (style) {
-        hilite.setAttribute('style', style);
-    }
-    var parent = textNode.parentElement;
-    parent.replaceChild(hilite, textNode);
-    hilite.appendChild(textNode);
-}
+    };
+    /* End of $scope.editor */
 
-function test(anno) {
-    var viewType;
-    for (viewType in anno.views) {
-        var viewMethod = annotations.viewMethods[viewType];
-        viewMethod(anno);
-    }
-}
+    // Set the editor engine to use (this could be a plugin)
+    $scope.editor.engine = $scope.editor.defaultSettings.engine;
 
-function clearAll() {
-    $("d_h").each(function (i) {
-        var child = $(this)[0].firstChild;
-        $(this).replaceWith(child);
+    // Set the style settings (these could be changed by the user)
+    $scope.editor.settings = {styles: $scope.editor.defaultSettings.styles};
 
-    });
-}
+});
+/* End EditorCtrl */
+
+
+//            var css = document.createElement('script');
+//            var head = $("head");
+//            $("<style>." + claz + " { background-color: yellow;}</style>").appendTo($(head));

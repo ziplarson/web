@@ -45,7 +45,7 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
           content="annotation, notes, document, publish, edit, learn, read, browse, search, latin, classics"/>
     <meta name="description"
           content="Horace application from Design for Literature lets people learn, edit, and publish Latin classics and documents in general."/>
-    <title>Design for Literature: Horace</title>
+    <title id="title">Design for Literature: Horace</title>
 
     <!-- Enabling HTML5 support for Internet Explorer -->
     <!--[if lt IE 9]>
@@ -74,16 +74,14 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="scripts/directives/general.js"></script>
     <script src="scripts/directives/signupDirs.js"></script>
 </head>
-<body ng-app="horaceApp">
+<body ng-app="horaceApp" style="margin: 2em">
 
-<div class="defaultDivStyle">
-    <div ng-view></div>
+<div ng-view></div>
 
     <!--<div class="container" id="content">-->
         <!--<div class="row anim" app-view-segment="0"></div>-->
     <!--</div>-->
 
-</div>
 
 </body>
 </html>

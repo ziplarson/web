@@ -27,3 +27,4 @@
 horaceApp.controller('SignupCtrl', function ($scope, $http) {
     $scope.signin = {menubar: 'views/menubarOffline.html'};
 });
+/* End SignupCtrl */

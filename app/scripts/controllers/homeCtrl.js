@@ -66,4 +66,4 @@ horaceApp.controller('HomeCtrl', function ($scope) {
 //        tabs.splice(index, 1);
 //    };
 
-});
+}); /* End HomeCtrl */

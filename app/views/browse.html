@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2013 Ruben Kleiman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<style id='d_styles'>
+</style>
+
+<div class="headline">Test Browser</div>
+<button ng-click="editor.test()">Annotate</button>
+<button ng-click="editor.clearAnnotationViews()">Clear Annotations</button>
+<br/><br/>
+
+
+
+<div id="poem">
+    <div>Lugete, o Veneres Cupidinesque</div>
+    <div>et quantum est hominum venustiorum!</div>
+    <div>passer
+        <d_ss sid="19"/>
+        mortuus est meae puellae,
+    </div>
+    <div>passer, deliciae meae
+        <d_se sid="19"/>
+        puellae,
+    </div>
+    <div>quem plus illa oculis suis amabat;</div>
+    <div>nam mellitus erat, suamque norat</div>
+    <div>ipsa tam bene quam puella matrem,</div>
+    <div>nec sese a gremio illius movebat,</div>
+    <div>sed circumsiliens modo huc modo illuc</div>
+    <div>ad solam dominam usque pipiabat.</div>
+    <div>qui nunc it per iter tenebricosum</div>
+    <div>illuc unde negant redire quemquam.</div>
+    <div>at vobis male sit, malae tenebrae</div>
+    <div>Orci, quae omnia bella devoratis;</div>
+    <div>tam bellum mihi passerem abstulistis.</div>
+    <div>o factum male! o miselle
+        <d_ss sid="20"/>
+        passer!
+        <d_se sid="20"/>
+    </div>
+    <div>tua nunc opera meae puellae</div>
+    <div>flendo turgiduli rubent ocelli.</div>
+</div>
+
+<script>
+
+    var testAnnotation = {
+        name: 'Multi-hilite',
+                views: {
+            hilite: [
+                {
+                    sids: [19], // selector ids
+                    method: 'sid', /* Find the text to hilite using the given sids */
+                    css: {'class': 'd_hy'}
+                },
+                {
+                    sids: [20], // selector ids
+                    method: 'sid', /* Find the text to hilite using the given sids */
+                    css: {'class': 'd_hr'}
+                }
+            ]
+        }, /* end views */
+        actions: {
+            hover: {
+                text: ''
+            }
+        }, /* end actions */
+        context: {
+            parent: 'body'
+        } /* end context */
+    };
+
+</script>

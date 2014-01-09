@@ -26,7 +26,7 @@ var horaceApp = angular.module('horaceApp', [
     'ngRoute',
     'route-segment', 'view-segment',
     'ui.bootstrap.tabs'
-]);
+]); /* End horaceApp module */
 
 //horaceApp.config(function ($routeSegmentProvider, $routeProvider) {
 //
@@ -56,4 +56,4 @@ horaceApp.config(function ($routeProvider) {
         .otherwise({
             redirectTo: '/'
         });
-});
+}); /* End horaceApp Route Config */
