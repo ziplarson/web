@@ -25,7 +25,7 @@
 var horaceApp = angular.module('horaceApp', [
     'ngRoute',
     'route-segment', 'view-segment',
-    'ui.bootstrap.tabs'
+    'ui.bootstrap',
 ]); /* End horaceApp module */
 
 //horaceApp.config(function ($routeSegmentProvider, $routeProvider) {

@@ -55,93 +55,163 @@ function d_SelectorNodeFilter(node) {
 }
 
 // Signin controls username and password model
-horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
+horaceApp.controller('EditorCtrl', function ($scope, $compile, $http, $location) {
 
     /* Execute after document loads */
     $scope.$on('$viewContentLoaded', function () {
-        $scope.editor.activateSettings($scope.editor.settings.styles);
-        $("headline").innerHTML = 'Hello';
+        $scope.editor.setContent(work);
+        var settings = $scope.editor.settings;
+        $scope.editor.activateSettings($scope.editor.settings);
     });
 
     $scope.editor = {
 
+        setContent: function (work) {
+            var type = work.type;
+            var layout = $scope.editor.engine.workTypeLayouts[type];
+            if (layout) {
+                layout(work);
+            } else {
+                throw 'Error: invalid work type "' + type + '"';
+            }
+        },
+
         /**
-         * Activates styles from settings. Removes current styles.
+         * Activates settings. Removes current settings.
+         * @param settings The editor's settings object.
          */
         activateSettings: function (settings) {
-            var styles = $('#d_styles');
-            if (!styles || styles.length === 0) {
-                throw 'Error: default styles (id d_styles) missing';
+
+            function activateSettingStyles() {
+                var styles = $('#d_styles');
+                if (!styles || styles.length === 0) {
+                    throw 'Error: default styles (id d_styles) missing';
+                }
+                var className;
+                var style;
+                var html = '';
+                for (className in settings.styles) {
+                    if (settings.styles.hasOwnProperty(className)) {
+                        style = settings.styles[className];
+                        html += style + ' ';
+                    }
+                }
+                l('Style settings: ' + html);
+                styles[0].innerHTML = html;
             }
-            var html = '';
-            $.each(settings, function (clazName, style) {
-                html += '.' + clazName + ' {';
-                $.each(style, function (name, value) {
-                    html += name + ':' + value + ';';
-                });
-                html += '} ';
-            });
-            l('Style settings: ' + html);
-            styles[0].innerHTML = html;
+
+            activateSettingStyles();
         },
 
         // stub function to do a test annotation
         test: function () {
             var viewMethName;
             for (viewMethName in testAnnotation.views) {
-                var viewMeth = $scope.editor.engine.viewMethods[viewMethName];
-                if (viewMeth) {
-                    viewMeth(testAnnotation);
-                } else {
-                    throw 'Error: no view method named "' + viewMethName + '"';
+                if (testAnnotation.views.hasOwnProperty(viewMethName)) {
+                    var viewMeth = $scope.editor.engine.viewMethods[viewMethName];
+                    if (viewMeth) {
+                        viewMeth(testAnnotation);
+                    } else {
+                        throw 'Error: no view method named "' + viewMethName + '"';
+                    }
                 }
             }
         },
+
         // stub function to clear all annotation views
         clearAnnotationViews: function () {
-            $($scope.editor.engine.tagSelectionSpan).each(function (i) {
+            $($scope.editor.engine.selectionSpanNodeName).each(function (i) {
                 var child = $(this)[0].firstChild;
                 $(this).replaceWith(child);
 
             });
         },
 
+        /* The default user preferences TODO should this be separated from editor object? */
+        defaultPrefs: {
+            lang: { /* Language preferences */
+                read: ['en', 'fr'], /* Preferably, user reads English, then French */
+                write: ['en']       /* By default, user writes in English */
+            }
+        },
+
         /* The default settings */
         defaultSettings: {
             styles: {
-                d_hy: {'background-color': '#ffff00'},
-                d_hr: {'background-color': '#ff767b'}
+                D_P: "D_P {display:block}", /* A poem */
+                D_V: "D_V {display:block}", /* A verse (e.g., in a poem) */
+                D_L: "D_L {display:block}", /* A line (e.g., in a verse) */
+                D_N: "D_N {display:block;float:right;margin-left: 2em}", /* Line numbers */
+                D_HY: ".D_HY {background-color: #ffff00}", /* Yellow hilite class */
+                D_HR: ".D_HR {background-color: #ff767b}" /* Light red hilite class */
             },
             engine: {
-                tagSelectionStart: 'D_SS',
-                tagSelectionEnd: 'D_SE',
-                tagSelectionSpan: 'D_S',
-                selectorsXpath: ['//D_SS', '//D_SE'],
+                selectionStartNodeName: 'D_SS', /* Used to mark the beginning of a selection */
+                selectionEndNodeName: 'D_SE', /* Used to mark the end of a selection */
+                selectionSpanNodeName: 'D_S', /* A span used to style a part of a selection */
+                selectorXPaths: ['//D_SS', '//D_SE'], /* Used to search for selectors */
                 viewMethods: {
-                    // Highlights text for annotation
-                    hilite: function (anno) {
-                        var hiIndex;
 
-                        function makeStyle(ignore, sid) {
-                            var claz = hilite.css['class'];
-                            var style = hilite.css.style;
+                    // Highlights text for annotation
+                    selection: function (anno) {
+                        function processSelection(selection, sid) {
+                            var claz = selection.css['class'];
+                            var style = selection.css.style;
                             if (!claz && !style) {
                                 throw 'Annotation missing one of class or style';
                             }
                             var sels = $scope.editor.engine.getSelectorById(anno, sid);
                             if (sels) {
-                                $scope.editor.engine.processSelection(anno.context, sels[0], sels[1], claz, style);
+                                $scope.editor.engine.doProcessSelection(anno, selection, sels[0], sels[1], claz, style);
                             }
                         }
 
-                        for (hiIndex in anno.views.hilite) {
-                            var hilite = anno.views.hilite[hiIndex];
-//                        var index;
-                            $.each(hilite.sids, makeStyle);
+                        var hiIndex;
+                        var sidIndex;
+                        var selCount = anno.views.selection.length;
+                        for (hiIndex = 0; hiIndex < selCount; hiIndex += 1) {
+                            var selection = anno.views.selection[hiIndex];
+                            var sidCount = selection.sids.length;
+                            for (sidIndex = 0; sidIndex < sidCount; sidIndex += 1) {
+                                var sid = selection.sids[sidIndex];
+                                processSelection(selection, sid);
+                            }
                         }
                     }
                 },
+                workTypeLayouts: {
+
+                    /* A poem */
+                    poem: function (work) {
+                        var div = $('#content')[0];
+                        div.innerHTML = work.content;
+                        var lineCount = $('D_L', div).length;
+
+                        div.innerHTML = $scope.editor.engine.makeLineNumbersHtml(lineCount, 5) + work.content;
+                    }
+                },
+
                 /* EDITOR METHODS TODO: move most of these to a service? */
+
+                /**
+                 * Creates the HTML for the line numbers next to a verse.
+                 * @param lineCount The number of lines in the verse.
+                 * @param every The line numbers are rendered every interval specified by this number (default: 1).
+                 * @param start The starting line number (default: 1)
+                 * @returns {string}
+                 */
+                makeLineNumbersHtml: function (lineCount, every, start) {
+                    var html = '<div style="float:left;margin-right:5em;">';
+                    every = every ? every : 1;
+                    start = start ? start : 1;
+                    lineCount += start - 1;
+                    var number;
+                    for (number = (start ? start : 1); number <= lineCount; number += 1) {
+                        html += '<div>' + ((number % every) ? '&nbsp' : number) + '</div>';
+                    }
+                    html += '</div>';
+                    return html;
+                },
 
                 /**
                  *
@@ -154,8 +224,9 @@ horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
                     var evaluator = new XPathEvaluator();
                     var selector = [];
                     var index;
-                    for (index in $scope.editor.engine.selectorsXpath) {
-                        var i = $scope.editor.engine.selectorsXpath[index];
+                    var count = $scope.editor.engine.selectorXPaths.length;
+                    for (index = 0; index < count; index += 1) {
+                        var i = $scope.editor.engine.selectorXPaths[index];
                         i = i + "[@sid='" + sid + "']";
                         var iter = evaluator.evaluate(i, document.documentElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
                         var s = iter.iterateNext();
@@ -175,14 +246,16 @@ horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
                  until it finds the corresponding d_se element. All text
                  in between the two elements is is surrounded by span elements,
                  as necessary, with the specified class and/or style.
-                 @param context The annotation's context
+                 @param anno The annotation
+                 @param selection The selection
                  @param startSel The d_ss element starting the selection
                  @param endSel The d_se element ending the selection
                  @param claz An optional CSS class to apply to the span element surrounding the
                  text enclosed by the selection. May be null.
                  @param style An optional style to apply to the span element. May be null.
                  */
-                processSelection: function (context, startSel, endSel, claz, style) {
+                doProcessSelection: function (anno, selection, startSel, endSel, claz, style) {
+                    var context = anno.context;
                     var root = document.getElementsByTagName(context.parent);
                     if (!root) {
                         throw 'Error: invalid context "' + context.parent + '"';
@@ -192,24 +265,26 @@ horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
                     l('startSel=' + startSel + ' root=' + root + 'sid=' + sid);
                     var nodeFilter = null; // TODO one that ignores anything besides text, D_SS, D_SE nodes
                     var tw = document.createTreeWalker(root, NodeFilter.SHOW_ALL, d_SelectorNodeFilter, false);
-                    $scope.editor.engine.hiliteSelection(tw, startSel, endSel, false, sid, claz, style);
+                    $scope.editor.engine.processSelectionSid(tw, anno, selection, startSel, endSel, sid, claz, style);
                 },
 
                 /*
-                 Walks the tree of the annotation's context and hilights the text fragments, as specified.
-                 @param context The annotation's context element
-                 @param doit If true, we are in the selection range and text nodes
-                 should be processed.
+                 Walks the tree of the annotation's context and processes a single sid in a selection.
+                 @param anno The annotation
+                 @param selection The selection
+                 @param startSel The d_ss element starting the selection's sid fragment
+                 @param endSel The d_se element ending the selection's sid fragment
                  @param sid The sid of the [start and end] selection elements.
                  @param claz Optional CSS class to employ
                  @param style Optional CSS style to employ
                  */
-                hiliteSelection: function (tw, startSel, endSel, doit, sid, claz, style) {
+                processSelectionSid: function (tw, anno, selection, startSel, endSel, sid, claz, style) {
+                    var doit = false;
                     var curr = tw.nextNode();
                     while (curr) {
-                        if (curr.nodeName === $scope.editor.engine.tagSelectionStart && curr.attributes.sid.nodeValue === sid) {
+                        if (curr.nodeName === $scope.editor.engine.selectionStartNodeName && curr.attributes.sid.nodeValue === sid) {
                             doit = true; // we entered the selection range
-                        } else if (curr.nodeName === $scope.editor.engine.tagSelectionEnd && curr.attributes.sid.nodeValue === sid) {
+                        } else if (curr.nodeName === $scope.editor.engine.selectionEndNodeName && curr.attributes.sid.nodeValue === sid) {
                             //doit = false;
 //                    l(curr.nodeName + ':' + sid);
                             return; // leaving the selection range
@@ -217,35 +292,49 @@ horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
                         if (doit) {
 //                    l(curr.nodeName + ':' + sid);
                             if (curr.nodeType === Node.TEXT_NODE) {
-                                $scope.editor.engine.applyHilite(curr, claz, style);
-
+                                $scope.editor.engine.writeSelectionDom(curr, selection, claz, style);
                             }
                         }
                         curr = tw.nextNode();
                     }
+                    if (selection.note) { // Is there a note attached to this sid
+
+                    }
                 },
 
                 /**
-                 * Applies the CSS hilite style to the node (typically a text node).
-                 * @param node  The node.
+                 * Applies the CSS hilite style to the node (typically a text node)
+                 *
+                 * @param node  The text node (TODO handle img etc...).
+                 * @param selection The selection
                  * @param claz Optional class to apply
                  * @param style Optional local style to apply
                  */
-                applyHilite: function (node, claz, style) {
-                    var hilite = document.createElement($scope.editor.engine.tagSelectionSpan);
+                writeSelectionDom: function (node, selection, claz, style) {
+                    var hilite = document.createElement($scope.editor.engine.selectionSpanNodeName);
                     if (claz) {
                         hilite.setAttribute('class', claz);
                     }
                     if (style) {
                         hilite.setAttribute('style', style);
                     }
-                    if (claz || style) {
-                        var parent = node.parentElement;
-                        parent.replaceChild(hilite, node);
+                    var textParent = node.parentElement;
+                    var tooltip;
+                    if (selection.note) { // Add a tooltip for the note
+                        tooltip = document.createElement('D_T');
+                        tooltip.setAttribute('tooltip-html-unsafe', selection.note.text);
+                        tooltip.setAttribute('tooltip-trigger', 'click');
+                    }
+                    textParent.replaceChild(hilite, node);
+                    if (tooltip) {
+                        hilite.appendChild(tooltip);
+                        tooltip.appendChild(node);
+                    } else {
                         hilite.appendChild(node);
                     }
+                    var ajs = $compile(textParent);
+                    ajs($scope);
                 }
-
             }
         }
 
@@ -255,8 +344,11 @@ horaceApp.controller('EditorCtrl', function ($scope, $http, $location) {
     // Set the editor engine to use (this could be a plugin)
     $scope.editor.engine = $scope.editor.defaultSettings.engine;
 
-    // Set the style settings (these could be changed by the user)
-    $scope.editor.settings = {styles: $scope.editor.defaultSettings.styles};
+    // Set the settings
+    $scope.editor.settings = $scope.editor.defaultSettings;
+
+    // Set the user preferences
+    $scope.editor.prefs = $scope.editor.defaultPrefs;
 
 });
 /* End EditorCtrl */

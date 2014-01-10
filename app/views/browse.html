@@ -23,59 +23,31 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <style id='d_styles'>
 </style>
 
-<div class="headline">Test Browser</div>
+<div class="headline">Catullus 3</div>
 <button ng-click="editor.test()">Annotate</button>
 <button ng-click="editor.clearAnnotationViews()">Clear Annotations</button>
 <br/><br/>
+<div id="content"/>
 
-
-
-<div id="poem">
-    <div>Lugete, o Veneres Cupidinesque</div>
-    <div>et quantum est hominum venustiorum!</div>
-    <div>passer
-        <d_ss sid="19"/>
-        mortuus est meae puellae,
-    </div>
-    <div>passer, deliciae meae
-        <d_se sid="19"/>
-        puellae,
-    </div>
-    <div>quem plus illa oculis suis amabat;</div>
-    <div>nam mellitus erat, suamque norat</div>
-    <div>ipsa tam bene quam puella matrem,</div>
-    <div>nec sese a gremio illius movebat,</div>
-    <div>sed circumsiliens modo huc modo illuc</div>
-    <div>ad solam dominam usque pipiabat.</div>
-    <div>qui nunc it per iter tenebricosum</div>
-    <div>illuc unde negant redire quemquam.</div>
-    <div>at vobis male sit, malae tenebrae</div>
-    <div>Orci, quae omnia bella devoratis;</div>
-    <div>tam bellum mihi passerem abstulistis.</div>
-    <div>o factum male! o miselle
-        <d_ss sid="20"/>
-        passer!
-        <d_se sid="20"/>
-    </div>
-    <div>tua nunc opera meae puellae</div>
-    <div>flendo turgiduli rubent ocelli.</div>
-</div>
 
 <script>
 
     var testAnnotation = {
         name: 'Multi-hilite',
-                views: {
-            hilite: [
+        views: {
+            selection: [
+//                {
+////                    note: {lang: 'en', text: '<h1>Note</h1><div>hello there</div>'},
+//                    sids: [1, 2], // selector ids
+//                    method: 'sid', /* Find the text to hilite using the given sids */
+//                    css: {'class': 'D_HY'}
+//                },
                 {
-                    sids: [19], // selector ids
+                    note: {lang: 'en', text: 'Note the repetition&mdash;somewhat new with Catullus. <i>bellus</i> is a colloquial form of <i>bonus</i>. Catullus, like the <i>novi poetae</i> often deploys diminutives and vernacular language. ' +
+                            'See <a href="http://www.perseus.tufts.edu/hopper/morph?l=bellus&la=la&can=bellus0&prior=Cotile&d=Perseus:text:2008.01.0506:book=3:poem=63&i=1#Perseus:text:1999.04.0059:entry=bellus-contents" target="_blank">Perseus Latin Word Study Tool</a>'},
+                    sids: [1,2,3, 4], // selector ids
                     method: 'sid', /* Find the text to hilite using the given sids */
-                    css: {'class': 'd_hy'}
-                },
-                {
-                    sids: [20], // selector ids
-                    method: 'sid', /* Find the text to hilite using the given sids */
-                    css: {'class': 'd_hr'}
+                    css: {'class': 'D_HY'}
                 }
             ]
         }, /* end views */
@@ -88,5 +60,51 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             parent: 'body'
         } /* end context */
     };
+
+    var work =
+        { content:
+            "<D_P>" +
+                    "        <D_V>" +
+                    "        <D_L>Lugete, o Veneres Cupidinesque</D_L>" +
+                    "        <D_L>et quantum est hominum venustiorum!</D_L>" +
+                    "        <D_L>passer mortuus est meae puellae,</D_L>" +
+                    "        <D_L>passer, deliciae meae puellae,</D_L>" +
+                    "        <D_L>quem plus illa oculis suis amabat;</D_L>" +
+                    "        <D_L>nam mellitus erat, suamque norat</D_L>" +
+                    "        <D_L>ipsa tam bene quam puella matrem,</D_L>" +
+                    "        <D_L>nec sese a gremio illius movebat,</D_L>" +
+                    "        <D_L>sed circumsiliens modo huc modo illuc</D_L>" +
+                    "        <D_L>ad solam dominam usque pipiabat.</D_L>" +
+                    "        <D_L>qui nunc it per iter tenebricosum</D_L>" +
+                    "       <D_L>illuc unde negant redire quemquam.</D_L>" +
+                    "        <D_L>at vobis" +
+                    "<d_ss sid='1'/>" +
+                    "        male" +
+                    "        <d_se sid='1'/>" +
+                    "        sit," +
+                    "<d_ss sid='2'/>" +
+                    "        malae" +
+                    "        <d_se sid='2'/>" +
+                    "        tenebrae" +
+                    "        </D_L>" +
+                    "        <D_L>Orci, quae omnia" +
+                    "<d_ss sid='3'/>" +
+                    "        bella" +
+                    "        <d_se sid='3'/>" +
+                    "        devoratis;" +
+                    "</D_L>" +
+                    "        <D_L>tam" +
+                    "<d_ss sid='4'/>" +
+                    "        bellum" +
+                    "        <d_se sid='4'/>" +
+                    "        mihi passerem abstulistis." +
+                    "</D_L>" +
+                    "        <D_L>o factum male! o miselle passer!</D_L>" +
+                    "        <D_L>tua nunc opera meae puellae</D_L>" +
+                    "        <D_L>flendo turgiduli rubent ocelli.</D_L>" +
+                    "</D_V>" +
+                    "</D_P>",
+            type: 'poem'
+        };
 
 </script>
