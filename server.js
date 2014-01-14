@@ -33,7 +33,7 @@ var express = require('express'),
     http = require('http'),
 //    socketio = require('socket.io'),
     path = require('path'),
-//    fs = require('fs'),
+    fs = require('fs'),
     format = require('util').format,
     mongodb = require('mongodb'),
     mongoStore = require('connect-mongodb'),
@@ -54,7 +54,7 @@ console.info('Environment: %s\nLocation: %s\nConfiguration:\n',
 
 // Express Configuration
 app.configure(env, function () {
-    if ('production' === env) {
+    if ('production' === env) { // TODO is this right? never tested
         app.use(express.favicon(path.join(__dirname, 'public/images/favicon.ico')));
         app.use(express.static(path.join(__dirname, 'public')));
         return;
@@ -64,16 +64,18 @@ app.configure(env, function () {
         showStack: true
     }));
 //    app.use(express.logger('dev'));
-//    app.use(express.bodyParser());
+    app.use(express.bodyParser());
 //    app.use(express.methodOverride());
     app.set('config', config);
     app.set('express', express);
     app.set('hogan', hogan);
     app.set('mongodb', mongodb);
     app.set('mongoStore', mongoStore);
+    app.set('fs', fs);
     app.set('db', db);
     app.set('routes', routes);
     app.set('session', session);
+    app.set('dirname', __dirname);
     app.set('views', path.join(__dirname, 'lib/views'));
     app.set('view engine', 'hjs');
     app.use(express.favicon(__dirname + '/app/images/favicon.ico'));

@@ -52,18 +52,21 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.css" rel="stylesheet"> -->
     <link rel='stylesheet' href='styles/style.css'/>
     <link rel='stylesheet' href='styles/signin.css'/>
     <link rel="stylesheet" href="styles/vendor/angularUI/bootstrap-3.0.2.css"> <!-- used by ui-bootstrap -->
 
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>-->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.js"></script>-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-route-segment/src/route-segment.js"></script>
     <script src="bower_components/angular-route-segment/src/view-segment.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
+    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
+
     <script src="scripts/vendor/angularUI/ui-bootstrap-0.7.0.js"></script>
 
     <script src="scripts/controllers/app.js"></script>
@@ -71,11 +74,15 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="scripts/controllers/signupCtrl.js"></script>
     <script src="scripts/controllers/editorCtrl.js"></script>
     <script src="scripts/controllers/homeCtrl.js"></script>
+    <script src="scripts/controllers/submitterCtrl.js"></script>
     <script src="scripts/directives/general.js"></script>
     <script src="scripts/directives/signupDirs.js"></script>
     <style>
+        /* Next line needed to make sure angularjs-bootstrap works correctly */
+        .nav, .pagination, .carousel a { cursor: pointer; }
+        /* Margins for app */
         body {
-            margin-left: 5em;
+            margin-left: 3em;
         }
     </style>
 </head>

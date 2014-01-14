@@ -143,7 +143,8 @@ horaceApp.controller('EditorCtrl', function ($scope, $compile, $http, $location)
                 D_L: "D_L {display:block}", /* A line (e.g., in a verse) */
                 D_N: "D_N {display:block;float:right;margin-left: 2em}", /* Line numbers */
                 D_HY: ".D_HY {background-color: #ffff00}", /* Yellow hilite class */
-                D_HR: ".D_HR {background-color: #ff767b}" /* Light red hilite class */
+                D_HR: ".D_HR {background-color: #ff767b}", /* Light red hilite class */
+                A_NOTE: "A.note {color:#3648FF;font-weight:bold}" /* Links in popup notes */
             },
             engine: {
                 selectionStartNodeName: 'D_SS', /* Used to mark the beginning of a selection */
@@ -220,7 +221,7 @@ horaceApp.controller('EditorCtrl', function ($scope, $compile, $http, $location)
                  * @returns Returns an array whose elements are, in order, the start and corresponding end selector.
                  *          Returns null if the selector pair were not found.
                  */
-                getSelectorById: function (anno, sid) {
+                getSelectorById: function (anno, sid) { // TODO could cache
                     var evaluator = new XPathEvaluator();
                     var selector = [];
                     var index;

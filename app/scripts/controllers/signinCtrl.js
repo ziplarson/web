@@ -37,7 +37,7 @@ horaceApp.controller('SigninCtrl', function ($scope, $http, $location) {
         $http.post('/login', user)
             .success(function (res) {
                 if (res.ok) {
-                    $location.path('home');
+                    $location.path('browse');
 //                    $window.location.href = 'home.html';
                 } else {
                     $scope.signin.user.name = '';

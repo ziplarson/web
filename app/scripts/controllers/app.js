@@ -24,7 +24,7 @@
 
 var horaceApp = angular.module('horaceApp', [
     'ngRoute',
-    'route-segment', 'view-segment',
+    'route-segment', 'view-segment', 'angularFileUpload',
     'ui.bootstrap',
 ]); /* End horaceApp module */
 
@@ -52,6 +52,10 @@ horaceApp.config(function ($routeProvider) {
         .when('/browse/', {
             controller: 'EditorCtrl',
             templateUrl: '/views/browse.html'
+        })
+        .when('/submitter/', {
+            controller: 'SubmitterCtrl',
+            templateUrl: '/views/submitter.html'
         })
         .otherwise({
             redirectTo: '/'

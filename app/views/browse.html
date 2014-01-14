@@ -36,18 +36,19 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         name: 'Multi-hilite',
         views: {
             selection: [
-//                {
-////                    note: {lang: 'en', text: '<h1>Note</h1><div>hello there</div>'},
-//                    sids: [1, 2], // selector ids
-//                    method: 'sid', /* Find the text to hilite using the given sids */
-//                    css: {'class': 'D_HY'}
-//                },
                 {
-                    note: {lang: 'en', text: 'Note the repetition&mdash;somewhat new with Catullus. <i>bellus</i> is a colloquial form of <i>bonus</i>. Catullus, like the <i>novi poetae</i> often deploys diminutives and vernacular language. ' +
-                            'See <a href="http://www.perseus.tufts.edu/hopper/morph?l=bellus&la=la&can=bellus0&prior=Cotile&d=Perseus:text:2008.01.0506:book=3:poem=63&i=1#Perseus:text:1999.04.0059:entry=bellus-contents" target="_blank">Perseus Latin Word Study Tool</a>'},
-                    sids: [1,2,3, 4], // selector ids
+                    note: {lang: 'en', text: 'Note the repetition: male/malae. <i>bellus</i> is a colloquial form of <i>bonus</i>. Catullus, like the <i>novi poetae</i>, is unafraid of diminutives and vernacular language. ' +
+                            '<br/>See: <a class="note" href="http://www.perseus.tufts.edu/hopper/morph?l=bellus&la=la" target="_blank">Perseus Latin Word Study Tool</a>'},
+                    sids: [1, 2], // selector ids
                     method: 'sid', /* Find the text to hilite using the given sids */
                     css: {'class': 'D_HY'}
+                },
+                {
+                    note: {lang: 'en', text: 'Note the repetition: bella/bellum. <i>bellus</i> is a colloquial form of <i>bonus</i>. Catullus, like the <i>novi poetae</i>, is unafraid of diminutives and vernacular language. ' +
+                            '<br/>See: <a class="note" href="http://www.perseus.tufts.edu/hopper/morph?l=bellus&la=la" target="_blank">Perseus Latin Word Study Tool</a>'},
+                    sids: [3, 4], // selector ids
+                    method: 'sid', /* Find the text to hilite using the given sids */
+                    css: {'class': 'D_HR'}
                 }
             ]
         }, /* end views */
