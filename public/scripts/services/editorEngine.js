@@ -22,15 +22,19 @@
 
 'use strict';
 
+/**
+ * The editor engine is the API for manipulating the edited DOM structure.
+ * This can be replaced by a different engine. The engine that will be
+ * used (by default, this one) is selected by the EditorCtrl controller.
+ */
 horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($compile, EditorSettings) {
+
     var engine = {
 
-        $compile: $compile, /* Binds the angular compiler */
+        utils: {
+            $compile: $compile
+        },
 
-        selectionStartNodeName: 'D_SS', /* Used to mark the beginning of a selection */
-        selectionEndNodeName: 'D_SE', /* Used to mark the end of a selection */
-        selectionSpanNodeName: 'D_S', /* A span used to style a part of a selection */
-        selectorXPaths: ['//D_SS', '//D_SE'], /* Used to search for selectors */
         viewMethods: {
 
             // Highlights text for annotation
@@ -63,11 +67,17 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
         workTypeLayouts: {
 
             /* A poem */
-            poem: function (work) {
+            Poem: function (work) {
                 var content = $('content')[0];
-                content.innerHTML = '<div style="width:100px">' + work.content + '</div>';
-                var lineCount = $('D_L', content).length;
-                content.innerHTML = engine.makeLineNumbersHtml(lineCount, 5) + work.content;
+                content.innerHTML = work.content;
+                if (work.type === definitions.workTypePoem && EditorSettings.lineNumberingOn) {
+                    // TODO care must be taken that this works even if content lines are broken up!
+                    //      ELSE: make sure that content lines are NEVER broken up.
+                    // TODO how will this work with prose sentence and/or paragraph numbering when text is flowed automatically?
+                    //      ELSE: have separate mechanism for sentence and/or paragraph numbering
+                    var lineCount = $(EditorSettings.nodeNames.line, content).length;
+                    content.innerHTML = engine.makeLineNumbersHtml(lineCount, EditorSettings.everyNLines) + work.content;
+                }
             }
         },
 
@@ -81,8 +91,8 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
          * @returns {string}
          */
         makeLineNumbersHtml: function (lineCount, every, start) {
-            var lineNumberingNode = EditorSettings.nodes.lineNumbering;
-            var lineNumberNode = EditorSettings.nodes.lineNumber;
+            var lineNumberingNode = EditorSettings.nodeNames.lineNumbering;
+            var lineNumberNode = EditorSettings.nodeNames.lineNumber;
             var html = engine.makeNodeTag(lineNumberingNode);
             every = every || 1;
             start = start || 1;
@@ -100,15 +110,15 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
          * @param anno  An annotation object
          * @param sid The annotation selector id
          * @returns Returns an array whose elements are, in order, the start and corresponding end selector.
-         *          Returns null if the selector pair were not found.
+         *          Returns null if the selector pair was not found.
          */
         getSelectorById: function (anno, sid) { // TODO could cache
             var evaluator = new XPathEvaluator();
             var selector = [];
             var index;
-            var count = engine.selectorXPaths.length;
+            var count = EditorSettings.xpaths.findSelectors.length;
             for (index = 0; index < count; index += 1) {
-                var i = engine.selectorXPaths[index];
+                var i = EditorSettings.xpaths.findSelectors[index];
                 i = i + "[@sid='" + sid + "']";
                 var iter = evaluator.evaluate(i, document.documentElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
                 var s = iter.iterateNext();
@@ -155,7 +165,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
         /*
          Walks the tree of the annotation's context and processes a single sid in a selection.
 
-         * @param scope The scope from some controller
+         @param scope The scope from some controller
          @param anno The annotation
          @param selection The selection
          @param startSel The d_ss element starting the selection's sid fragment
@@ -165,22 +175,20 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
          @param style Optional CSS style to employ
          */
         processSelectionSid: function (scope, tw, anno, selection, startSel, endSel, sid, claz, style) {
-            var doit = false;
+            var write = false;
             var curr = tw.nextNode();
             while (curr) {
-                if (curr.nodeName === engine.selectionStartNodeName && curr.attributes.sid.nodeValue === sid) {
-                    doit = true; // we entered the selection range
-                } else if (curr.nodeName === engine.selectionEndNodeName && curr.attributes.sid.nodeValue === sid) {
-                    //doit = false;
+                if (curr.nodeName === EditorSettings.nodeNames.selectionStart && curr.attributes.sid.nodeValue === sid) {
+                    write = true; // we entered the selection range
+                } else if (curr.nodeName === EditorSettings.nodeNames.selectionEnd && curr.attributes.sid.nodeValue === sid) {
                     return; // leaving the selection range
                 }
-                if (doit) {
-                    if (curr.nodeType === Node.TEXT_NODE) {
-                        engine.writeSelectionDom(scope, curr, selection, claz, style);
-                    }
+                if (write && curr.nodeType === Node.TEXT_NODE) {
+                    engine.writeSelectionDom(scope, curr, selection, claz, style);
                 }
                 curr = tw.nextNode();
             }
+
             if (selection.note) { // Is there a note attached to this sid
                 // TODO incomplete
             }
@@ -196,7 +204,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
          * @param style Optional local style to apply
          */
         writeSelectionDom: function (scope, node, selection, claz, style) {
-            var hilite = document.createElement(engine.selectionSpanNodeName);
+            var hilite = document.createElement(EditorSettings.nodeNames.selectionSpan);
             if (claz) {
                 hilite.setAttribute('class', claz);
             }
@@ -206,7 +214,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
             var textParent = node.parentElement;
             var tooltip;
             if (selection.note) { // Add a tooltip for the note
-                tooltip = document.createElement('D_T');
+                tooltip = document.createElement(EditorSettings.nodeNames.tooltip);
                 tooltip.setAttribute('tooltip-html-unsafe', selection.note.text);
                 tooltip.setAttribute('tooltip-trigger', 'click');
             }
@@ -217,7 +225,9 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
             } else {
                 hilite.appendChild(node);
             }
-            var ajs = engine.$compile(textParent);
+
+            // Recompile content for DOM changes to take effect
+            var ajs = engine.utils.$compile(textParent);
             ajs(scope);
         },
 
@@ -226,13 +236,13 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
          * a node if it is not a text node, or a D_SS or D_SE element.
          */
         SelectorNodeFilter: function (node) {
-            if (node.nodeType === Node.TEXT_NODE || node.nodeName === 'D_SS' || node.nodeName === 'D_SE') {
+            if (node.nodeType === Node.TEXT_NODE || node.nodeName === EditorSettings.nodeNames.selectionStart || node.nodeName === EditorSettings.nodeNames.selectionEnd) {
                 return NodeFilter.FILTER_ACCEPT;
             }
             return NodeFilter.FILTER_SKIP;
         },
 
-        /**
+        /** TODO move to utilities
          * Creates an XML node element tag.
          * @param nodeName Name of the node
          * @param terminating    If true, then this is a terminating tag.
@@ -245,7 +255,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
             return '<' + nodeName + '>';
         },
 
-        /**
+        /** TODO move to utilities TODO maybe use document.createElement if more efficient
          * Wraps the body text with the specified node name.
          * @param nodeName  The name of the node
          * @param body  The text to wrap

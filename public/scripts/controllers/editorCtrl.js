@@ -29,7 +29,7 @@ horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSetting
     /* Execute after document loads */
     $scope.$on('$viewContentLoaded', function () {
         $scope.editor.setContent(work);
-        $scope.editor.activateSettings($scope.editor.settings);
+        $scope.editor.activateSettings(EditorSettings);
     });
 
     $scope.editor = {
@@ -87,7 +87,7 @@ horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSetting
 
         // stub function to clear all annotation views
         clearAnnotationViews: function () {
-            $($scope.editor.engine.selectionSpanNodeName).each(function (i) {
+            $(EditorSettings.nodeNames.selectionSpan).each(function (i) {
                 var child = $(this)[0].firstChild;
                 $(this).replaceWith(child);
 
@@ -98,9 +98,6 @@ horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSetting
 
     // Set the editor engine to use
     $scope.editor.engine = EditorEngine;
-
-    // Set the settings to use
-    $scope.editor.settings = EditorSettings;
 
     // Set the user preferences
     $scope.editor.prefs = UserPrefs;
