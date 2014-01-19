@@ -44,7 +44,7 @@ horaceApp.directive('signinField', function () {
         scope.signin.error = !ok;
         ctrl.$setValidity(fieldName, ok);
         return ok ? text : undefined;
-    };
+    }
 
     /**
      * Confirms that the password has been correctly retyped.

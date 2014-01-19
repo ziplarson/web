@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test DB</title>
+</head>
+<body>
+<h3>Test</h3>
+<script>
+
+    function Whatever() {
+        this._foo = 1;
+        this.foo = function() {return this._foo;};
+    }
+
+    var bar = new Whatever();
+    console.log(bar.foo());
+
+</script>
+</body>
+</html>

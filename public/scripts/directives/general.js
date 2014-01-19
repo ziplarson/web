@@ -20,37 +20,16 @@
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+/*
+ * General-purpose directives.
+ */
 'use strict';
 
-// Signin controls username and password model
-horaceApp.controller('SigninCtrl', function ($scope, $http, $location) {
-
-    $scope.signin = {
-        menubars: {standard: 'views/menubarOffline.html'}
-    };
-    $scope.signin.menubar = $scope.signin.menubars.standard;
-
-
-    $scope.login = function () {
-        var user = $scope.signin.user;
-        $http.post('/login', user)
-            .success(function (res) {
-                if (res.ok) {
-                    $location.path('browse');
-//                    $window.location.href = 'home.html';
-                } else {
-                    $scope.signin.user.name = '';
-                    $scope.signin.user.password = '';
-                    $scope.signin.msg = 'No such user: Try again';
-                    $scope.signin.error = true;
-//                    $scope.signinForm.$valid = false;
-                }
-            })
-            .error(function (res) {
-                $scope.signin.msg = 'Technical Problem: Please retry';
-                $scope.signin.error = true;
-            });
+// Sets focus on specified element
+horaceApp.directive('setFocus', function () {
+    return {
+        link: function (scope, element, attrs, ctrl) {
+            element[0].focus();
+        }
     };
 });
-/* End SigninCtrl */

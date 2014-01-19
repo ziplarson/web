@@ -22,10 +22,11 @@
 */
 'use strict';
 
+
 var horaceApp = angular.module('horaceApp', [
     'ngRoute',
     'route-segment', 'view-segment', 'angularFileUpload',
-    'ui.bootstrap',
+    'ui.bootstrap'
 ]); /* End horaceApp module */
 
 //horaceApp.config(function ($routeSegmentProvider, $routeProvider) {
@@ -36,10 +37,11 @@ var horaceApp = angular.module('horaceApp', [
 //});
 
 horaceApp.config(function ($routeProvider) {
+
     $routeProvider
         .when('/', {
             controller: 'SigninCtrl',
-            templateUrl: '/views/main.html'
+            templateUrl: '/views/signin.html'
         })
         .when('/signup/', {
             controller: 'SignupCtrl',

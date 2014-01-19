@@ -33,7 +33,7 @@ module.exports = function (env) {
                 readPreference: "primary",
                 slaveOk: false,
                 fsync: true,
-                dbNames: ["users", "session"],
+                dbNames: ["users", "session", "works"],
                 sessionDb: "session",
                 verbose: true
             },
@@ -58,7 +58,7 @@ module.exports = function (env) {
                 readPreference: "primary",
                 slaveOk: false,
                 fsync: true,
-                dbNames: ["users", "session"],
+                dbNames: ["users", "session", "works"],
                 sessionDb: "session",
                 verbose: true
             },
@@ -83,7 +83,7 @@ module.exports = function (env) {
                 readPreference: "primary",
                 slaveOk: false,
                 fsync: true,
-                dbNames: ["users", "session"],
+                dbNames: ["users", "session", "works"],
                 sessionDb: "session",
                 verbose: true
             },

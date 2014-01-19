@@ -1,11 +1,12 @@
 {
     "name": "dfl",
     "version": "0.0.0",
+    "private": true,
     "dependencies": {
         "express": "*",
         "mongodb": "*",
+        "socket.io": "*",
         "connect-mongodb": "*",
-        "mongoose": "*",
         "async": "*"
     },
     "devDependencies": {
