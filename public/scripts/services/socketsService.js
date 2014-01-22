@@ -22,6 +22,25 @@
 
 'use strict';
 
-var data = require('../../public/scripts/app/schema.js');
-exports.definitions = data.definitions;
-exports.schema = data.schema;
+/**
+ * Creates sockets for use by interested client parties.
+ */
+horaceApp.service('SocketsService', function () {
+
+    /** chatSocket: a test socket */
+    var chatSocket = io.connect('http://localhost:3000/chat');
+
+    /** error Socket: socket used to communicate error messages between client and server */
+    var errorSocket = io.connect('http://localhost:3000/error');
+
+    // dummy for testing
+    chatSocket.on('pageview', function (msg) {
+        $('#pageViews').append('<h4 style="color:blue">' + JSON.stringify(msg) + '</h4>');
+    });
+    chatSocket.emit('message', 'The chat channel is open');
+
+    return {
+        chatSocket: chatSocket,
+        errorSocket: errorSocket
+    };
+});

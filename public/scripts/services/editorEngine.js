@@ -70,7 +70,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
             Poem: function (work) {
                 var content = $('content')[0];
                 content.innerHTML = work.content;
-                if (work.type === definitions.workTypePoem && EditorSettings.lineNumberingOn) {
+                if (work.type === definitions.workType.Poem && EditorSettings.lineNumberingOn) {
                     // TODO care must be taken that this works even if content lines are broken up!
                     //      ELSE: make sure that content lines are NEVER broken up.
                     // TODO how will this work with prose sentence and/or paragraph numbering when text is flowed automatically?

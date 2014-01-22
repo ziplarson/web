@@ -99,8 +99,8 @@ app.configure('development', function () {
 var port = config.rest.port || process.env.NODE_SERVER_PORT || 80;
 
 // Open socket.io communication
-var sockets = require('./lib/routes/sockets.js');
-sockets.init(httpServer);
+require('./lib/routes/sockets.js').init(app, httpServer);
+
 
 // Initialize the server and get it back
 var server = httpServer.listen(port);
