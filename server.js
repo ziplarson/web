@@ -78,11 +78,11 @@ app.configure(function () {
     app.use(stat(path.join(__dirname, 'public'))); // Configure our app's statics server
     db.use(app, function (err) { // First initialize our DB wrapper
         if (err) {
-            throw {message: 'Error DB creation: ' + err};
+            throw {msg: 'Error DB creation: ' + err};
         } else {
             routes.use(app, function (err) { // Then initialize the router, which relies on our DB being initialized
                 if (err) {
-                    throw {message: 'Error Routes creation: ' + err};
+                    throw {msg: 'Error Routes creation: ' + err};
                 }
             });
         }

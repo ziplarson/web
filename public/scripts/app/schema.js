@@ -20,6 +20,8 @@
  *THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// CLIENT SIDE --------------------------------------------------------------------------------------------
+
 'use strict';
 
 var definitions = {

@@ -21,6 +21,8 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// CLIENT SIDE --------------------------------------------------------------------------------------------
+
 'use strict';
 
 // Handles the signup profile data.

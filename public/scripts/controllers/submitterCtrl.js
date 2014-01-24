@@ -21,6 +21,8 @@
  */
 'use strict';
 
+// CLIENT SIDE --------------------------------------------------------------------------------------------
+
 // Signin controls username and password model
 horaceApp.controller('SubmitterCtrl', function ($scope, $http, $timeout, $upload) {
 

@@ -20,6 +20,8 @@
  *THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// CLIENT SIDE --------------------------------------------------------------------------------------------
+
 'use strict';
 
 /**
@@ -28,10 +30,26 @@
 horaceApp.service('SocketsService', function () {
 
     /** chatSocket: a test socket */
-    var chatSocket = io.connect('http://localhost:3000/chat');
+    var chatSocket = io.connect(clientConfig.chatSocket);
+    chatSocket.on('connection', function (sock) {
+        console.info('Client chatSocket connected');
+    });
 
-    /** error Socket: socket used to communicate error messages between client and server */
-    var errorSocket = io.connect('http://localhost:3000/error');
+    /** noteSocket Socket: socket used to communicate notifications from server */
+    var noteSocket = io.connect(clientConfig.notificationSocket);
+    noteSocket.on('connection', function (sock) {
+        console.info('Client noteSocket connected');
+    });
+    noteSocket.on('note', function (notification) {
+        if (notification && notification.type && notification.msg) {
+            console.info('SERVER NOTIFICATION: ' + JSON.stringify(notification));
+            if (displayNotification) {
+                displayNotification(notification.type, notification.msg, clientConfig.icon.notification, 2, undefined);
+            }
+        } else {
+            console.info('BAD SERVER NOTIFICATION');
+        }
+    });
 
     // dummy for testing
     chatSocket.on('pageview', function (msg) {
@@ -41,6 +59,6 @@ horaceApp.service('SocketsService', function () {
 
     return {
         chatSocket: chatSocket,
-        errorSocket: errorSocket
+        noteSocket: noteSocket
     };
 });

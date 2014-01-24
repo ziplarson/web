@@ -21,10 +21,12 @@
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// CLIENT SIDE --------------------------------------------------------------------------------------------
+
 'use strict';
 
 // Signin controls username and password model
-horaceApp.controller('SigninCtrl', function ($scope, $http, $location) {
+horaceApp.controller('SigninCtrl', function ($scope, $http, $location, SocketsService) {
 
     $scope.signin = {
         menubars: {standard: 'views/menubarOffline.html'}

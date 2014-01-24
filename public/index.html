@@ -54,7 +54,8 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 
     <link rel='stylesheet' href='styles/style.css'/>
     <link rel='stylesheet' href='styles/signin.css'/>
-    <link rel="stylesheet" href="styles/vendor/angularUI/bootstrap-3.0.2.css"> <!-- used by ui-bootstrap -->
+    <link rel="stylesheet" href="styles/vendor/angularUI/bootstrap-3.0.2.css">
+    <!-- used by ui-bootstrap -->
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js"></script>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.js"></script>-->
@@ -69,9 +70,10 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <!--<script src="bower_components/angular-route-segment/src/view-segment.js"></script>-->
 
     <!-- Start application scripts --------------------------------------------------- -->
+    <script src="scripts/app/config.js"></script>
     <script src="scripts/app/schema.js"></script>
+    <script src="scripts/app/notifications.js"></script>
     <script src="scripts/controllers/app.js"></script>
-    <script src="scripts/controllers/alertCtrl.js"></script>
     <script src="scripts/controllers/signinCtrl.js"></script>
     <script src="scripts/controllers/signupCtrl.js"></script>
     <script src="scripts/controllers/editorCtrl.js"></script>
@@ -87,31 +89,34 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 
     <style>
         /* Next line needed to make sure angularjs-bootstrap works correctly */
-        .nav, .pagination, .carousel a { cursor: pointer; }
+        .nav, .pagination, .carousel a {
+            cursor: pointer;
+        }
+
         /* Margins for app */
         body {
             margin-left: 5em;
         }
     </style>
 </head>
+
+<script>
+    $(document).ready(function() {
+    Notification.requestPermission(function (status) {
+        console.info('Notification Permission ' + status);
+        if (Notification.permission !== status) {
+            Notification.permission = status;
+        }
+    });
+});
+
+</script>
 <body ng-app="horaceApp">
 
-
-<div id="foo" ng-controller="AlertCtrl">
-    <alert ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
-    <!--<button class='btn btn-default' ng-click="addAlert()">Add Alert</button>-->
-    <div id="error" style="color:red"></div>
-</div>
-
-<div id="pageViews"></div>
+<!--<div id="pageViews"></div>-->
 
 
 <div ng-view></div>
-
-<!--<div class="container" id="content">-->
-<!--<div class="row anim" app-view-segment="0"></div>-->
-<!--</div>-->
-
 
 </body>
 </html>

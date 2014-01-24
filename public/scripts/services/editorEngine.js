@@ -20,6 +20,8 @@
  *THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// CLIENT SIDE --------------------------------------------------------------------------------------------
+
 'use strict';
 
 /**
@@ -43,7 +45,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
                     var claz = selection.css['class'];
                     var style = selection.css.style;
                     if (!claz && !style) {
-                        throw {message: 'Annotation missing one of class or style'};
+                        throw {msg: 'Annotation missing one of class or style'};
                     }
                     var sels = engine.getSelectorById(anno, sid);
                     if (sels) {
@@ -152,7 +154,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
             var context = anno.context;
             var root = document.getElementsByTagName(context.parent);
             if (!root) {
-                throw {message: 'Error: invalid context "' + context.parent + '"'};
+                throw {msg: 'Error: invalid context "' + context.parent + '"'};
             }
             root = root[0];
             var sid = startSel.attributes.sid.nodeValue;
