@@ -45,7 +45,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
                     var claz = selection.css['class'];
                     var style = selection.css.style;
                     if (!claz && !style) {
-                        throw {msg: 'Annotation missing one of class or style'};
+                        throw {type: 'fatal', msg: 'Annotation missing either class or style'};
                     }
                     var sels = engine.getSelectorById(anno, sid);
                     if (sels) {
@@ -154,7 +154,7 @@ horaceApp.service('EditorEngine', ['$compile', 'EditorSettings', function ($comp
             var context = anno.context;
             var root = document.getElementsByTagName(context.parent);
             if (!root) {
-                throw {msg: 'Error: invalid context "' + context.parent + '"'};
+                throw {type: 'fatal', msg: 'Invalid context "' + context.parent + '"'};
             }
             root = root[0];
             var sid = startSel.attributes.sid.nodeValue;

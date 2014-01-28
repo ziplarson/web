@@ -42,7 +42,7 @@ horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSetting
             if (layout) {
                 layout(work);
             } else {
-                throw {msg: 'Error: invalid work type "' + type + '"'};
+                throw {type: 'fatal', msg: 'Invalid work layout type "' + type + '"'};
             }
         },
 
@@ -55,7 +55,7 @@ horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSetting
             function activateSettingStyles() {
                 var styles = $('#d_styles');
                 if (!styles || styles.length === 0) {
-                    throw {msg: 'Error: default styles (id d_styles) missing'};
+                    throw {type: 'fatal', msg: 'Default styles (id d_styles) missing'};
                 }
                 var className;
                 var style;
@@ -81,7 +81,7 @@ horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSetting
                     if (viewMeth) {
                         viewMeth($scope, testAnnotation);
                     } else {
-                        throw {msg: 'Error: no view method named "' + viewMethName + '"'};
+                        throw {type: 'fatal', msg: 'No view method named "' + viewMethName + '"'};
                     }
                 }
             }

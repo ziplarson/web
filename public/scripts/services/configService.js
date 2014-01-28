@@ -20,11 +20,28 @@
  *THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// SERVER SIDE --------------------------------------------------------------------------------------------
+/* CLIENT SIDE ------------------------------------------------------------------------------------- */
 
 'use strict';
 
+/**
+ * Provides client configuration data.
+ */
+horaceApp.service('ConfigService', function () {
 
-var data = require('../../public/scripts/app/schema.js');
-exports.definitions = data.definitions;
-exports.schema = data.schema;
+    return {
+        /* chatSocketPath: Used to hold a chat room for users */
+        chatSocketPath: '/chat',
+
+        /* notificationSocketPath: Used to get push notifications from server */
+        notificationSocketPath: '/note',
+
+        /* txSocketPath: Used for client/server transactions */
+        txSocketPath: '/tx',
+
+        icon: {
+            notification: '/images/dfl-icon-250.png'
+        }
+    };
+});
+

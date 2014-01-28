@@ -41,7 +41,7 @@ var express = require('express'),
     db = require('./lib/db'),
     routes = require('./lib/routes'),
     session = require('./lib/session'),
-    utils = require('./lib/utilities'),
+    utils = require('./lib/utilities/general.js'),
 
     app = express(),
     httpServer = http.createServer(app),
@@ -78,11 +78,11 @@ app.configure(function () {
     app.use(stat(path.join(__dirname, 'public'))); // Configure our app's statics server
     db.use(app, function (err) { // First initialize our DB wrapper
         if (err) {
-            throw {msg: 'Error DB creation: ' + err};
+            throw {type: 'fatal', msg: 'DB not created: ' + err};
         } else {
             routes.use(app, function (err) { // Then initialize the router, which relies on our DB being initialized
                 if (err) {
-                    throw {msg: 'Error Routes creation: ' + err};
+                    throw {type: 'fatal', msg: 'Routes not created: ' + err};
                 }
             });
         }

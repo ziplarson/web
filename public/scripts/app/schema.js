@@ -50,6 +50,18 @@ var definitions = {
 
 var schema = {
 
+    /* The most general object */
+    Item: {
+        /* plist: A property list whose values are any kind of object */
+        plist: {},
+
+        /* parent: A refid to the parent Item or undefined if this is a root Item */
+        parent: undefined,
+
+        /* children: An ordered set of refids */
+        children: []
+    },
+
     CatalogOptions: {
 
         /* workTypes: The possible type of works */
@@ -154,7 +166,6 @@ var schema = {
         /* content: Content in specified contentFormat and workType (default: undefined) */
         this.content = undefined;
     },
-
 
     /* Content Objects */
 

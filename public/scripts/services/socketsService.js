@@ -27,27 +27,87 @@
 /**
  * Creates sockets for use by interested client parties.
  */
-horaceApp.service('SocketsService', function () {
+horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', function (ConfigService, NotificationService) {
 
+    // Chat Socket --------------------------------------------------------------------------------------------------
     /** chatSocket: a test socket */
-    var chatSocket = io.connect(clientConfig.chatSocket);
+    var chatSocket = io.connect(ConfigService.chatSocketPath);
     chatSocket.on('connection', function (sock) {
         console.info('Client chatSocket connected');
     });
 
+    // Transaction Socket -------------------------------------------------------------------------------------------
+    var txSocket = io.connect(ConfigService.txSocketPath);
+    txSocket.on('connection', function (sock) {
+        console.info('Client txSocket connected');
+    });
+
+    /**
+     * catalogTx: result of attempt to create or update a catalog item.
+     */
+    txSocket.on('catalogTx', function(tx) {
+        var fback = jQuery('#feedback');
+        if (fback) {
+            if (tx.status === 'error') {
+                fback.css('color', 'red');
+            } else if (tx.status === 'ok') {
+                fback.css('color', 'green');
+            }
+            fback[0].innerHTML = tx.msg;
+        }
+    });
+
+
+
+    // Note Socket --------------------------------------------------------------------------------------------------
     /** noteSocket Socket: socket used to communicate notifications from server */
-    var noteSocket = io.connect(clientConfig.notificationSocket);
+    var noteSocket = io.connect(ConfigService.notificationSocketPath);
+
+    /* noteTitle: key := the notification type, value := the title to use in the notification */
+    var noteTitle = {trans: 'Technical Problem', error: 'Error', warn: 'Warning', note: 'Note'};
+
+    /**
+     * Returns an appropriate message for the specified notification
+     * @param note  The notification object
+     * @returns {string} The message text
+     */
+    noteSocket.makeMessage = function (note) {
+        var msg = note.msg;
+        if (note.type === 'fatal') {
+            msg = 'Our site is currently down for maintenance. Our apologies. Please try again later.';
+            console.error(note);
+        } else if (note.type === 'trans') {
+            msg = 'Due to a technical problem, your request was not fulfilled. Please try again.';
+            console.error(note);
+        }
+        return msg;
+    };
+
+    /**
+     * Returns an appropriate notification icon based on the specified notification type.
+     * @param noteType  The notification type.
+     * @returns {ConfigService.icon.notification|*}
+     */
+    noteSocket.getIcon = function (noteType) {
+        return ConfigService.icon.notification; // TODO create warning and error icons
+    };
+
     noteSocket.on('connection', function (sock) {
         console.info('Client noteSocket connected');
     });
-    noteSocket.on('note', function (notification) {
-        if (notification && notification.type && notification.msg) {
-            console.info('SERVER NOTIFICATION: ' + JSON.stringify(notification));
-            if (displayNotification) {
-                displayNotification(notification.type, notification.msg, clientConfig.icon.notification, 2, undefined);
-            }
+
+    /**
+     * Receives a notification from the server.
+     */
+    noteSocket.on('note', function (note) {
+        if (note && note.type && note.msg) {
+//            console.info('SERVER NOTIFICATION: ' + JSON.stringify(note));
+            var title = noteTitle[note.type] || 'Error';
+            var msg = noteSocket.makeMessage(note);
+            var icon = noteSocket.getIcon(note.type);
+            NotificationService.displayNotification(title, msg, icon, 0, undefined);
         } else {
-            console.info('BAD SERVER NOTIFICATION');
+            console.info('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
         }
     });
 
@@ -57,8 +117,11 @@ horaceApp.service('SocketsService', function () {
     });
     chatSocket.emit('message', 'The chat channel is open');
 
+    // Return the socket service
     return {
         chatSocket: chatSocket,
-        noteSocket: noteSocket
+        noteSocket: noteSocket,
+        txSocket: txSocket
     };
-});
+
+}]);

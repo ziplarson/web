@@ -24,13 +24,14 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <div>
     <form enctype="multipart/form-data">
         <br/>
-        <div><input id="thefile" type="file" name="work" accept="plain/text"/></div>
+        <div><input id="thefile" type="file" name="work" accept="text/plain"/></div>
         <br/>
         <div><input id="thebutton" type="button" name="Submit" value="Submit"/></div>
         <br/>
 
         <!-- TODO name fields should be angular inserts from model -->
         <div style="font-weight: bold">Title: <input type="text" name="title" size="100" size="100" value='[{"en": "Poem 1"}]'/></div>
+        <div style="font-weight: bold">Id: <input type="text" name="id" size="100" size="100" value=''/></div>
         <div style="font-weight: bold">Work Type: <input type="text" name="workType" size="100" value="Poem"/></div>
         <div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100" value="'Catullus, Gaius Valerius'"/></div>
         <div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100" value="'Kleiman, Ruben'"/></div>
@@ -48,6 +49,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         </div>
     </form>
     <script>
+        // TODO move this script code to a controller
         $('#thefile').change(function(){
             var file = this.files[0];
             var name = file.name;
@@ -70,15 +72,17 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 },
                 //Ajax events
                 beforeSend: function(x) {
-                    console.info('Before ' + JSON.stringify(x));},
+//                    console.info('Before ' + JSON.stringify(x));
+                },
                 success: function(x) {
-                    console.info('Complete: ' + JSON.stringify(x));
+                    console.info('Upload done: ' + JSON.stringify(x));
                 },
                 error: function(err) {
-                    console.error('Error: ' + err);
+                    console.error('Upload error: ' + err);
                 },
                 // Form data
                 data: formData,
+
                 //Options to tell jQuery not to process data or worry about content-type.
                 cache: false,
                 contentType: false,
@@ -87,37 +91,8 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         });
         function progressHandlingFunction(e){
             if(e.lengthComputable){
-//                $('progress').attr({value:e.loaded,max:e.total});
-                console.info('progress: ' + e.loaded);
+                console.info('Upload progress: ' + e.loaded);
             }
         }
     </script>
 </div>
-
-<!--<div>-->
-    <!--<form enctype="multipart/form-data" method="post" action="submit">-->
-        <!--<br/>-->
-        <!--<div><input type="file" name="work"/></div>-->
-        <!--<br/>-->
-        <!--<div><input type="submit" name="Submit"/></div>-->
-        <!--<br/>-->
-
-        <!--&lt;!&ndash; TODO name fields should be angular inserts from model &ndash;&gt;-->
-        <!--<div style="font-weight: bold">Title: <input type="text" name="title" size="100" size="100" value='[{"en": "Poem 1"}]'/></div>-->
-        <!--<div style="font-weight: bold">Work Type: <input type="text" name="workType" size="100" value="Poem"/></div>-->
-        <!--<div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100" value="'Catullus, Gaius Valerius'"/></div>-->
-        <!--<div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100" value="'Kleiman, Ruben'"/></div>-->
-        <!--<div style="font-weight: bold">Base Publisher: <input type="text" name="basePublisher" size="100" value="'Harvard University Press'"/></div>-->
-        <!--<div style="font-weight: bold">Base Edition: <input type="text" name="baseEdition" size="100" value="1"/></div>-->
-        <!--<div style="font-weight: bold">Base Editor: <input type="text" name="baseEditors" size="100" value="Merrill, Elmer Truesdell"/></div>-->
-        <!--<div style="font-weight: bold">Language: <input type="text" name="lang" size="100" value="la"/></div> &lt;!&ndash; latin &ndash;&gt;-->
-        <!--<div style="font-weight: bold">Subjects: <input type="text" name="subjects" size="100" value='{"en": ["poetry"]}'/></div>-->
-        <!--<div style="font-weight: bold">Format: <input type="text" name="contentFormat" size="100" value="raw"/></div>-->
-        <!--<div style="font-weight: bold">Base Versions: <input type="text" name="baseVersions"-->
-                                   <!--size="100" value='{"worldcat": "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/>-->
-        <!--</div>-->
-        <!--<div style="font-weight: bold">Similar Versions: <input type="text" name="similarVersions"-->
-                                      <!--size="100" value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/>-->
-        <!--</div>-->
-    <!--</form>-->
-<!--</div>-->

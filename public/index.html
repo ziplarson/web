@@ -70,21 +70,21 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <!--<script src="bower_components/angular-route-segment/src/view-segment.js"></script>-->
 
     <!-- Start application scripts --------------------------------------------------- -->
-    <script src="scripts/app/config.js"></script>
+    <script src="scripts/controllers/app.js"></script> <!-- Horace app module defs -->
     <script src="scripts/app/schema.js"></script>
-    <script src="scripts/app/notifications.js"></script>
-    <script src="scripts/controllers/app.js"></script>
+    <script src="scripts/services/configService.js"></script>
+    <script src="scripts/services/notificationService.js"></script>
+    <script src="scripts/services/socketsService.js"></script>
+    <script src="scripts/services/editorEngine.js"></script>
+    <script src="scripts/services/editorSettings.js"></script>
+    <script src="scripts/services/userPrefs.js"></script>
+    <script src="scripts/directives/general.js"></script>
+    <script src="scripts/directives/signupDirs.js"></script>
     <script src="scripts/controllers/signinCtrl.js"></script>
     <script src="scripts/controllers/signupCtrl.js"></script>
     <script src="scripts/controllers/editorCtrl.js"></script>
     <script src="scripts/controllers/homeCtrl.js"></script>
     <script src="scripts/controllers/submitterCtrl.js"></script>
-    <script src="scripts/directives/general.js"></script>
-    <script src="scripts/directives/signupDirs.js"></script>
-    <script src="scripts/services/socketsService.js"></script>
-    <script src="scripts/services/editorEngine.js"></script>
-    <script src="scripts/services/editorSettings.js"></script>
-    <script src="scripts/services/userPrefs.js"></script>
     <!-- End application scripts ----------------------------------------------------- -->
 
     <style>
@@ -113,8 +113,8 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 </script>
 <body ng-app="horaceApp">
 
-<!--<div id="pageViews"></div>-->
-
+<!-- Feedback messages from transactions -->
+<div id="feedback"></div>
 
 <div ng-view></div>
 
