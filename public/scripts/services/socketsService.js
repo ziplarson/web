@@ -33,13 +33,55 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     /** chatSocket: a test socket */
     var chatSocket = io.connect(ConfigService.chatSocketPath);
     chatSocket.on('connection', function (sock) {
-        console.info('Client chatSocket connected');
+        console.info('chatSocket: Connected');
+        sock.on('connecting',function () {
+            console.info('chatSocket: Connecting...');
+        });
+        sock.on('disconnect', function () {
+            console.info('chatSocket: Disconnected');
+        });
+        sock.on('connect_failed',function () {
+            console.info('chatSocket: Connect failed');
+        });
+        sock.on('reconnecting',function () {
+            console.info('chatSocket: Reconnecting...');
+        });
+        sock.on('reconnect',function () {
+            console.info('chatSocket: Reconnected');
+        });
+        sock.on('reconnect_failed',function () {
+            console.info('chatSocket: Reconnect failed');
+        });
+        sock.on('error', function () {
+            console.info('chatSocket: Some socket error');
+        });
     });
 
     // Transaction Socket -------------------------------------------------------------------------------------------
     var txSocket = io.connect(ConfigService.txSocketPath);
     txSocket.on('connection', function (sock) {
-        console.info('Client txSocket connected');
+        alert('txSocket: Connected');
+        sock.on('connecting',function () {
+            alert('txSocket: Connecting...');
+        });
+        sock.on('disconnect', function () {
+            console.info('txSocket: Disconnected');
+        });
+        sock.on('connect_failed',function () {
+            console.info('txSocket: Connect failed');
+        });
+        sock.on('reconnecting',function () {
+            console.info('txSocket: Reconnecting...');
+        });
+        sock.on('reconnect',function () {
+            console.info('txSocket: Reconnected');
+        });
+        sock.on('reconnect_failed',function () {
+            console.info('txSocket: Reconnect failed');
+        });
+        sock.on('error', function () {
+            console.info('txSocket: Some socket error');
+        });
     });
 
     /**
@@ -93,7 +135,28 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     };
 
     noteSocket.on('connection', function (sock) {
-        console.info('Client noteSocket connected');
+        console.info('noteSocket: Connected');
+        sock.on('connecting',function () {
+            console.info('noteSocket: Connecting...');
+        });
+        sock.on('disconnect', function () {
+            console.info('noteSocket: Disconnected');
+        });
+        sock.on('connect_failed',function () {
+            console.info('noteSocket: Connect failed');
+        });
+        sock.on('reconnecting',function () {
+            console.info('noteSocket: Reconnecting...');
+        });
+        sock.on('reconnect',function () {
+            console.info('noteSocket: Reconnected');
+        });
+        sock.on('reconnect_failed',function () {
+            console.info('noteSocket: Reconnect failed');
+        });
+        sock.on('error', function () {
+            console.info('noteSocket: Some socket error');
+        });
     });
 
     /**
@@ -112,10 +175,10 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     });
 
     // dummy for testing
-    chatSocket.on('pageview', function (msg) {
-        $('#pageViews').append('<h4 style="color:blue">' + JSON.stringify(msg) + '</h4>');
+    chatSocket.on('echo', function (msg) {
+        $('#pageview').append('<h4 style="color:blue">' + JSON.stringify(msg) + '</h4>');
     });
-    chatSocket.emit('message', 'The chat channel is open');
+
 
     // Return the socket service
     return {

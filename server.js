@@ -47,7 +47,9 @@ var express = require('express'),
     httpServer = http.createServer(app),
     env = app.get('env'),
 
-    config = require('./config/server-config.js')(env);
+    config = require('./config/server-config.js')(env),
+
+    catalogService = require('./lib/services/catalogService.js');
 
 console.info('Environment: %s\nLocation: %s\nConfiguration:\n',
     env, __dirname, JSON.stringify(config, null, 2));
@@ -72,6 +74,7 @@ app.configure(function () {
     app.set('view engine', 'hjs'); // The HJS engine
     app.use(express.favicon(__dirname + '/app/images/favicon.ico'));
     app.use(express.cookieParser()); // Initialize cookie management
+    catalogService.use(app); // Initialize the catalog service
     session.use(app); // Initialize session management
     app.use(app.router); // Initialize router
     var stat = express['static']; // Use this to prevent JLint error (static is a reserved word)
