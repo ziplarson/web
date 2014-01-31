@@ -56,3 +56,9 @@ other errors must be delivered to the client through the notification
 or some other client-facing mechanism.
 
 The try/catch mechanism should expect only error types 'fatal', 'trans' and 'error'.
+
+Server-side Websocket Management
+================================
+
+Sockets are cached on a per-session basis to permit access
+to them at any time.

@@ -32,23 +32,23 @@ horaceApp.service('NotificationService', function () {
     if (!Notification) {
         console.error('no notification support');
     } else {
-        console.info('notifications supported');
+        console.log('notifications supported');
     }
 
     var checkPermission = function () {
         if (Notification.permission !== 'granted') {
-            console.info('Getting permission...');
+            console.log('Getting permission...');
             Notification.requestPermission(function (status) {
-                console.info('Returned permission status');
+                console.log('Returned permission status');
                 if (status && status === "granted") {
-                    console.info('Permission granted!');
+                    console.log('Permission granted!');
                 } else {
-                    console.info('Permission NOT granted!');
+                    console.log('Permission NOT granted!');
 
                 }
             });
         } else {
-            console.info('checkPermission: ' + Notification.permission);
+            console.log('checkPermission: ' + Notification.permission);
         }
     };
 
@@ -58,7 +58,7 @@ horaceApp.service('NotificationService', function () {
 
         checkPermission();
 
-//    console.info('Current Notification Permission: ' + Notification.permission);
+//    console.log('Current Notification Permission: ' + Notification.permission);
 
         if (title.length > 0) {
             var attributes = {lang: 'en'};

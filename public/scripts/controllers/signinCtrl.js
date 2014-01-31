@@ -26,7 +26,7 @@
 'use strict';
 
 // Signin controls username and password model
-horaceApp.controller('SigninCtrl', function ($scope, $http, $location, SocketsService) {
+horaceApp.controller('SigninCtrl', function ($scope, SocketsService, $http, $location) {
 
     $scope.signin = {
         menubars: {standard: 'views/menubarOffline.html'}

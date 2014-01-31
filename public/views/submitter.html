@@ -56,7 +56,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             var size = file.size;
             var type = file.type;
             //Your validation
-            console.info('File ' + name + ' size=' + size + ' type=' + type);
+            console.log('File ' + name + ' size=' + size + ' type=' + type);
         });
         $('#thebutton').click(function(){
             var formData = new FormData($('form')[0]);
@@ -72,10 +72,10 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 },
                 //Ajax events
                 beforeSend: function(x) {
-//                    console.info('Before ' + JSON.stringify(x));
+//                    console.log('Before ' + JSON.stringify(x));
                 },
                 success: function(x) {
-                    console.info('Upload done: ' + JSON.stringify(x));
+                    console.log('Upload done: ' + JSON.stringify(x));
                 },
                 error: function(err) {
                     console.error('Upload error: ' + err);
@@ -91,7 +91,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         });
         function progressHandlingFunction(e){
             if(e.lengthComputable){
-                console.info('Upload progress: ' + e.loaded);
+                console.log('Upload progress: ' + e.loaded);
             }
         }
     </script>

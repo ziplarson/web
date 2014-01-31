@@ -33,27 +33,27 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     /** chatSocket: a test socket */
     var chatSocket = io.connect(ConfigService.chatSocketPath);
     chatSocket.on('connection', function (sock) {
-        console.info('chatSocket: Connected');
+        console.log('chatSocket: Connected');
         sock.on('connecting',function () {
-            console.info('chatSocket: Connecting...');
+            console.log('chatSocket: Connecting...');
         });
         sock.on('disconnect', function () {
-            console.info('chatSocket: Disconnected');
+            console.log('chatSocket: Disconnected');
         });
         sock.on('connect_failed',function () {
-            console.info('chatSocket: Connect failed');
+            console.log('chatSocket: Connect failed');
         });
         sock.on('reconnecting',function () {
-            console.info('chatSocket: Reconnecting...');
+            console.log('chatSocket: Reconnecting...');
         });
         sock.on('reconnect',function () {
-            console.info('chatSocket: Reconnected');
+            console.log('chatSocket: Reconnected');
         });
         sock.on('reconnect_failed',function () {
-            console.info('chatSocket: Reconnect failed');
+            console.log('chatSocket: Reconnect failed');
         });
         sock.on('error', function () {
-            console.info('chatSocket: Some socket error');
+            console.log('chatSocket: Some socket error');
         });
     });
 
@@ -65,22 +65,22 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
             alert('txSocket: Connecting...');
         });
         sock.on('disconnect', function () {
-            console.info('txSocket: Disconnected');
+            console.log('txSocket: Disconnected');
         });
         sock.on('connect_failed',function () {
-            console.info('txSocket: Connect failed');
+            console.log('txSocket: Connect failed');
         });
         sock.on('reconnecting',function () {
-            console.info('txSocket: Reconnecting...');
+            console.log('txSocket: Reconnecting...');
         });
         sock.on('reconnect',function () {
-            console.info('txSocket: Reconnected');
+            console.log('txSocket: Reconnected');
         });
         sock.on('reconnect_failed',function () {
-            console.info('txSocket: Reconnect failed');
+            console.log('txSocket: Reconnect failed');
         });
         sock.on('error', function () {
-            console.info('txSocket: Some socket error');
+            console.log('txSocket: Some socket error');
         });
     });
 
@@ -120,7 +120,7 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
             console.error(note);
         } else if (note.type === 'trans') {
             msg = 'Due to a technical problem, your request was not fulfilled. Please try again.';
-            console.error(note);
+            console.error(JSON.stringify(note));
         }
         return msg;
     };
@@ -135,27 +135,27 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     };
 
     noteSocket.on('connection', function (sock) {
-        console.info('noteSocket: Connected');
+        console.log('noteSocket: Connected');
         sock.on('connecting',function () {
-            console.info('noteSocket: Connecting...');
+            console.log('noteSocket: Connecting...');
         });
         sock.on('disconnect', function () {
-            console.info('noteSocket: Disconnected');
+            console.log('noteSocket: Disconnected');
         });
         sock.on('connect_failed',function () {
-            console.info('noteSocket: Connect failed');
+            console.log('noteSocket: Connect failed');
         });
         sock.on('reconnecting',function () {
-            console.info('noteSocket: Reconnecting...');
+            console.log('noteSocket: Reconnecting...');
         });
         sock.on('reconnect',function () {
-            console.info('noteSocket: Reconnected');
+            console.log('noteSocket: Reconnected');
         });
         sock.on('reconnect_failed',function () {
-            console.info('noteSocket: Reconnect failed');
+            console.log('noteSocket: Reconnect failed');
         });
         sock.on('error', function () {
-            console.info('noteSocket: Some socket error');
+            console.log('noteSocket: Some socket error');
         });
     });
 
@@ -164,13 +164,13 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
      */
     noteSocket.on('note', function (note) {
         if (note && note.type && note.msg) {
-//            console.info('SERVER NOTIFICATION: ' + JSON.stringify(note));
+//            console.log('SERVER NOTIFICATION: ' + JSON.stringify(note));
             var title = noteTitle[note.type] || 'Error';
             var msg = noteSocket.makeMessage(note);
             var icon = noteSocket.getIcon(note.type);
             NotificationService.displayNotification(title, msg, icon, 0, undefined);
         } else {
-            console.info('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
+            console.log('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
         }
     });
 
