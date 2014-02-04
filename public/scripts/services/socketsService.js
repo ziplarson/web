@@ -87,15 +87,17 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     /**
      * catalogTx: result of attempt to create or update a catalog item.
      */
-    txSocket.on('catalogTx', function(tx) {
+    txSocket.on('catalog/submit/metadata', function(tx) {
         var fback = jQuery('#feedback');
         if (fback) {
-            if (tx.status === 'error') {
+            if (tx.type === 'error' || tx.type === 'fatal') {
                 fback.css('color', 'red');
-            } else if (tx.status === 'ok') {
+            } else if (tx.type === 'trans') {
+                fback.css('color', 'yellow');
+            } else if (tx.type === 'ack') {
                 fback.css('color', 'green');
             }
-            fback[0].innerHTML = tx.msg;
+            fback[0].innerHTML = tx.msg + ' (txId=' + tx.txId + ')';
         }
     });
 
@@ -106,7 +108,7 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     var noteSocket = io.connect(ConfigService.notificationSocketPath);
 
     /* noteTitle: key := the notification type, value := the title to use in the notification */
-    var noteTitle = {trans: 'Technical Problem', error: 'Error', warn: 'Warning', note: 'Note'};
+    var noteTitle = {trans: 'Technical Problem', error: 'Error', warn: 'Warning', ack: 'Note', note: 'Note'};
 
     /**
      * Returns an appropriate message for the specified notification
@@ -165,7 +167,7 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     noteSocket.on('note', function (note) {
         if (note && note.type && note.msg) {
 //            console.log('SERVER NOTIFICATION: ' + JSON.stringify(note));
-            var title = noteTitle[note.type] || 'Error';
+            var title = noteTitle[note.type] || 'Unknown Error';
             var msg = noteSocket.makeMessage(note);
             var icon = noteSocket.getIcon(note.type);
             NotificationService.displayNotification(title, msg, icon, 0, undefined);

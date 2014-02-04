@@ -39,7 +39,6 @@ var express = require('express'),
     sessionSockets,
     io = require('socket.io'),
     hogan = require('hjs'),
-    nodeUtils = require('connect').utils.uid,
 
     db = require('./lib/db'),
     routes = require('./lib/routes'),
