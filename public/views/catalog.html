@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2013 Ruben Kleiman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+
+<div>
+    <button ng-click="catalog.goBrowse()">Go Browse</button>
+    <h4>Save Catalog Metadata</h4>
+
+    <form name="saveMetadataForm" novalidate ng-submit="submit(catalog.metadata)">
+        <div style="height: 100%"><a ng-href="http://designforliterature.com">
+            <img class="horace" ng-src="../images/horace-90x106.png"/></a>
+        </div>
+        <input ng-model='catalog.metadata.notify' type="hidden" name="notify" value="true"/>
+        <!-- Request notifications for this tx -->
+        <!-- TODO name fields should be angular inserts from model -->
+        <div>Id: <input ng-model='catalog.metadata.id' type="text" name="id" size="100" size="100" value=''/></div>
+        <div>Title: <input ng-model='catalog.metadata.title' type="text" name="title" size="100" size="100"
+                           value='[{"en": "Poem 1"}]'/></div>
+        <div>Work Type: <input ng-model='catalog.metadata.workType' type="text" name="workType" size="100"
+                               value="Poem"/></div>
+        <div>Base Author: <input ng-model='catalog.metadata.baseAuthors' type="text" name="baseAuthors" size="100"
+                                 value="'Catullus, Gaius Valerius'"/></div>
+        <div>Base Author: <input ng-model='catalog.metadata.baseAuthors' type="text" name="baseAuthors" size="100"
+                                 value="'Kleiman, Ruben'"/></div>
+        <div>Base Publisher: <input ng-model='catalog.metadata.basePublisher' type="text" name="basePublisher"
+                                    size="100"
+                                    value="'Harvard University Press'"/></div>
+        <div>Base Edition: <input ng-model='catalog.metadata.baseEdition' type="text" name="baseEdition" size="100"
+                                  value="1"/></div>
+        <div>Base Editor: <input ng-model='catalog.metadata.baseEditors' type="text" name="baseEditors" size="100"
+                                 value="Merrill, Elmer Truesdell"/></div>
+        <div>Language: <input ng-model='catalog.metadata.lang' type="text" name="lang" size="100" value="la"/></div>
+        <div>Subjects: <input ng-model='catalog.metadata.subjects' type="text" name="subjects" size="100"
+                              value='{"en": ["poetry"]}'/></div>
+        <div>Format: <input ng-model='catalog.metadata.contentFormat' type="text" name="contentFormat" size="100"
+                            value="raw"/></div>
+        <div>Base Versions: <input ng-model='catalog.metadata.baseVersions' type="text" name="baseVersions"
+                                   size="100"
+                                   value='{"worldcat": "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/>
+        </div>
+        <div>Similar Versions: <input ng-model='catalog.metadata.similarVersions' type="text" name="similarVersions"
+                                      size="100"
+                                      value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/>
+
+            <div class="errorMsg" ng-show="catalog.error">{{catalog.error}}</div>
+        </div>
+        <button id="submit" ng-click="catalog.submitMetadata()" ng-disabled="!saveMetadataForm.$valid">Submit
+        </button>
+    </form>
+
+    <!--<form>-->
+    <!--<div><input id="saveMetadataButton" type="button" name="Submit" value="Submit"/></div>-->
+    <!--<br/>-->
+
+    <!--<input type="hidden" name="notify" value="true"/> &lt;!&ndash; Request notifications for this tx &ndash;&gt;-->
+    <!--&lt;!&ndash; TODO name fields should be angular inserts from model &ndash;&gt;-->
+    <!--<div style="font-weight: bold">Id: <input type="text" name="id" size="100" size="100" value=''/></div>-->
+    <!--<div style="font-weight: bold">Title: <input type="text" name="title" size="100" size="100" value='[{"en": "Poem 1"}]'/></div>-->
+    <!--<div style="font-weight: bold">Work Type: <input type="text" name="workType" size="100" value="Poem"/></div>-->
+    <!--<div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100" value="'Catullus, Gaius Valerius'"/></div>-->
+    <!--<div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100" value="'Kleiman, Ruben'"/></div>-->
+    <!--<div style="font-weight: bold">Base Publisher: <input type="text" name="basePublisher" size="100" value="'Harvard University Press'"/></div>-->
+    <!--<div style="font-weight: bold">Base Edition: <input type="text" name="baseEdition" size="100" value="1"/></div>-->
+    <!--<div style="font-weight: bold">Base Editor: <input type="text" name="baseEditors" size="100" value="Merrill, Elmer Truesdell"/></div>-->
+    <!--<div style="font-weight: bold">Language: <input type="text" name="lang" size="100" value="la"/></div> &lt;!&ndash; latin &ndash;&gt;
+    -->
+    <!--<div style="font-weight: bold">Subjects: <input type="text" name="subjects" size="100" value='{"en": ["poetry"]}'/></div>-->
+    <!--<div style="font-weight: bold">Format: <input type="text" name="contentFormat" size="100" value="raw"/></div>-->
+    <!--<div style="font-weight: bold">Base Versions: <input type="text" name="baseVersions"-->
+    <!--size="100" value='{"worldcat": "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/>-->
+    <!--</div>-->
+    <!--<div style="font-weight: bold">Similar Versions: <input type="text" name="similarVersions"-->
+    <!--size="100" value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/>-->
+    <!--</div>-->
+    <!--</form>-->
+
+    <br/><br/>
+
+    <h4>UploadContent</h4>
+
+    <form enctype="multipart/form-data">
+        <br/>
+
+        <div><input id="thefile" type="file" name="work" accept="text/plain"/></div>
+        <br/>
+
+        <div><input id="saveContentButton" type="button" name="Submit" value="Submit"/></div>
+        <br/>
+
+        <input type="hidden" name="notify" value="true"/> <!-- Request notifications for this tx -->
+        <!-- TODO name fields should be angular inserts from model -->
+        <div style="font-weight: bold">Id: <input type="text" name="id" size="100" size="100" value=''/></div>
+        <div style="font-weight: bold">Title: <input type="text" name="title" size="100" size="100"
+                                                     value='[{"en": "Poem 1"}]'/></div>
+        <div style="font-weight: bold">Work Type: <input type="text" name="workType" size="100" value="Poem"/></div>
+        <div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100"
+                                                           value="'Catullus, Gaius Valerius'"/></div>
+        <div style="font-weight: bold">Base Author: <input type="text" name="baseAuthors" size="100"
+                                                           value="'Kleiman, Ruben'"/></div>
+        <div style="font-weight: bold">Base Publisher: <input type="text" name="basePublisher" size="100"
+                                                              value="'Harvard University Press'"/></div>
+        <div style="font-weight: bold">Base Edition: <input type="text" name="baseEdition" size="100" value="1"/></div>
+        <div style="font-weight: bold">Base Editor: <input type="text" name="baseEditors" size="100"
+                                                           value="Merrill, Elmer Truesdell"/></div>
+        <div style="font-weight: bold">Language: <input type="text" name="lang" size="100" value="la"/></div>
+        <!-- latin -->
+        <div style="font-weight: bold">Subjects: <input type="text" name="subjects" size="100"
+                                                        value='{"en": ["poetry"]}'/></div>
+        <div style="font-weight: bold">Format: <input type="text" name="contentFormat" size="100" value="raw"/></div>
+        <div style="font-weight: bold">Base Versions: <input type="text" name="baseVersions"
+                                                             size="100"
+                                                             value='{"worldcat": "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/>
+        </div>
+        <div style="font-weight: bold">Similar Versions: <input type="text" name="similarVersions"
+                                                                size="100"
+                                                                value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/>
+        </div>
+    </form>
+    <script>
+        // TODO move this script code to a controller
+
+        function progressHandlingFunction(e) {
+            if (e.lengthComputable) {
+                console.log('Upload progress: ' + e.loaded);
+            }
+        }
+        $('#thefile').change(function () {
+            var file = this.files[0];
+            var name = file.name;
+            var size = file.size;
+            var type = file.type;
+            //Your validation
+            console.log('File ' + name + ' size=' + size + ' type=' + type);
+        });
+
+        $('#saveMetadataButton').click(function () {
+            var formData = new FormData($('form')[0]);
+            $.ajax({
+                url: 'catalog/submit/metadata',
+                type: 'POST',
+
+                //Ajax events
+                success: function (x) {
+                    console.log('Metadata received by server: ' + JSON.stringify(x));
+                },
+                error: function (err) {
+                    console.error('Metadata save error: ' + err);
+                },
+                // Form data
+                data: formData,
+
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+
+        $('#saveContentButton').click(function () {
+            var formData = new FormData($('form')[0]);
+            $.ajax({
+                url: 'catalog/submit/content',
+                type: 'POST',
+                xhr: function () {  // Custom XMLHttpRequest
+                    var myXhr = $.ajaxSettings.xhr();
+                    if (myXhr.upload) { // Check if upload property exists
+                        myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload
+                    }
+                    return myXhr;
+                },
+                //Ajax events
+                beforeSend: function (x) {
+//                    console.log('Before ' + JSON.stringify(x));
+                },
+                success: function (txId) { // Returns transaction id
+                    // TODO remember id and match it with responses for tracking transaction history in session
+                    // TODO server could store the full transaction history for use between sessions
+                    console.log('Upload succeeded with txId ' + txId);
+                },
+                error: function (err) {
+                    console.error('Upload error: ' + err);
+                },
+                // Form data
+                data: formData,
+
+                //Options to tell jQuery not to process data or worry about content-type.
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+    </script>
+</div>

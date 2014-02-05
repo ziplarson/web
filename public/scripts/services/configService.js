@@ -30,8 +30,6 @@
 horaceApp.service('ConfigService', function () {
 
     return {
-        /* chatSocketPath: Used to hold a chat room for users */
-        chatSocketPath: '/chat',
 
         /* notificationSocketPath: Used to get push notifications from server */
         notificationSocketPath: '/note',

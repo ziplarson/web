@@ -29,34 +29,6 @@
  */
 horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', function (ConfigService, NotificationService) {
 
-    // Chat Socket --------------------------------------------------------------------------------------------------
-    /** chatSocket: a test socket */
-    var chatSocket = io.connect(ConfigService.chatSocketPath);
-    chatSocket.on('connection', function (sock) {
-        console.log('chatSocket: Connected');
-        sock.on('connecting',function () {
-            console.log('chatSocket: Connecting...');
-        });
-        sock.on('disconnect', function () {
-            console.log('chatSocket: Disconnected');
-        });
-        sock.on('connect_failed',function () {
-            console.log('chatSocket: Connect failed');
-        });
-        sock.on('reconnecting',function () {
-            console.log('chatSocket: Reconnecting...');
-        });
-        sock.on('reconnect',function () {
-            console.log('chatSocket: Reconnected');
-        });
-        sock.on('reconnect_failed',function () {
-            console.log('chatSocket: Reconnect failed');
-        });
-        sock.on('error', function () {
-            console.log('chatSocket: Some socket error');
-        });
-    });
-
     // Transaction Socket -------------------------------------------------------------------------------------------
     var txSocket = io.connect(ConfigService.txSocketPath);
     txSocket.on('connection', function (sock) {
@@ -88,16 +60,17 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
      * catalogTx: result of attempt to create or update a catalog item.
      */
     txSocket.on('catalog/submit/metadata', function(tx) {
-        var fback = jQuery('#feedback');
+        var fback = jQuery('#debuginfo');
+        console.info('hello');
         if (fback) {
-            if (tx.type === 'error' || tx.type === 'fatal') {
-                fback.css('color', 'red');
-            } else if (tx.type === 'trans') {
-                fback.css('color', 'yellow');
+            if (tx.type === 'trans') {
+                fback.css('color', 'blue');
             } else if (tx.type === 'ack') {
                 fback.css('color', 'green');
+            } else {
+                fback.css('color', 'red');
             }
-            fback[0].innerHTML = tx.msg + ' (txId=' + tx.txId + ')';
+            fback[0].innerHTML = tx.type + ': ' + tx.msg + ' (txId=' + tx.txId + ')';
         }
     });
 
@@ -166,7 +139,6 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
      */
     noteSocket.on('note', function (note) {
         if (note && note.type && note.msg) {
-//            console.log('SERVER NOTIFICATION: ' + JSON.stringify(note));
             var title = noteTitle[note.type] || 'Unknown Error';
             var msg = noteSocket.makeMessage(note);
             var icon = noteSocket.getIcon(note.type);
@@ -176,15 +148,9 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
         }
     });
 
-    // dummy for testing
-    chatSocket.on('echo', function (msg) {
-        $('#pageview').append('<h4 style="color:blue">' + JSON.stringify(msg) + '</h4>');
-    });
-
 
     // Return the socket service
     return {
-        chatSocket: chatSocket,
         noteSocket: noteSocket,
         txSocket: txSocket
     };

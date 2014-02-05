@@ -34,7 +34,7 @@ horaceApp.controller('SigninCtrl', function ($scope, SocketsService, $http, $loc
     $scope.signin.menubar = $scope.signin.menubars.standard;
 
 
-    $scope.login = function () {
+    $scope.signin.login = function () {
         var user = $scope.signin.user;
         $http.post('/login', user)
             .success(function (res) {
@@ -45,7 +45,6 @@ horaceApp.controller('SigninCtrl', function ($scope, SocketsService, $http, $loc
                     $scope.signin.user.password = '';
                     $scope.signin.msg = 'No such user: Try again';
                     $scope.signin.error = true;
-//                    $scope.signinForm.$valid = false;
                 }
             })
             .error(function (res) {

@@ -44,6 +44,8 @@ error       An error for the client. The client should present the message as an
 warn        A warning for the client. The client may present the message payload
             as a warning notification.
 
+ack         An acknowledgement that a transaction has succeeded (used only for transaction sockets).
+
 note        A note for the client. The client may present the message as an
             informational notification.
 

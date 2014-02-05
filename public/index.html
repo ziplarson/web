@@ -84,7 +84,7 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="scripts/controllers/signupCtrl.js"></script>
     <script src="scripts/controllers/editorCtrl.js"></script>
     <script src="scripts/controllers/homeCtrl.js"></script>
-    <script src="scripts/controllers/submitterCtrl.js"></script>
+    <script src="scripts/controllers/catalogCtrl.js"></script>
     <!-- End application scripts ----------------------------------------------------- -->
 
     <style>
@@ -102,12 +102,14 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 
 <script>
     $(document).ready(function() {
-    Notification.requestPermission(function (status) {
-        console.info('Notification Permission ' + status);
-        if (Notification.permission !== status) {
-            Notification.permission = status;
+        if (Notification) {
+            Notification.requestPermission(function (status) {
+                console.info('Notification Permission ' + status);
+                if (Notification.permission !== status) {
+                    Notification.permission = status;
+                }
+            });
         }
-    });
 });
 
 </script>
@@ -116,8 +118,8 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 <!-- Test -->
 <div id="pageview"></div>
 
-<!-- Feedback messages from transactions -->
-<div id="feedback"></div>
+<!-- Feedback messages from transactions for debugging only -->
+<div id="debuginfo"></div>
 
 <div ng-view></div>
 

@@ -31,8 +31,6 @@ horaceApp.service('NotificationService', function () {
 
     if (!Notification) {
         console.error('no notification support');
-    } else {
-        console.log('notifications supported');
     }
 
     var checkPermission = function () {

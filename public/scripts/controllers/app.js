@@ -58,9 +58,9 @@ horaceApp.config(function ($routeProvider) {
             controller: 'EditorCtrl',
             templateUrl: '/views/browse.html'
         })
-        .when('/submitter/', {
-            controller: 'SubmitterCtrl',
-            templateUrl: '/views/submitter.html'
+        .when('/catalog/', {
+            controller: 'CatalogCtrl',
+            templateUrl: '/views/catalog.html'
         })
         .otherwise({
             redirectTo: '/'
