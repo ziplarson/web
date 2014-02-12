@@ -84,13 +84,13 @@ app.configure(function () {
                     throw {type: 'fatal', msg: 'Routes not created: ' + err};
                 }
             });
+
+            require('./lib/routes/sockets.js').init(app, sessionSockets, httpServer); // Open socket.io communication
         }
     });
 });
 
 var port = config.rest.port || process.env.NODE_SERVER_PORT || 80;
-
-require('./lib/routes/sockets.js').init(app, sessionSockets, httpServer); // Open socket.io communication
 
 // Initialize the server and get it back
 var server = httpServer.listen(port);
