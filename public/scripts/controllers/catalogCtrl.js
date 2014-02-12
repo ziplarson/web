@@ -86,6 +86,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
                         $('#debuginfo').innerHTML = '<b>' + res + '</b>';
                     } else {
                         $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
+
                         $scope.catalog.error = true;
                     }
                 })
