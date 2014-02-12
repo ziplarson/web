@@ -50,17 +50,22 @@ var definitions = {
 
 var schema = {
 
-    /* The most general object */
-    Item: {
-        /* plist: A property list whose values are any kind of object */
-        plist: {},
-
-        /* parent: A refid to the parent Item or undefined if this is a root Item */
-        parent: undefined,
-
-        /* children: An ordered set of refids */
-        children: []
+    /* query: catalog search query fields */
+    query: {
+        general: '' /* general: text query on any catalog metadata and content */
     },
+
+//    /* The most general object TODO might or might not be wise (not in use)*/
+//    Item: {
+//        /* plist: A property list whose values are any kind of object */
+//        plist: {},
+//
+//        /* parent: A refid to the parent Item or undefined if this is a root Item */
+//        parent: undefined,
+//
+//        /* children: An ordered set of refids */
+//        children: []
+//    },
 
     CatalogOptions: {
 
@@ -90,50 +95,88 @@ var schema = {
     },
 
     /**
-     * Version: object contains version information for a catalog item.
+     * ContentVersion: object contains version information for a catalog item's content.
      * @param id    The version id. This is an arbitrary string, but it generally
      * is an integer.
-     * @param dateTime  The datetime when this version was created.
+     * @param dateTime  The datetime when this version was posted or published.
      * @constructor
      */
-    Version: function (id, dateTime) {
-        this.id = id;
-        this.dateTime = dateTime;
+    ContentVersion: function (id, number, dateTime) {
+        this.id = id || '1';
+        this.dateTime = dateTime || new Date().toISOString();
     },
 
     Person: function () {
-        this.foo = 1;
+        this.fullName = null;
+    },
+
+    Publisher: function () {
+        /* id: the publisher's internal id */
+        this.id = null;
+        /* name: the publisher's display name */
+        this.name = null;
+        /* city: city or town of publisher */
+        this.city = null;
+        /* country: displayable country of publisher */
+        this.country = null;
+        /* countryCode: ISO country code of publisher */
+        this.countryISO = null;
+
+    },
+
+    ContentDescription: function () {
+        /* notes: general notes in freehand */
+        this.notes = null;
+        /* print: if true, this was published in a print form (default: false) */
+        this.print = false;
+        /* images: the number of images in work (default: 0). An image can be an illustration, figure, chart, map, etc. */
+        this.images = 0;
+        /* maps: images that are maps (default: 0) */
+        this.maps = 0;
+        /* format: if print is true, this is the widthxheight of the book (default: null) */
+        this.format = null;
+        /* pages: if published in print form, the number of pages (default: null) */
+        this.pages = null;
+        /* words: number of words in work (default: null) */
+        this.words = null;
     },
 
     Catalog: function () {
 
-        /* id: This catalog item's system-specific unique id for this application (default: undefined) */
-        this.id = undefined;
+        /* id: This catalog item's system-specific unique id for this application (default: null) */
+        this.id = null;
 
         /* identifier: Corresponds to dcterms:identifier */
-        this.identifier = undefined;
+        this.identifier = null;
+
+        /* urn: http://www.homermultitext.org/hmt-doc/cite/cts-urn-overview.html
+         * registeredWorkIdentifier: textgroup, work, edition | translation, exemplar (each period-separated) */
+        this.urn = 'urn:cts:dfl:registeredWorkIdentifier[:passageReference[:subreference]]';
 
         /* identifierType: The type of identifier (oneof catalogIdentifierTypes) */
-        this.identifierType = undefined;
+        this.identifierType = null;
 
         /* title: The displayable title in various languages (defaults to an empty object).
          * DCMI: corresponds to dcterms:title.
          */
-        this.title = undefined;
+        this.title = {};
+
+        /* description: notes about this work */
+        this.description = new schema.ContentDescription();
 
         /* canonical: True if catalog's metadata (not including content field) is in canonical form. (default: false) */
         this.mdCanonical = false;
 
-        /* baseAuthors: The authors of the base edition (default: empty array) TODO should be a sequence of person ID references */
+        /* baseAuthors: The authors of the base edition (default: empty array) TODO should be a sequence of person ID references conjoined with a distinguished literal name */
         this.baseAuthors = [];
 
         /* authors: Authors of current edition (default: empty array) (authors who ammended the content--rathen than just annotating it) */
         this.authors = [];
 
-        /* baseEditors: The editors of the base edition (default: empty array) TODO should be a sequence of person ID references */
+        /* baseEditors: The editors of the base edition (default: empty array) TODO should be a sequence of person ID references conjoined with a distinguished literal name */
         this.baseEditors = [];
 
-        /* editors: Editors who annotated the content (default: empty array) */
+        /* editors: Editors who annotated or ammended the content (default: empty array) */
         this.editors = [];
 
         /* lang: Default language of text (fragments in a different lang must be explicitly marked as such) (default: English) */
@@ -142,20 +185,20 @@ var schema = {
         /* subjects: The subject areas covered by this catalog item (default: empty object) */
         this.subjects = {};         // TODO add keywords or just generate them from word frequency?
 
-        /* basePublisher: This should be an ID to a record with publisher's name, address, etc. (default: undefined) */
-        this.basePublisher = undefined;
+        /* basePublisher: An object with information about the publisher (default: default object) */
+        this.basePublisher = new schema.Publisher();
 
         /* baseEdition: The base edition number (default: 1) */
         this.baseEdition = '1';
 
-        /* versions: Starts with the first version -- ea. version is instance of Version prototype (default: empty array) */
-        this.versions = [];
+        /* versions: Instances of schema.ContentVersion. Starts with the first version -- (default: empty array) */
+        this.versions = [new schema.ContentVersion()];
 
-        /* baseVersions: Editions/versions closest to the base edition (default: empty object) */
-        this.baseVersions = {};
+        /* baseEditions: Editions/versions closest to the base edition (default: empty object) */
+        this.baseEditions = {};
 
-        /* similarVersions: Different editions or versions of the base edition (default: empty object) */
-        this.similarVersions = {};
+        /* similarEditions: Different editions or versions of the base edition (default: empty object) */
+        this.similarEditions = {};
 
         /* workType: The type of work -- see CatalogOptions.workType (default: 'Unknown') */
         this.workType = definitions.workType.Unknown;
@@ -164,7 +207,7 @@ var schema = {
         this.contentFormat = definitions.contentFormatRaw;
 
         /* content: Content in specified contentFormat and workType (default: undefined) */
-        this.content = undefined;
+        this.content = null;
     },
 
     /* Content Objects */

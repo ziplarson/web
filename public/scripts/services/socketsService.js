@@ -61,7 +61,6 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
      */
     txSocket.on('catalog/submit/metadata', function(tx) {
         var fback = jQuery('#debuginfo');
-        console.info('hello');
         if (fback) {
             if (tx.type === 'trans') {
                 fback.css('color', 'blue');

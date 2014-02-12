@@ -29,16 +29,9 @@
 "use strict";
 
 var express = require('express'),
-    namespace = require('express-namespace'),
-    http = require('http'),
     path = require('path'),
-    fs = require('fs'),
-//    format = require('util').format,
-    mongodb = require('mongodb'),
-    sessionStore = require('connect-mongodb'),
     sessionSockets,
     io = require('socket.io'),
-    hogan = require('hjs'),
 
     db = require('./lib/db'),
     routes = require('./lib/routes'),
@@ -47,12 +40,10 @@ var express = require('express'),
     appUtils = require('./lib/utilities/generalUtils.js'),
 
     app = express(),
-    httpServer = http.createServer(app),
+    httpServer = require('http').createServer(app),
     env = app.get('env'),
 
-    config = require('./config/server-config.js')(env),
-
-    catalogService = require('./lib/services/catalogService.js');
+    config = require('./config/server-config.js')(env);
 
 console.info('Environment: %s\nLocation: %s\nConfiguration:\n',
     env, __dirname, JSON.stringify(config, null, 2));
@@ -70,11 +61,6 @@ app.configure(function () {
     app.use(express.methodOverride());
 //    app.use(express.logger());
     app.set('config', config); // Our app's configuration object
-    app.set('express', express);
-    app.set('hogan', hogan);
-    app.set('mongodb', mongodb); // MongoDB database
-    app.set('sessionStore', sessionStore); // MongoDB-based session management
-    app.set('fs', fs); // Node file system
     app.set('db', db); // Our wrapper to the DB implementation
     app.set('routes', routes); // Router
     app.set('session', session); // Session management
@@ -85,10 +71,8 @@ app.configure(function () {
     app.use(express.favicon(__dirname + '/app/images/favicon.ico'));
     app.use(express.cookieParser()); // Initialize cookie management
     cookieParser = express.cookieParser(config.rest.session.secret);
-    console.info('Cookie parser: %s', cookieParser);
-    catalogService.use(app); // Initialize the catalog service
     sessionSockets = session.use(app, io, cookieParser, config.rest.session.key); // Initialize session management
-    app.use(app.router); // Initialize router
+    app.use(app.router); // Initialize REST routes
     var stat = express['static']; // Use this to prevent JLint error (static is a reserved word)
     app.use(stat(path.join(__dirname, 'public'))); // Configure our app's statics server
     db.use(app, function (err) { // First initialize our DB wrapper

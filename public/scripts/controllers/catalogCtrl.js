@@ -27,6 +27,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
 
     $scope.catalog = {
 
+        /* metadata: catalog metadata fields TODO must conform to schema.Catalog! */
         metadata: {
             notify: true,
             id: '',
@@ -43,42 +44,72 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             similarVersions: '{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'
         },
 
+        /* query: catalog search query fields TODO must conform to schema.query! */
+        query: {
+            general: null /* general: queries any metadata and content */
+        },
+
         /* goBrowse: Go browse TODO unfinished */
         goBrowse: function () {
             alert('goBrowse');
             document.location = 'index.html#/browse/';
         },
 
-
+        /* submitMetadata: creates or updates a catalog item's metadata using a form */
         submitMetadata: function () {
             var metadata = $scope.catalog.metadata;
             $http.post('/catalog/submit/metadata', metadata)
-                .success(function (res) {
-                    if (!res.error) {
+                .success(function (res, status, headers, config) {
+                    if (status === 200) {
                         $('#debuginfo').innerHTML = '<b>' + res + '</b>';
                     } else {
-                        $scope.catalog.errorMsg = 'No such user: Try again. (' + res.error + ')';
+                        $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
                         $scope.catalog.error = true;
                     }
                 })
-                .error(function (res) {
-                    $scope.catalog.errorMsg = 'Technical Problem: Please retry';
+                .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
+                    if (status !== 200) {
+                        $('#debuginfo').innerHTML = '<b>Error: HTTP STATUS ' + status + '</b>';
+                    }
+                    $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + err + ')';
                     $scope.catalog.error = true;
                 });
         },
 
-        /* saveMetadata: creates or updates a catalog item's metadata using a form */
-        saveMetadata: function () {
+        /* searchCatalog: searches catalog */
+        search: function() {
+            var query = $scope.catalog.query;
+            $http.post('/catalog/search/query', query)
+                .success(function (res, status, headers, config) {
+                    console.info('Status ' + status);
+                    if (status === 200) {
+                        $('#debuginfo').innerHTML = '<b>' + res + '</b>';
+                    } else {
+                        $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
+                        $scope.catalog.error = true;
+                    }
+                })
+                .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
+                    if (status !== 200) {
+                        $('#debuginfo').innerHTML = '<b>Error: HTTP STATUS ' + status + '</b>';
+                    }
+                    $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + err + ')';
+                    $scope.catalog.error = true;
+                });
+        },
+
+        /** submitContent: creates or overwrites content for a catalog item */ // TODO
+        submitContent: function () {
             var formData = new FormData($('form')[0]);
             $.ajax({
-                url: 'catalog/submit/metadata',
+                url: 'catalog/submit/content',
                 type: 'POST',
 
                 //Ajax events
                 success: function (x) {
                     console.log('Metadata received by server: ' + JSON.stringify(x));
                 },
-                error: function (err) {
+                error: function (err) { // TODO should be either 400 or 500 page
                     console.error('Metadata save error: ' + err);
                 },
                 // Form data
