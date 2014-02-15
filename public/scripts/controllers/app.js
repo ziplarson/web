@@ -29,6 +29,7 @@
 var horaceApp = angular.module('horaceApp', [
     'ngRoute',
     'angularFileUpload',
+//    'ui', /* angular ui */
     'ui.bootstrap'
 ]); /* End horaceApp module */
 

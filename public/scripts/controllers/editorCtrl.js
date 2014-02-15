@@ -25,6 +25,82 @@
 'use strict';
 
 
+var testAnnotation = {
+    name: 'Multi-hilite',
+    views: {
+        selection: [
+            {
+                note: {lang: 'en', text: 'Note the repetition: male/malae. <i>bellus</i> is a colloquial form of <i>bonus</i>. Catullus, like the <i>novi poetae</i>, is unafraid of diminutives and vernacular language. ' +
+                    '<br/>See: <a class="note" href="http://www.perseus.tufts.edu/hopper/morph?l=bellus&la=la" target="_blank">Perseus Latin Word Study Tool</a>'},
+                sids: [1, 2], // selector ids
+                method: 'sid', /* Find the text to hilite using the given sids */
+                css: {'class': 'D_HY'}
+            },
+            {
+                note: {lang: 'en', text: 'Note the repetition: bella/bellum. <i>bellus</i> is a colloquial form of <i>bonus</i>. Catullus, like the <i>novi poetae</i>, is unafraid of diminutives and vernacular language. ' +
+                    '<br/>See: <a class="note" href="http://www.perseus.tufts.edu/hopper/morph?l=bellus&la=la" target="_blank">Perseus Latin Word Study Tool</a>'},
+                sids: [3, 4], // selector ids
+                method: 'sid', /* Find the text to hilite using the given sids */
+                css: {'class': 'D_HR'}
+            }
+        ]
+    }, /* end views */
+    actions: {
+        hover: {
+            text: ''
+        }
+    }, /* end actions */
+    context: {
+        parent: 'body'
+    } /* end context */
+};
+
+var work =
+{ content:
+    "<D_P>" +
+        "        <D_V>" +
+        "        <D_L>Lugete, o Veneres Cupidinesque</D_L>" +
+        "        <D_L>et quantum est hominum venustiorum!</D_L>" +
+        "        <D_L>passer mortuus est meae puellae,</D_L>" +
+        "        <D_L>passer, deliciae meae puellae,</D_L>" +
+        "        <D_L>quem plus illa oculis suis amabat;</D_L>" +
+        "        <D_L>nam mellitus erat, suamque norat</D_L>" +
+        "        <D_L>ipsa tam bene quam puella matrem,</D_L>" +
+        "        <D_L>nec sese a gremio illius movebat,</D_L>" +
+        "        <D_L>sed circumsiliens modo huc modo illuc</D_L>" +
+        "        <D_L>ad solam dominam usque pipiabat.</D_L>" +
+        "        <D_L>qui nunc it per iter tenebricosum</D_L>" +
+        "       <D_L>illuc unde negant redire quemquam.</D_L>" +
+        "        <D_L>at vobis" +
+        "<d_ss sid='1'/>" +
+        "        male" +
+        "<d_se sid='1'/>" +
+        "        sit," +
+        "<d_ss sid='2'/>" +
+        "        malae" +
+        "<d_se sid='2'/>" +
+        "        tenebrae" +
+        "        </D_L>" +
+        "        <D_L>Orci, quae omnia" +
+        "<d_ss sid='3'/>" +
+        "        bella" +
+        "<d_se sid='3'/>" +
+        "        devoratis;" +
+        "</D_L>" +
+        "        <D_L>tam" +
+        "<d_ss sid='4'/>" +
+        "        bellum" +
+        "<d_se sid='4'/>" +
+        "        mihi passerem abstulistis." +
+        "</D_L>" +
+        "        <D_L>o factum male! o miselle passer!</D_L>" +
+        "        <D_L>tua nunc opera meae puellae</D_L>" +
+        "        <D_L>flendo turgiduli rubent ocelli.</D_L>" +
+        "</D_V>" +
+        "</D_P>",
+    type: definitions.workType.Poem
+};
+
 // Signin controls username and password model
 horaceApp.controller('EditorCtrl', function ($scope, EditorEngine, EditorSettings, UserPrefs) {
 

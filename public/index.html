@@ -47,30 +47,41 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
           content="Horace application from Design for Literature lets people learn, edit, and publish Latin classics and documents in general."/>
     <title id="title">Design for Literature: Horace</title>
 
+    <!-- Start system scripts --------------------------------------------------------- -->
     <!-- Enabling HTML5 support for Internet Explorer -->
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link rel='stylesheet' href='styles/style.css'/>
-    <link rel='stylesheet' href='styles/signin.css'/>
-    <link rel="stylesheet" href="styles/vendor/angularUI/bootstrap-3.0.2.css">
-    <!-- used by ui-bootstrap -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="scripts/vendor/jquery-1.11.0.js"></script>
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.js"></script>-->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload-shim.js"></script>
-    <script src="bower_components/ng-file-upload/angular-file-upload.js"></script>
-    <script src="scripts/vendor/socket.io.min.js"></script>
-    <script src="scripts/vendor/angularUI/ui-bootstrap-0.7.0.js"></script>
+    <script src="scripts/vendor/socket.io/socket.io.min.js"></script>
+    <script src="scripts/vendor/jquery/dist/jquery.min.js"></script>
+    <!--<script src="scripts/vendor/angular/angular.min.js"></script>-->
+    <!--<script src="scripts/vendor/angular-animate/angular-animate.min.js"></script>-->
+    <!--<script src="scripts/vendor/angular-route/angular-route.min.js"></script>-->
+    <script src="scripts/vendor/ng-file-upload/angular-file-upload-html5-shim.min.js"></script>
+    <script src="scripts/vendor/ng-file-upload/angular-file-upload.min.js"></script>
+    <!--<script src="scripts/vendor/angular-ui/build/angular-ui.min.js"></script>-->
+
+    <!--<script src="scripts/vendor/angular-ui/build/angular-ui-ieshiv.min.js"></script>-->
+    <!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>-->
     <!--<script src="bower_components/angular-route-segment/src/route-segment.js"></script>-->
     <!--<script src="bower_components/angular-route-segment/src/view-segment.js"></script>-->
+    <!-- End system scripts ----------------------------------------------------------- -->
+
+
+    <!-- Start system styles --------------------------------------------------------- -->
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">-->
+    <!--<link rel="stylesheet" href="styles/vendor/bootstrap/bootstrap.min.css">-->
+    <!--<link rel='stylesheet' href='scripts/vendor/angular-ui/build/angular-ui.min.css'/>-->
+    <!-- End system styles ----------------------------------------------------------- -->
 
     <!-- Start application scripts --------------------------------------------------- -->
-    <script src="scripts/controllers/app.js"></script> <!-- Horace app module defs -->
+    <script src="scripts/controllers/app.js"></script>
     <script src="scripts/app/schema.js"></script>
     <script src="scripts/services/configService.js"></script>
     <script src="scripts/services/notificationService.js"></script>
@@ -87,21 +98,16 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="scripts/controllers/catalogCtrl.js"></script>
     <!-- End application scripts ----------------------------------------------------- -->
 
-    <style>
-        /* Next line needed to make sure angularjs-bootstrap works correctly */
-        .nav, .pagination, .carousel a {
-            cursor: pointer;
-        }
-
-        /* Margins for app */
-        body {
-            margin-left: 5em;
-        }
-    </style>
+    <!-- Start application styles --------------------------------------------------- -->
+    <link rel='stylesheet' href='styles/app.css'/>
+    <link rel='stylesheet' href='styles/signin.css'/>
+    <!-- used by ui-bootstrap -->
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- End application styles ----------------------------------------------------- -->
 </head>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (Notification) {
             Notification.requestPermission(function (status) {
                 console.info('Notification Permission ' + status);
@@ -110,13 +116,13 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
                 }
             });
         }
-});
+    });
 
 </script>
 <body ng-app="horaceApp">
 
 <!-- Test -->
-<div id="pageview"></div>
+<!--<div id="pageview"></div>-->
 
 <!-- Feedback messages from transactions for debugging only -->
 <div id="debuginfo"></div>

@@ -32,8 +32,8 @@
 
 body {
     padding-top: 5px;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 5em;
+    padding-right: 5px;
 }
 
 a {
@@ -52,6 +52,11 @@ a.error {
     color: red;
 }
 
+/* Following to make angularjs-bootstrap-ui work correctly */
+.nav, .pagination, .carousel .panel-title a {
+    cursor: pointer;
+}
+
 .defaultDivStyle {
     text-align: center;
     vertical-align: middle;
@@ -65,7 +70,6 @@ div.headline {
 }
 
 .yellowBox {
-    width: 300px;
     margin: auto;
     line-height: 2em;
     padding: .5em;
@@ -90,6 +94,11 @@ div.headline {
     /*-webkit-border-radius: 20px;*/
     /*-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);*/
     /*-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);*/
+}
+.left-column, .right-column{
+    float:left;
+    padding:10px;
+    border:solid 1px black;
 }
 
 .newsAlert {

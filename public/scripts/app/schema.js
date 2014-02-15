@@ -82,7 +82,7 @@ var schema = {
         contentFormats: [definitions.contentFormatRaw, definitions.contentFormatCanonical],
 
         /* arrayFields: catalog fields whose value is an array */
-        arrayFields: ['baseAuthors', 'authors', 'baseEditors', 'editors'],
+        arrayFields: ['baseAuthorNames', 'authors', 'baseEditors', 'editors'],
 
         /* objectFields: catalog fields whose value is an object */
         objectFields: ['title', 'subjects', 'baseVersions', 'similarVersions'],
@@ -167,8 +167,8 @@ var schema = {
         /* canonical: True if catalog's metadata (not including content field) is in canonical form. (default: false) */
         this.mdCanonical = false;
 
-        /* baseAuthors: The authors of the base edition (default: empty array) TODO should be a sequence of person ID references conjoined with a distinguished literal name */
-        this.baseAuthors = [];
+        /* baseAuthorNames: The authors of the base edition (default: empty array)  */
+        this.baseAuthorNames = [];
 
         /* authors: Authors of current edition (default: empty array) (authors who ammended the content--rathen than just annotating it) */
         this.authors = [];

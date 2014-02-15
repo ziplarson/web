@@ -25,7 +25,44 @@
 
 horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) {
 
+    $scope.oneAtATime = true;
+
+    $scope.groups = [
+        {
+            title: "Dynamic Group Header - 1",
+            content: "Dynamic Group Body - 1"
+        },
+        {
+            title: "Dynamic Group Header - 2",
+            content: "Dynamic Group Body - 2"
+        }
+    ];
+
+    $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+
+    $scope.addItem = function() {
+        var newItemNo = $scope.items.length + 1;
+        $scope.items.push('Item ' + newItemNo);
+    };
+
     $scope.catalog = {
+
+//        groups: [
+//            {title: 'Create or Update Catalog Metadata', content: 'stuff for create'},
+//            {title: 'Search Catalog', content: 'stuff for search'}
+//        ],
+
+        metadataOptions: [
+            {name: 'Title', type: 'text'},
+            {name: 'Description', type: 'text'},
+            {name: 'Subject', type: 'text'},
+            {name: 'URN', type: 'text'},
+            {name: 'Work Type', options: ['BookOfPoems', 'BookOfProse', 'Poem', 'Verse', 'VerseLine']},
+            {name: 'Author', type: 'text'},
+            {name: 'Publisher', type: 'text'},
+            {name: 'Editor', type: 'text'},
+            {name: 'Edition', type: 'text'}
+        ],
 
         /* metadata: catalog metadata fields TODO must conform to schema.Catalog! */
         metadata: {
@@ -33,7 +70,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             id: '',
             title: '[{"en": "Poem 1"}]',
             workType: 'Poem',
-            baseAuthors: 'Catullus, Gaius Valerius',
+            baseAuthorNames: 'Catullus, Gaius Valerius',
             basePublisher: 'Harvard University Press',
             baseEdition: '1',
             baseEditors: 'Merrill, Elmer Truesdell',
