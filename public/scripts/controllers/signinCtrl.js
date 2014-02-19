@@ -25,7 +25,7 @@
 
 'use strict';
 
-// Signin controls username and password model
+// Signin controls username and password model IMPORTANT: must include SocketsService here to instantiate sockets service!
 horaceApp.controller('SigninCtrl', function ($scope, SocketsService, $http, $location) {
 
     $scope.signin = {

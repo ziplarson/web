@@ -116,6 +116,13 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
                 }
             });
         }
+       var foo = horaceApp.value();
+        if (foo.connectSockets) {
+
+            foo.connectSockets();
+        } else {
+            console.info("NO CONNECTSOCKETS");
+        }
     });
 
 </script>

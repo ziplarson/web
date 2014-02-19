@@ -86,11 +86,10 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             general: null /* general: queries any metadata and content */
         },
 
-        /* goBrowse: Go browse TODO unfinished */
-        goBrowse: function () {
-            alert('goBrowse');
-            document.location = 'index.html#/browse/';
-        },
+//        /* goBrowse: Go browse TODO unfinished */
+//        goBrowse: function () {
+//            document.location = 'index.html#/browse/';
+//        },
 
         /* submitMetadata: creates or updates a catalog item's metadata using a form */
         submitMetadata: function () {
@@ -108,7 +107,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
                     if (status !== 200) {
                         $('#debuginfo').innerHTML = '<b>Error: HTTP STATUS ' + status + '</b>';
                     }
-                    $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + err + ')';
+                    $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
                     $scope.catalog.error = true;
                 });
         },

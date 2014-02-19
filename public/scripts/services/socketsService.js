@@ -24,13 +24,23 @@
 
 'use strict';
 
+var txSocket;
+var noteSocket;
+
+horaceApp['connectSockets'] = function () {
+    txSocket = io.connect('/tx');
+    noteSocket = io.connect('/note');
+};
+
 /**
  * Creates sockets for use by interested client parties.
  */
 horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', function (ConfigService, NotificationService) {
 
+    horaceApp.connectSockets();
+
     // Transaction Socket -------------------------------------------------------------------------------------------
-    var txSocket = io.connect(ConfigService.txSocketPath);
+//    var txSocket = io.connect(ConfigService.txSocketPath);
     txSocket.on('connection', function (sock) {
         alert('txSocket: Connected');
         sock.on('connecting',function () {
@@ -77,7 +87,7 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
 
     // Note Socket --------------------------------------------------------------------------------------------------
     /** noteSocket Socket: socket used to communicate notifications from server */
-    var noteSocket = io.connect(ConfigService.notificationSocketPath);
+//    var noteSocket = io.connect(ConfigService.notificationSocketPath);
 
     /* noteTitle: key := the notification type, value := the title to use in the notification */
     var noteTitle = {trans: 'Technical Problem', error: 'Error', warn: 'Warning', ack: 'Note', note: 'Note'};
