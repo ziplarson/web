@@ -27,17 +27,15 @@
 var txSocket;
 var noteSocket;
 
-horaceApp['connectSockets'] = function () {
-    txSocket = io.connect('/tx');
-    noteSocket = io.connect('/note');
-};
-
 /**
  * Creates sockets for use by interested client parties.
  */
 horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', function (ConfigService, NotificationService) {
 
-    horaceApp.connectSockets();
+//    horaceApp.connectSockets();
+    var connectSockets = function () {
+        txSocket = io.connect('/tx');
+        noteSocket = io.connect('/note');
 
     // Transaction Socket -------------------------------------------------------------------------------------------
 //    var txSocket = io.connect(ConfigService.txSocketPath);
@@ -47,22 +45,22 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
             alert('txSocket: Connecting...');
         });
         sock.on('disconnect', function () {
-            console.log('txSocket: Disconnected');
+            console.info('txSocket: Disconnected');
         });
         sock.on('connect_failed',function () {
-            console.log('txSocket: Connect failed');
+            console.info('txSocket: Connect failed');
         });
         sock.on('reconnecting',function () {
-            console.log('txSocket: Reconnecting...');
+            console.info('txSocket: Reconnecting...');
         });
         sock.on('reconnect',function () {
-            console.log('txSocket: Reconnected');
+            console.info('txSocket: Reconnected');
         });
         sock.on('reconnect_failed',function () {
-            console.log('txSocket: Reconnect failed');
+            console.info('txSocket: Reconnect failed');
         });
         sock.on('error', function () {
-            console.log('txSocket: Some socket error');
+            console.info('txSocket: Some socket error');
         });
     });
 
@@ -119,27 +117,27 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     };
 
     noteSocket.on('connection', function (sock) {
-        console.log('noteSocket: Connected');
+        console.info('noteSocket: Connected');
         sock.on('connecting',function () {
-            console.log('noteSocket: Connecting...');
+            console.info('noteSocket: Connecting...');
         });
         sock.on('disconnect', function () {
-            console.log('noteSocket: Disconnected');
+            console.info('noteSocket: Disconnected');
         });
         sock.on('connect_failed',function () {
-            console.log('noteSocket: Connect failed');
+            console.info('noteSocket: Connect failed');
         });
         sock.on('reconnecting',function () {
-            console.log('noteSocket: Reconnecting...');
+            console.info('noteSocket: Reconnecting...');
         });
         sock.on('reconnect',function () {
-            console.log('noteSocket: Reconnected');
+            console.info('noteSocket: Reconnected');
         });
         sock.on('reconnect_failed',function () {
-            console.log('noteSocket: Reconnect failed');
+            console.info('noteSocket: Reconnect failed');
         });
         sock.on('error', function () {
-            console.log('noteSocket: Some socket error');
+            console.info('noteSocket: Some socket error');
         });
     });
 
@@ -153,15 +151,26 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
             var icon = noteSocket.getIcon(note.type);
             NotificationService.displayNotification(title, msg, icon, 0, undefined);
         } else {
-            console.log('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
+            console.info('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
         }
     });
 
+        return {
 
-    // Return the socket service
-    return {
         noteSocket: noteSocket,
         txSocket: txSocket
+        }
+
     };
+
+
+        return {
+            connectSockets: connectSockets
+        };
+    // Return the socket service
+//    return {
+//        noteSocket: noteSocket,
+//        txSocket: txSocket
+//    };
 
 }]);

@@ -91,6 +91,7 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="scripts/services/userPrefs.js"></script>
     <script src="scripts/directives/general.js"></script>
     <script src="scripts/directives/signupDirs.js"></script>
+    <script src="scripts/controllers/appCtrl.js"></script>
     <script src="scripts/controllers/signinCtrl.js"></script>
     <script src="scripts/controllers/signupCtrl.js"></script>
     <script src="scripts/controllers/editorCtrl.js"></script>
@@ -116,13 +117,14 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
                 }
             });
         }
-       var foo = horaceApp.value();
-        if (foo.connectSockets) {
-
-            foo.connectSockets();
-        } else {
-            console.info("NO CONNECTSOCKETS");
-        }
+//        console.info("ABOUT TO CALL CONNECTSOCKETS FROM INDEX.HTML");
+//       var foo = horaceApp.value();
+//        if (foo.connectSockets) {
+//            foo.connectSockets();
+//            console.info("RECONNECTED");
+//        } else {
+//            console.info("NO CONNECTSOCKETS");
+//        }
     });
 
 </script>
@@ -134,7 +136,9 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 <!-- Feedback messages from transactions for debugging only -->
 <div id="debuginfo"></div>
 
-<div ng-view></div>
+<div ng-controller="AppCtrl">
+    <div ng-view></div>
+</div>
 
 </body>
 </html>
