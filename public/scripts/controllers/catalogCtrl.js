@@ -30,32 +30,23 @@
 
 horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) {
 
-    $scope.oneAtATime = true;
-
-    $scope.groups = [
-        {
-            title: "Dynamic Group Header - 1",
-            content: "Dynamic Group Body - 1"
-        },
-        {
-            title: "Dynamic Group Header - 2",
-            content: "Dynamic Group Body - 2"
+    function copyObject(obj) {
+        var newObj = {};
+        var prop;
+        for (prop in obj) {
+            if (obj.hasOwnProperty(prop)) {
+                newObj[prop] = obj[prop];
+            }
         }
-    ];
-
-    $scope.items = ['Item 1', 'Item 2', 'Item 3'];
-
-    $scope.addItem = function() {
-        var newItemNo = $scope.items.length + 1;
-        $scope.items.push('Item ' + newItemNo);
-    };
+        return newObj;
+    }
 
     $scope.catalog = {
 
-//        groups: [
-//            {title: 'Create or Update Catalog Metadata', content: 'stuff for create'},
-//            {title: 'Search Catalog', content: 'stuff for search'}
-//        ],
+        closeOneAtATime: false,
+
+        createCatalogOpen: false,
+        searchCatalogOpen: false,
 
         metadataOptions: [
             {name: 'Title', type: 'text'},
@@ -69,22 +60,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             {name: 'Edition', type: 'text'}
         ],
 
-        /* metadata: catalog metadata fields TODO must conform to schema.Catalog! */
-        metadata: {
-            notify: true,
-            id: '',
-            title: '[{"en": "Poem 1"}]',
-            workType: 'Poem',
-            baseAuthorNames: 'Catullus, Gaius Valerius',
-            basePublisher: 'Harvard University Press',
-            baseEdition: '1',
-            baseEditors: 'Merrill, Elmer Truesdell',
-            lang: 'la',
-            subjects: '{"en": ["poetry"]}',
-            contentFormat:'raw',
-            baseVersions: '{"worldcat": "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}',
-            similarVersions: '{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'
-        },
+        metadata: copyObject(schema.ClientCatalog),
 
         /* query: catalog search query fields TODO must conform to schema.query! */
         query: {

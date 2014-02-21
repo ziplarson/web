@@ -142,6 +142,36 @@ var schema = {
     //       uses strings whereas the server side uses more complex, canonicalized objects
     //       partly obtained from the client and partly from the DB and other declarations.
 
+
+    /* ClientCatalog: catalog metadata fields for the client */
+    ClientCatalog: {
+        notify: true, // use notifications
+        id: '',
+        title: '',
+        workType: 'Poem',
+        baseAuthorNames: '',
+        basePublisher: '',
+        baseEdition: '',
+        baseEditors: '',
+        lang: '',
+        subjects: '',
+        contentFormat:'raw',
+        baseVersions: '',
+        similarVersions: ''
+//        title: 'Poem 1',
+//        workType: 'Poem',
+//        baseAuthorNames: 'Catullus, Gaius Valerius',
+//        basePublisher: 'Harvard University Press',
+//        baseEdition: '1',
+//        baseEditors: 'Merrill, Elmer Truesdell',
+//        lang: 'la',
+//        subjects: '{"en": ["poetry"]}',
+//        contentFormat:'raw',
+//        baseVersions: '{"worldcat": "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}',
+//        similarVersions: '{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'
+    },
+
+    /* Catalog: catalog metadata fields for the server */
     Catalog: function () {
 
         /* id: This catalog item's system-specific unique id for this application (default: null) */

@@ -51,12 +51,12 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </div>
 <div class="right-column" style="width: 88%">
 
-    <accordion close-others="oneAtATime">
+    <accordion close-others="catalog.closeOneAtATime">
 
-        <accordion-group heading="Create or Update Catalog Metadata">
+        <accordion-group is-open="catalog.createCatalogOpen" heading="Create Catalog">
             <div>
 
-                <div>Add
+                <div style="margin: 1em 1em 1em 1em;">Add
                     <select>
                         <option>Title</option>
                         <option>URN</option>
@@ -73,57 +73,44 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                 <form name="saveMetadataForm" novalidate>
                     <input ng-model='catalog.metadata.notify' type="hidden" name="notify" value="true"/>
-
-                    <div id="saveMetadataFields">
+                    <div>
                         <table>
-                            <tr><td>URN:</td><td><input ng-model='catalog.metadata.id' type="text" name="id" size="100" size="100"
-                                                       value=''/></td></tr>
-                            <tr><td>Title:</td><td><input ng-model='catalog.metadata.title' type="text" name="title" size="100"
-                                                          size="100"
-                                                          value='[{"en": "Poem 1"}]'/></td></tr>
-                            <tr><td>Author:</td><td><input ng-model='catalog.metadata.baseAuthorNames' type="text"
-                                                              name="baseAuthorNames"
-                                                              size="100"
-                                                              value="'Catullus, Gaius Valerius'"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.basePublisher' type="text"
-                                                                name="basePublisher"
-                                                                size="100"
-                                                                value='{"name": "Harvard University Press", city: "Cambridge", province: "MA", country: "USA"'/></td></tr>
-                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.baseEditors' type="text" name="baseEditors"
-                                                                   size="100"
-                                                                   value="Merrill, Elmer Truesdell"/></td></tr>
-                            <tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"
-                                                                value="la"/></td></tr>
-                            <tr><td>Subjects:</td><td><input ng-model='catalog.metadata.subjects' type="text" name="subjects"
-                                                             size="100"
-                                                             value='{"en": ["poetry"]}'/></td></tr>
-                            <tr><td>Format:</td><td><input ng-model='catalog.metadata.contentFormat' type="text" name="contentFormat"
-                                                             size="100"
-                                                             value="raw"/></td></tr>
-                            <tr><td>Editions:</td><td><input ng-model="catalog.metadata.baseEditions" type="text" name="editions" size="100" value='{"worldcat: "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/> </td></tr>
-                            <tr><td>Similar Editions:</td><td><input ng-model='catalog.metadata.similarEditions' type="text"
-                                                                  name="similarEditions"
-                                                                  size="100"
-                                                                  value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/></td></tr>
+                            <tr><td>URN:</td><td><input ng-model='catalog.metadata.id' type="text" name="id" size="100"/></td></tr>
+                            <tr><td>Title:</td><td><input ng-model='catalog.metadata.title' type="text" name="title" size="100"/></td></tr>
+                            <tr><td>Author:</td><td><input ng-model='catalog.metadata.baseAuthorNames' type="text" name="baseAuthorNames" size="100"/></td></tr>
+                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.basePublisher' type="text" name="basePublisher" size="100"/></td></tr>
+                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.baseEditors' type="text" name="baseEditors" size="100"/></td></tr>
+                            <tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"/></td></tr>
+                            <tr><td>Subjects:</td><td><input ng-model='catalog.metadata.subjects' type="text" name="subjects" size="100"/></td></tr>
+                            <tr><td>Format:</td><td><input ng-model='catalog.metadata.contentFormat' type="text" name="contentFormat" size="100"/></td></tr>
+                            <tr><td>Editions:</td><td><input ng-model="catalog.metadata.baseEditions" type="text" name="editions" size="100"/> </td></tr>
+                            <tr><td>Similar Editions:</td><td><input ng-model='catalog.metadata.similarEditions' type="text" name="similarEditions" size="100"/></td></tr>
                         </table>
                     </div>
                     <!-- end of fields -->
                     <div class="errorMsg" ng-show="catalog.error">{{catalog.errorMsg}}</div>
-                    <button style="margin-top: 1em" ng-click="catalog.submitMetadata()"
-                            ng-disabled="!saveMetadataForm.$valid">
-                        Submit
-                    </button>
+                    <div style="float: right">
+                        <!-- TODO replace submit with Save icon -->
+                        <a style="margin: 1em" ng-click="catalog.submitMetadata()"
+                           ng-disabled="!saveMetadataForm.$valid">
+                            Create
+                        </a>
+                    <span>
+                        <!-- TODO replace Search Similar with Search icon -->
+                        <a ng-click="catalog.searchCatalogOpen = true">Search Similar</a>
+                    </span>
+                    </div>
                 </form>
             </div>
         </accordion-group>
 
-        <accordion-group heading="Search Catalog">
+        <accordion-group style="margin-top: 1em" is-open="catalog.searchCatalogOpen" heading="Search Catalog">
             <div style="margin-top: 2em"/>
-            <form name="searchForm" novalidate>
+            <form name="searchForm" novalidate> <!-- TODO replace button with search icon -->
                 <div>Search: <input ng-model="catalog.query.general" name="general" type="text" size="100"/></div>
-                <button ng-click="catalog.search()" ng-disabled="!searchForm.$valid || catalog.query.general === ''">
-                    Search
-                </button>
+                <a style="float: right" ng-click="catalog.search()" ng-disabled="!searchForm.$valid || catalog.query.general === ''">
+                    Submit Search
+                </a>
             </form>
         </accordion-group>
     </accordion>
@@ -236,3 +223,34 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <!--});-->
     <!--</script>-->
 </div>
+
+
+<!--<tr><td>URN:</td><td><input ng-model='catalog.metadata.id' type="text" name="id" size="100" size="100"-->
+                            <!--value=''/></td></tr>-->
+<!--<tr><td>Title:</td><td><input ng-model='catalog.metadata.title' type="text" name="title" size="100"-->
+                              <!--size="100"-->
+                              <!--value='[{"en": "Poem 1"}]'/></td></tr>-->
+<!--<tr><td>Author:</td><td><input ng-model='catalog.metadata.baseAuthorNames' type="text"-->
+                               <!--name="baseAuthorNames"-->
+                               <!--size="100"-->
+                               <!--value="'Catullus, Gaius Valerius'"/></td></tr>-->
+<!--<tr><td>Publisher:</td><td><input ng-model='catalog.metadata.basePublisher' type="text"-->
+                                  <!--name="basePublisher"-->
+                                  <!--size="100"-->
+                                  <!--value='{"name": "Harvard University Press", city: "Cambridge", province: "MA", country: "USA"'/></td></tr>-->
+<!--<tr><td>Editor:</td><td><input ng-model='catalog.metadata.baseEditors' type="text" name="baseEditors"-->
+                               <!--size="100"-->
+                               <!--value="Merrill, Elmer Truesdell"/></td></tr>-->
+<!--<tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"-->
+                                 <!--value=""/></td></tr>-->
+<!--<tr><td>Subjects:</td><td><input ng-model='catalog.metadata.subjects' type="text" name="subjects"-->
+                                 <!--size="100"-->
+                                 <!--value='{"en": ["poetry"]}'/></td></tr>-->
+<!--<tr><td>Format:</td><td><input ng-model='catalog.metadata.contentFormat' type="text" name="contentFormat"-->
+                               <!--size="100"-->
+                               <!--value="raw"/></td></tr>-->
+<!--<tr><td>Editions:</td><td><input ng-model="catalog.metadata.baseEditions" type="text" name="editions" size="100" value='{"worldcat: "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/> </td></tr>-->
+<!--<tr><td>Similar Editions:</td><td><input ng-model='catalog.metadata.similarEditions' type="text"-->
+                                         <!--name="similarEditions"-->
+                                         <!--size="100"-->
+                                         <!--value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/></td></tr>-->
