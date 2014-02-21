@@ -32,26 +32,6 @@
 
 horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) {
 
-    /* ClientCatalog: catalog metadata fields for the client. Must keep this
-     * in synch with server-side schema.js */
-    var ClientCatalog = {
-        notify: true, // use notifications
-        id: '',
-        title: '',
-        lang: '',
-        workType: 'Poem',
-        authors: '',
-        editors: '',
-        edition: '',
-        publisherName: '',
-        publisherCity: '',
-        publisherProvince: '',
-        publisherCountryISO: '',
-        copyright: '',
-        subjects: '',
-        similarEditions: '',
-        contentFormat: 'raw' // TODO this is part of the content upload process--doesn't belong here
-    };
 
     function copyObject(obj) {
         var newObj = {};
@@ -83,7 +63,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             {name: 'Edition', type: 'text'}
         ],
 
-        metadata: copyObject(ClientCatalog),
+        metadata: copyObject(shared.ClientCatalog),
 
         /* query: catalog search query fields TODO must conform to server-side schema.query! */
         query: {
