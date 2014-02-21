@@ -27,7 +27,7 @@
 horaceApp.service('UserPrefs', function () {
     var prefs = {
         lang: { /* Language preferences */
-            // TODO languages should be drawn from schema.CatalogOptions or some bcp47.js file
+            // TODO languages should ultimately be drawn from bcp47
             read: ['en', 'fr'], /* Preferably, user reads English, then French */
             write: ['en']       /* By default, user writes in English */
         }

@@ -77,13 +77,17 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         <table>
                             <tr><td>URN:</td><td><input ng-model='catalog.metadata.id' type="text" name="id" size="100"/></td></tr>
                             <tr><td>Title:</td><td><input ng-model='catalog.metadata.title' type="text" name="title" size="100"/></td></tr>
-                            <tr><td>Author:</td><td><input ng-model='catalog.metadata.baseAuthorNames' type="text" name="baseAuthorNames" size="100"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.basePublisher' type="text" name="basePublisher" size="100"/></td></tr>
-                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.baseEditors' type="text" name="baseEditors" size="100"/></td></tr>
                             <tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"/></td></tr>
+                            <tr><td>URN:</td><td><input ng-model='catalog.metadata.workType' type="text" name="workType" size="100"/></td></tr>
+                            <tr><td>Author:</td><td><input ng-model='catalog.metadata.authors' type="text" name="authors" size="100"/></td></tr>
+                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.editors' type="text" name="editors" size="100"/></td></tr>
+                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.edition' type="text" name="edition" size="100"/></td></tr>
+                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherName' type="text" name="publisherName" size="100"/></td></tr>
+                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherCity' type="text" name="publisherCity" size="100"/></td></tr>
+                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherProvince' type="text" name="publisherProvince" size="100"/></td></tr>
+                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherCountryISO' type="text" name="publisherCountryISO" size="100"/></td></tr>
+                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.copyright' type="text" name="copyright" size="100"/></td></tr>
                             <tr><td>Subjects:</td><td><input ng-model='catalog.metadata.subjects' type="text" name="subjects" size="100"/></td></tr>
-                            <tr><td>Format:</td><td><input ng-model='catalog.metadata.contentFormat' type="text" name="contentFormat" size="100"/></td></tr>
-                            <tr><td>Editions:</td><td><input ng-model="catalog.metadata.baseEditions" type="text" name="editions" size="100"/> </td></tr>
                             <tr><td>Similar Editions:</td><td><input ng-model='catalog.metadata.similarEditions' type="text" name="similarEditions" size="100"/></td></tr>
                         </table>
                     </div>
@@ -234,11 +238,11 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                <!--name="baseAuthorNames"-->
                                <!--size="100"-->
                                <!--value="'Catullus, Gaius Valerius'"/></td></tr>-->
-<!--<tr><td>Publisher:</td><td><input ng-model='catalog.metadata.basePublisher' type="text"-->
-                                  <!--name="basePublisher"-->
+<!--<tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisher' type="text"-->
+                                  <!--name="publisher"-->
                                   <!--size="100"-->
                                   <!--value='{"name": "Harvard University Press", city: "Cambridge", province: "MA", country: "USA"'/></td></tr>-->
-<!--<tr><td>Editor:</td><td><input ng-model='catalog.metadata.baseEditors' type="text" name="baseEditors"-->
+<!--<tr><td>Editor:</td><td><input ng-model='catalog.metadata.editors' type="text" name="editors"-->
                                <!--size="100"-->
                                <!--value="Merrill, Elmer Truesdell"/></td></tr>-->
 <!--<tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"-->
