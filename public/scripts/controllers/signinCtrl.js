@@ -25,14 +25,11 @@
 
 'use strict';
 
-// Signin controls username and password model IMPORTANT: must include SocketsService here to instantiate sockets service!
-horaceApp.controller('SigninCtrl', function ($scope, SocketsService, $http, $location) {
+/**
+ * Controls user signin behavior
+ */
 
-//    console.info("CREATED SIGNINCTRL");
-//    var foo = SocketsService;
-//
-//    console.info("SigninCtrl CALLING connectSockets");
-//    var sockets = foo.connectSockets();
+horaceApp.controller('SigninCtrl', function ($scope, $http, $location) {
 
     $scope.signin = {
         menubars: {standard: 'views/menubarOffline.html'}

@@ -25,20 +25,16 @@
 
 'use strict';
 
+/**
+ * This is the client application's angular module.
+ * Angular configuration (esp. routes) is done here.
+ */
 
 var horaceApp = angular.module('horaceApp', [
     'ngRoute',
     'angularFileUpload',
-//    'ui', /* angular ui */
     'ui.bootstrap'
 ]); /* End horaceApp module */
-
-//horaceApp.config(function ($routeSegmentProvider, $routeProvider) {
-//
-//    $routeSegmentProvider
-//        .when('/', 'index')
-//        .segment('index', {templateUrl: 'views/main.html', controller: 'SignInCtrl'});
-//});
 
 horaceApp.config(function ($routeProvider) {
 
@@ -67,3 +63,12 @@ horaceApp.config(function ($routeProvider) {
             redirectTo: '/'
         });
 }); /* End horaceApp Route Config */
+
+
+// Keep for reference if I decide to later use the route segment provider.
+//horaceApp.config(function ($routeSegmentProvider, $routeProvider) {
+//
+//    $routeSegmentProvider
+//        .when('/', 'index')
+//        .segment('index', {templateUrl: 'views/main.html', controller: 'SignInCtrl'});
+//});

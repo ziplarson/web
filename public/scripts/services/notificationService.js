@@ -29,24 +29,41 @@ horaceApp.service('NotificationService', function () {
     var Notification = window.Notification || window.mozNotification || window.webkitNotification || window.msNotification,
         FileReader = window.FileReader || window.mozFileReader || window.webkitFileReader || window.msFileReader;
 
+    /* Is permission to use notifications granted? */
+    var granted = false;
+
     if (!Notification) {
-        console.error('no notification support');
+        alert('Sorry, but your browser settings do not support notifications.');
     }
 
-    var checkPermission = function () {
-        if (Notification.permission !== 'granted') {
-            console.log('Getting permission...');
-            Notification.requestPermission(function (status) {
-                console.log('Returned permission status');
-                if (status && status === "granted") {
-                    console.log('Permission granted!');
-                } else {
-                    console.log('Permission NOT granted!');
+    function setPermissionState (state, callback) {
+        granted = state;
+        if (callback) {
+            callback();
+        }
+        console.log('Notification permission ' + (granted ? 'granted' : 'not granted'));
+    }
 
-                }
-            });
+    /**
+     * Checks whether we are permitted to use the notification system.
+     * Sets var granted to true if permission is granted.
+     * Will display a notification by calling callback if it is provided.
+     */
+    var checkPermission = function (callback) {
+
+        if (Notification.permission === 'granted') {
+            setPermissionState(true, callback);
         } else {
-            console.log('checkPermission: ' + Notification.permission);
+            try {
+                Notification.requestPermission(function (status) {
+                    if (status && status === "granted") {
+                        setPermissionState(true, callback);
+                    }
+                });
+            } catch (reqErr) {
+                console.error(reqErr);
+                alert('Sorry, but your browser settings do not support notifications.');
+            }
         }
     };
 
@@ -54,38 +71,42 @@ horaceApp.service('NotificationService', function () {
     var displayNotification = function (title, message, icon, delay, onclick) {
         var instance;
 
-        checkPermission();
+        function doDisplay() {
+            if (title.length > 0) {
+                var attributes = {lang: 'en'};
 
-//    console.log('Current Notification Permission: ' + Notification.permission);
+                delay = Math.max(0, Math.min(60, delay));
 
-        if (title.length > 0) {
-            var attributes = {lang: 'en'};
+                if (message.length > 0) {
+                    attributes.body = message.substr(0, 250);
+                }
 
-            delay = Math.max(0, Math.min(60, delay));
+                if (icon !== undefined && icon.length > 0) {
+                    attributes.icon = icon;
+                }
 
-            if (message.length > 0) {
-                attributes.body = message.substr(0, 250);
-            }
+                if (delay > 0) {
+                    window.setTimeout(function () {
 
-            if (icon !== undefined && icon.length > 0) {
-                attributes.icon = icon;
-            }
-
-            if (delay > 0) {
-                window.setTimeout(function () {
-
+                        instance = new Notification(title.substr(0, 100), attributes);
+                        if (onclick !== undefined) {
+                            instance.onclick = onclick;
+                        }
+                    }, delay * 1000);
+                } else {
                     instance = new Notification(title.substr(0, 100), attributes);
+
                     if (onclick !== undefined) {
                         instance.onclick = onclick;
                     }
-                }, delay * 1000);
-            } else {
-                instance = new Notification(title.substr(0, 100), attributes);
-
-                if (onclick !== undefined) {
-                    instance.onclick = onclick;
                 }
             }
+        }
+
+        if (!granted) {
+            checkPermission(doDisplay);
+        } else {
+            doDisplay();
         }
     };
 

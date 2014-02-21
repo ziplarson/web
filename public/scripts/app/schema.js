@@ -24,6 +24,13 @@
 
 'use strict';
 
+/**
+ * The schema for some common objects used by the app.
+ * This file is shared by the nodejs server and the client.
+ *
+ */
+
+/** definitions: common constants */
 var definitions = {
 
     /* Supported bcp47 languages for CatalogOptions.lang */
@@ -48,24 +55,13 @@ var definitions = {
     contentFormatCanonical: 'canonical'
 };
 
+/** schema: some common schema objects */
 var schema = {
 
     /* query: catalog search query fields */
     query: {
         general: '' /* general: text query on any catalog metadata and content */
     },
-
-//    /* The most general object TODO might or might not be wise (not in use)*/
-//    Item: {
-//        /* plist: A property list whose values are any kind of object */
-//        plist: {},
-//
-//        /* parent: A refid to the parent Item or undefined if this is a root Item */
-//        parent: undefined,
-//
-//        /* children: An ordered set of refids */
-//        children: []
-//    },
 
     CatalogOptions: {
 
@@ -141,6 +137,11 @@ var schema = {
         this.words = null;
     },
 
+    // TODO: create a version of this object that is used by the client and another by the server
+    //       the declarations would be jointly maintained in this file. The client side
+    //       uses strings whereas the server side uses more complex, canonicalized objects
+    //       partly obtained from the client and partly from the DB and other declarations.
+
     Catalog: function () {
 
         /* id: This catalog item's system-specific unique id for this application (default: null) */
@@ -173,7 +174,7 @@ var schema = {
         /* authors: Authors of current edition (default: empty array) (authors who ammended the content--rathen than just annotating it) */
         this.authors = [];
 
-        /* baseEditors: The editors of the base edition (default: empty array) TODO should be a sequence of person ID references conjoined with a distinguished literal name */
+        /* baseEditors: The editors of the base edition (default: empty array) */
         this.baseEditors = [];
 
         /* editors: Editors who annotated or ammended the content (default: empty array) */
@@ -183,7 +184,7 @@ var schema = {
         this.lang = definitions.lang.en;
 
         /* subjects: The subject areas covered by this catalog item (default: empty object) */
-        this.subjects = {};         // TODO add keywords or just generate them from word frequency?
+        this.subjects = {};         // TODO have canonical keywords or just generate them from word frequency?
 
         /* basePublisher: An object with information about the publisher (default: default object) */
         this.basePublisher = new schema.Publisher();

@@ -22,15 +22,18 @@
 
 // CLIENT SIDE --------------------------------------------------------------------------------------------
 
+/**
+ * This is the toplevel controller for the client.
+ * All global-like behavior should be encapsulated here.
+ */
+
 'use strict';
 
 horaceApp.controller('AppCtrl', function ($scope, SocketsService) {
 
-    console.info("CREATED AppCtrl");
-    var foo = SocketsService;
-
-    console.info("AppCtrl CALLING connectSockets");
-    var sockets = foo.connectSockets();
+    // Connect websockets when client is (re-)loaded
+    var service = SocketsService;
+    service.connectSockets();
 
 });
 /* End AppCtrl */

@@ -53,16 +53,19 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular-route.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="scripts/vendor/bootstrap/css/bootstrap.css"/>
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular.js"></script>-->
+    <script src="scripts/vendor/angular/angular.js"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.js"></script>-->
+    <script src="scripts/vendor/angular-route/angular-route.js"></script>
+    <script src="scripts/vendor/angular-ui/angular-ui.js"></script>
+    <!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>-->
+    <script src="scripts/vendor/angular-ui/ui-bootstrap.js"></script>
 
     <script src="scripts/vendor/socket.io/socket.io.min.js"></script>
-    <script src="scripts/vendor/jquery/dist/jquery.min.js"></script>
-    <!--<script src="scripts/vendor/angular/angular.min.js"></script>-->
-    <!--<script src="scripts/vendor/angular-animate/angular-animate.min.js"></script>-->
-    <!--<script src="scripts/vendor/angular-route/angular-route.min.js"></script>-->
+    <script src="scripts/vendor/jquery/jquery.min.js"></script>
     <script src="scripts/vendor/ng-file-upload/angular-file-upload-html5-shim.min.js"></script>
     <script src="scripts/vendor/ng-file-upload/angular-file-upload.min.js"></script>
     <!--<script src="scripts/vendor/angular-ui/build/angular-ui.min.js"></script>-->
@@ -81,7 +84,7 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <!-- End system styles ----------------------------------------------------------- -->
 
     <!-- Start application scripts --------------------------------------------------- -->
-    <script src="scripts/controllers/app.js"></script>
+    <script src="scripts/app/appModule.js"></script>
     <script src="scripts/app/schema.js"></script>
     <script src="scripts/services/configService.js"></script>
     <script src="scripts/services/notificationService.js"></script>
