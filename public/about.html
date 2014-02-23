@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!--
  The MIT License (MIT)
 
@@ -20,23 +21,14 @@
  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-
-<div ng-include="signin.menubar"></div>
-<div> Select a tab by setting active binding to true:</div>
-<div style="text-align: left">
-    <!--<button class="btn btn-small" ng-click="tabs[0].active = true">Select Tab 1</button>-->
-    <!--<button class="btn btn-small" ng-click="tabs[1].active = true">Select Tab 2</button>-->
-    <!--<button class="btn btn-small" ng-click="tabs[1].disabled = !tabs[1].disabled">Enable / Disable Tab 2</button>-->
-    <tabset>
-        <!--<tab heading="Static title" ng-include="signin.test"></tab>-->
-        <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
-            {{tab.content}}
-        </tab>
-        <tab select="alertMe()">
-            <tab-heading>
-                <b class="icon-bell">Alert Tab</b>
-            </tab-heading>
-            I've got an HTML heading, and a select callback. Pretty cool!
-        </tab>
-    </tabset>
+<html>
+<head>
+    <link rel='stylesheet' href='/styles/app.css'/>
+    <title>About Horace</title>
+</head>
+<body>
+<div class="defaultDivStyle">
+    <h1>About Horace</h1>
 </div>
+</body>
+</html>
