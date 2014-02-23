@@ -60,11 +60,11 @@ app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 //    app.use(express.logger());
+    app.set('dirname', __dirname); // Root directory name
     app.set('config', config); // Our app's configuration object
     app.set('db', db); // Our wrapper to the DB implementation
-    app.set('routes', routes); // Router
-    app.set('session', session); // Session management
-    app.set('dirname', __dirname); // Root directory name
+    app.set('routes', routes); // Our router
+    app.set('session', session); // Our session management
     app.set('appUtils', appUtils); // Our app's utilities
     app.set('views', path.join(__dirname, 'lib/views'));  // Our app's views
     app.set('view engine', 'hjs'); // The HJS engine
@@ -73,8 +73,7 @@ app.configure(function () {
     cookieParser = express.cookieParser(config.rest.session.secret);
     sessionSockets = session.use(app, io, cookieParser, config.rest.session.key); // Initialize session management
     app.use(app.router); // Initialize REST routes
-    var stat = express['static']; // Use this to prevent JLint error (static is a reserved word)
-    app.use(stat(path.join(__dirname, 'public'))); // Configure our app's statics server
+    app.use(express['static'](path.join(__dirname, 'public'))); // Configure our app's static page server
     db.use(app, function (err) { // First initialize our DB wrapper
         if (err) {
             throw {type: 'fatal', msg: 'DB not created: ' + err};
@@ -84,15 +83,14 @@ app.configure(function () {
                     throw {type: 'fatal', msg: 'Routes not created: ' + err};
                 }
             });
-
-            require('./lib/routes/sockets.js').init(app, sessionSockets, httpServer); // Open socket.io communication
+            require('./lib/routes/sockets.js').init(app, sessionSockets, httpServer); // Open websocket communications
         }
     });
 });
 
 var port = config.rest.port || process.env.NODE_SERVER_PORT || 80;
 
-// Initialize the server and get it back
-var server = httpServer.listen(port);
+// Start the server
+httpServer.listen(port);
 console.info('HTTP server listening on port %d, environment=%s', port, env);
 

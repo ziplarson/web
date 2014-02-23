@@ -31,17 +31,18 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         <accordion-group is-open="catalog.createCatalogOpen" heading="Create/Update Catalog">
             <div class="yellowBox">
                 <form name="saveMetadataForm" novalidate>
-                    <input ng-model='catalog.metadata.notify' type="hidden" name="notify" value="true"/>
 
                     <div>Work Type: <select ng-change="catalog.workTypeSelected()"
                                             ng-model="catalog.metadata.workType"
-                                            ng-options="value[0] as value[1] for value in catalog.catalogFieldSpecs.workType.options"></select>
+                                            ng-options="value[0] as value[1] for value in catalog.workTypeOptions"></select>
                     </div>
+
+                    <input type="hidden" name="notify" value="true"/>
 
                     <!-- Start catalog fields -->
                     <div id="catalogFields" style="display: none">
                         <table style="table-layout:fixed">
-                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.metadata.workType]">
+                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.metadata.workType]" ng-if="(item.id !== 'workType')">
                                 <td>{{item.name}}:<span ng-if="item.required"
                                                         style="font-weight: bold;color:red">*</span>
                                 </td>

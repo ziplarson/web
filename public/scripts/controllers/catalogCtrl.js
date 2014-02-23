@@ -41,11 +41,11 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
         searchCatalogOpen: true,
 
 //        catalogFieldInfo: client.catalogFieldInfo,
-        workTypeCatalogFieldInfo: client.workTypeCatalogFieldInfo,
+        workTypeCatalogFieldInfo: client.shared.workTypeCatalogFieldInfo,
 
-        catalogFieldSpecs: client.catalogFieldSpecs,
+        workTypeOptions: client.workTypeOptions,
 
-        metadata: new client.shared.ClientCatalog(), // TODO  clear after submit?
+        metadata: undefined,
 
         /**
          * workTypeSelected: Called when a new work type is selected.
@@ -53,6 +53,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
          */
         workTypeSelected: function() {
 //            alert('worktype selected = ' + $scope.catalog.metadata.workType);
+            $scope.catalog.resetCatalogMetadata();
             $('#catalogFields').css('display', 'inline');
         },
 
@@ -61,7 +62,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
          */
         resetCatalogMetadata: function() {
             var wt = $scope.catalog.metadata.workType;
-            $scope.catalog.metadata = new client.shared.ClientCatalog();
+            $scope.catalog.metadata = new client.shared.makeClientCatalog(wt);
             $scope.catalog.metadata.workType = wt;
         },
 
