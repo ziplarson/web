@@ -39,8 +39,12 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
         openOneAtATime: true,
         createCatalogOpen: true,
         searchCatalogOpen: true,
-        catalogFieldInfo: client.catalogFieldInfo,
+
+//        catalogFieldInfo: client.catalogFieldInfo,
+        workTypeCatalogFieldInfo: client.workTypeCatalogFieldInfo,
+
         catalogFieldSpecs: client.catalogFieldSpecs,
+
         metadata: new client.shared.ClientCatalog(), // TODO  clear after submit?
 
         /**
@@ -56,7 +60,9 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
          * resetCatalogMetadata: Clears the catalog metadata (and its corresponding fields)
          */
         resetCatalogMetadata: function() {
+            var wt = $scope.catalog.metadata.workType;
             $scope.catalog.metadata = new client.shared.ClientCatalog();
+            $scope.catalog.metadata.workType = wt;
         },
 
         /* query: catalog search query fields TODO must conform to server-side schema.query! */

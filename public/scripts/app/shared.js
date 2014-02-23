@@ -41,6 +41,21 @@ langs.codes = function () {
     return codes;
 };
 
+var workTypes = [
+    ['WebSite', 'Web Site'],
+    ['WebPage', 'Web Page'],
+    ['BookPoems', 'Book of Poems'],
+    ['Poem', 'Poem'],
+    ['BookNovel', 'Novel (Book)'],
+    ['BookNonFiction', 'Non-Fiction (Book)'],
+    ['BookShortStories', 'Short Stories (Book)'],
+    ['ShortStory', 'Short Story'],
+    ['JournalArticle', 'Article (Journal)'],
+    ['MagazineArticle', 'Article (Magazine)'],
+    ['Unknown', 'Other (Unknown Corpus)']
+];
+workTypes.codes = langs.codes;
+
 /**
  * catalogFieldSpecs: Presentation specs for each catalog field
  * id := the id of the field
@@ -53,20 +68,7 @@ var catalogFieldSpecs = {
     id: {id: 'id', name: 'Identifier', type: 'input'},
     title: {id: 'title', required: true, name: 'Title', type: 'text'},
     lang: {id: 'lang', required: true, name: 'Language', type: 'select', options: langs},
-    workType: {id: 'workType', required: true, name: 'Work Type', type: 'select', options: [
-        ['undefined', '---------------'],
-        ['WebSite', 'Web Site'],
-        ['WebPage', 'Web Page'],
-        ['BookPoems', 'Book of Poems'],
-        ['Poem', 'Poem'],
-        ['BookNovel', 'Novel (Book)'],
-        ['BookNonFiction', 'Non-Fiction (Book)'],
-        ['BookShortStories', 'Short Stories (Book)'],
-        ['ShortStory', 'Short Story'],
-        ['JournalArticle', 'Article (Journal)'],
-        ['MagazineArticle', 'Article (Magazine)'],
-        ['Unknown', 'Other (Unknown Corpus)']
-    ]},
+    workType: {id: 'workType', required: true, name: 'Work Type', type: 'select', options: workTypes},
     authors: {id: 'authors', name: 'Author(s)', type: 'text'},
     editors: {id: 'editors', name: 'Editor(s)', type: 'text'},
     edition: {id: 'edition', name: 'Edition', type: 'input'}, // TODO a number wheel?
@@ -75,9 +77,10 @@ var catalogFieldSpecs = {
     publisherProvince: {id: 'publisherProvince', name: 'Publisher Province', type: 'input'},
     publisherCountryISO: {id: 'publisherCountryISO', name: 'Publisher Country', type: 'input'},
     copyright: {id: 'copyright', name: 'Copyright', type: 'text'},
-    subjects: {id: 'subjects', name: 'Subject(s)', type: 'text'} // TODO some kind of keyword widget?
+    subjects: {id: 'subjects', name: 'Subject(s)', type: 'text'}, // TODO some kind of keyword widget?
+    pageUrl: {id: 'pageUrl', name: 'Page URL', type: 'input'},
+    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://'} // TODO add placeholders for text/input fields
 };
-catalogFieldSpecs.workType.options.codes = langs.codes;
 
 /** definitions: common constants */
 var definitions = {
@@ -88,7 +91,7 @@ var definitions = {
     /* Supported bcp47 language codes */
     lang: langs.codes(langs),
 
-    workType: catalogFieldSpecs.workType.options.codes(),
+    workType: workTypes.codes(),
 
     /* The content formats for CatalogOptions.contentFormat */
     contentFormatRaw: 'raw',
@@ -115,7 +118,7 @@ var client = {
             this.id = undefined;
             this.title = undefined;
             this.lang = undefined;
-            this.workType = '---------------'; // TODO make blank
+            this.workType = undefined; // TODO make blank
             this.authors = undefined;
             this.editors = undefined;
             this.edition = undefined;
@@ -130,23 +133,137 @@ var client = {
         }
     },
 
-    catalogFieldSpecs: catalogFieldSpecs,
+    catalogFieldSpecs: catalogFieldSpecs, // TODO really needed?
 
-    /* catalogFieldInfo: Catalog field specs in presentation order.  */
-    catalogFieldInfo: [
-        catalogFieldSpecs.id,
-        catalogFieldSpecs.title ,
-        catalogFieldSpecs.lang ,
-        catalogFieldSpecs.authors ,
-        catalogFieldSpecs.editors ,
-        catalogFieldSpecs.edition ,
-        catalogFieldSpecs.publisherName ,
-        catalogFieldSpecs.publisherCity ,
-        catalogFieldSpecs.publisherProvince ,
-        catalogFieldSpecs.publisherCountryISO ,
-        catalogFieldSpecs.copyright ,
-        catalogFieldSpecs.subjects
-    ]
+    workTypeCatalogFieldInfo: {
+        BookPoems: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects
+        ],
+        WebSite: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.websiteUrl ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects
+        ],
+        WebPage: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects
+        ],
+        Poem: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects],
+        BookNovel: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects],
+        BookNonFiction: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects],
+        BookShortStories: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects],
+        ShortStory: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects],
+        JournalArticle: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects],
+        Unknown: [
+            catalogFieldSpecs.id,
+            catalogFieldSpecs.title ,
+            catalogFieldSpecs.lang ,
+            catalogFieldSpecs.authors ,
+            catalogFieldSpecs.editors ,
+            catalogFieldSpecs.edition ,
+            catalogFieldSpecs.publisherName ,
+            catalogFieldSpecs.publisherCity ,
+            catalogFieldSpecs.publisherProvince ,
+            catalogFieldSpecs.publisherCountryISO ,
+            catalogFieldSpecs.copyright ,
+            catalogFieldSpecs.subjects]
+    }
 };
 
 if ('undefined' === typeof horaceApp) {

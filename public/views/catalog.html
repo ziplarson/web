@@ -28,20 +28,20 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     <accordion close-others="catalog.openOneAtATime">
 
-        <accordion-group class="yellowBox" is-open="catalog.createCatalogOpen" heading="Create/Update Catalog">
-            <div>
+        <accordion-group is-open="catalog.createCatalogOpen" heading="Create/Update Catalog">
+            <div class="yellowBox">
                 <form name="saveMetadataForm" novalidate>
                     <input ng-model='catalog.metadata.notify' type="hidden" name="notify" value="true"/>
 
                     <div>Work Type: <select ng-change="catalog.workTypeSelected()"
-                                                   ng-model="catalog.metadata.workType"
-                                                   ng-options="value[0] as value[1] for value in catalog.catalogFieldSpecs.workType.options"></select>
+                                            ng-model="catalog.metadata.workType"
+                                            ng-options="value[0] as value[1] for value in catalog.catalogFieldSpecs.workType.options"></select>
                     </div>
 
                     <!-- Start catalog fields -->
                     <div id="catalogFields" style="display: none">
                         <table style="table-layout:fixed">
-                            <tr ng-repeat="item in catalog.catalogFieldInfo">
+                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.metadata.workType]">
                                 <td>{{item.name}}:<span ng-if="item.required"
                                                         style="font-weight: bold;color:red">*</span>
                                 </td>
@@ -49,7 +49,7 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                     <textarea ng-if="item.type === 'text'" ng-model="catalog.metadata[item.id]"
                                               style="width: 250px;height: 2em"></textarea>
                                     <input ng-if="item.type === 'input'" ng-model="catalog.metadata[item.id]"
-                                              style="width: 250px;height: 2em"/>
+                                           style="width: 250px;height: 2em"/>
                                     <select ng-if="item.type === 'select'" ng-model="catalog.metadata[item.id]"
                                             ng-options="value[0] as value[1] for value in item.options"></select>
                                 </td>
