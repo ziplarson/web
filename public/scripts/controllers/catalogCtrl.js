@@ -24,6 +24,7 @@
 
 'use strict';
 
+// TODO error handling
 
 
 /**
@@ -32,38 +33,31 @@
 
 horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) {
 
-
-    function copyObject(obj) {
-        var newObj = {};
-        var prop;
-        for (prop in obj) {
-            if (obj.hasOwnProperty(prop)) {
-                newObj[prop] = obj[prop];
-            }
-        }
-        return newObj;
-    }
-
     $scope.catalog = {
 
-        closeOneAtATime: false,
+        // Accordion flags
+        openOneAtATime: true,
+        createCatalogOpen: true,
+        searchCatalogOpen: true,
+        catalogFieldInfo: client.catalogFieldInfo,
+        catalogFieldSpecs: client.catalogFieldSpecs,
+        metadata: new client.shared.ClientCatalog(), // TODO  clear after submit?
 
-        createCatalogOpen: false,
-        searchCatalogOpen: false,
+        /**
+         * workTypeSelected: Called when a new work type is selected.
+         * This method displays the catalog fields for the selected type of work.
+         */
+        workTypeSelected: function() {
+//            alert('worktype selected = ' + $scope.catalog.metadata.workType);
+            $('#catalogFields').css('display', 'inline');
+        },
 
-        metadataOptions: [
-            {name: 'Title', type: 'text'},
-            {name: 'Description', type: 'text'},
-            {name: 'Subject', type: 'text'},
-            {name: 'URN', type: 'text'},
-            {name: 'Work Type', options: ['BookOfPoems', 'BookOfProse', 'Poem', 'Verse', 'VerseLine']},
-            {name: 'Author', type: 'text'},
-            {name: 'Publisher', type: 'text'},
-            {name: 'Editor', type: 'text'},
-            {name: 'Edition', type: 'text'}
-        ],
-
-        metadata: copyObject(shared.ClientCatalog),
+        /**
+         * resetCatalogMetadata: Clears the catalog metadata (and its corresponding fields)
+         */
+        resetCatalogMetadata: function() {
+            $scope.catalog.metadata = new client.shared.ClientCatalog();
+        },
 
         /* query: catalog search query fields TODO must conform to server-side schema.query! */
         query: {
@@ -81,7 +75,10 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             $http.post('/catalog/submit/metadata', metadata)
                 .success(function (res, status, headers, config) {
                     if (status === 200) {
-                        $('#debuginfo').innerHTML = '<b>' + res + '</b>';
+                        var dbg = $('#httpDebug');
+                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
+                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(res) + '</b>';
+                        }
                     } else {
                         $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
                         $scope.catalog.error = true;
@@ -89,7 +86,10 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
                 })
                 .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
                     if (status !== 200) {
-                        $('#debuginfo').innerHTML = '<b>Error: HTTP STATUS ' + status + '</b>';
+                        var dbg = $('#httpDebug');
+                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
+                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(err) + '</b>';
+                        }
                     }
                     $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
                     $scope.catalog.error = true;
@@ -103,7 +103,10 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
                 .success(function (res, status, headers, config) {
                     console.info('Status ' + status);
                     if (status === 200) {
-                        $('#debuginfo').innerHTML = '<b>' + res + '</b>';
+                        var dbg = $('#httpDebug');
+                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
+                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(res) + '</b>';
+                        }
                     } else {
                         $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
 
@@ -112,7 +115,10 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
                 })
                 .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
                     if (status !== 200) {
-                        $('#debuginfo').innerHTML = '<b>Error: HTTP STATUS ' + status + '</b>';
+                        var dbg = $('#httpDebug');
+                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
+                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(err) + '</b>';
+                        }
                     }
                     $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + err + ')';
                     $scope.catalog.error = true;
@@ -144,6 +150,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
         }
     };
 
+
 });
 /* End of CatalogCtrl */
 
@@ -153,7 +160,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
 //        progress: [],
 //        response: 'Ready To Submit',
 //        immediate: true, /* Upload immediately after selecting the file */
-//        model: {type: 'BookOfPoems'},
+//        model: {type: 'BookPoems'},
 //        setPreview: function (fileReader, index) {
 //            fileReader.onload = $scope.onload;
 //        }

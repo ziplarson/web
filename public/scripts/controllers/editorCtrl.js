@@ -98,7 +98,7 @@ var work =
         "        <D_L>flendo turgiduli rubent ocelli.</D_L>" +
         "</D_V>" +
         "</D_P>",
-    type: definitions.workType.Poem
+    type: 'Poem'
 };
 
 // Signin controls username and password model

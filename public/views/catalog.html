@@ -20,80 +20,47 @@ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRA
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
-<!--<label class="checkbox">-->
-<!--<input type="checkbox" ng-model="oneAtATime">-->
-<!--Open only one at a time-->
-<!--</label>-->
-
-<!--<accordion close-others="oneAtATime">-->
-<!--<accordion-group heading="Static Header, initially expanded" is-open="true">-->
-<!--This content is straight in the template.-->
-<!--</accordion-group>-->
-<!--<accordion-group heading="{{group.title}}" ng-repeat="group in groups">-->
-<!--{{group.content}}-->
-<!--</accordion-group>-->
-<!--<accordion-group heading="Dynamic Body Content">-->
-<!--<p>The body of the accordion group grows to fit the contents</p>-->
-<!--<button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>-->
-<!--<div ng-repeat="item in items">{{item}}</div>-->
-<!--</accordion-group>-->
-<!--<accordion-group is-open="isopen">-->
-<!--<accordion-heading>-->
-<!--I can have markup, too! <i class="pull-right glyphicon"-->
-<!--ng-class="{'glyphicon-chevron-down': isopen, 'glyphicon-chevron-right': !isopen}"></i>-->
-<!--</accordion-heading>-->
-<!--This is just some content to illustrate fancy headings.-->
-<!--</accordion-group>-->
-<!--</accordion>-->
 
 <div class="left-column" style="width: 12%">
     <a onclick="document.location = 'index.html#/browse/';">Go Browse</a>
 </div>
 <div class="right-column" style="width: 88%">
 
-    <accordion close-others="catalog.closeOneAtATime">
+    <accordion close-others="catalog.openOneAtATime">
 
-        <accordion-group is-open="catalog.createCatalogOpen" heading="Create Catalog">
+        <accordion-group class="yellowBox" is-open="catalog.createCatalogOpen" heading="Create/Update Catalog">
             <div>
-
-                <div style="margin: 1em 1em 1em 1em;">Add
-                    <select>
-                        <option>Title</option>
-                        <option>URN</option>
-                        <option>Work Type</option>
-                        <option>Author</option>
-                        <option>Publisher</option>
-                        <option>Editor</option>
-                        <option>Edition</option>
-                        <option>Similar Edition</option>
-                        <option>Language</option>
-                        <option>Subject</option>
-                    </select>
-                </div>
-
                 <form name="saveMetadataForm" novalidate>
                     <input ng-model='catalog.metadata.notify' type="hidden" name="notify" value="true"/>
-                    <div>
-                        <table>
-                            <tr><td>URN:</td><td><input ng-model='catalog.metadata.id' type="text" name="id" size="100"/></td></tr>
-                            <tr><td>Title:</td><td><input ng-model='catalog.metadata.title' type="text" name="title" size="100"/></td></tr>
-                            <tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"/></td></tr>
-                            <tr><td>URN:</td><td><input ng-model='catalog.metadata.workType' type="text" name="workType" size="100"/></td></tr>
-                            <tr><td>Author:</td><td><input ng-model='catalog.metadata.authors' type="text" name="authors" size="100"/></td></tr>
-                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.editors' type="text" name="editors" size="100"/></td></tr>
-                            <tr><td>Editor:</td><td><input ng-model='catalog.metadata.edition' type="text" name="edition" size="100"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherName' type="text" name="publisherName" size="100"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherCity' type="text" name="publisherCity" size="100"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherProvince' type="text" name="publisherProvince" size="100"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisherCountryISO' type="text" name="publisherCountryISO" size="100"/></td></tr>
-                            <tr><td>Publisher:</td><td><input ng-model='catalog.metadata.copyright' type="text" name="copyright" size="100"/></td></tr>
-                            <tr><td>Subjects:</td><td><input ng-model='catalog.metadata.subjects' type="text" name="subjects" size="100"/></td></tr>
-                            <tr><td>Similar Editions:</td><td><input ng-model='catalog.metadata.similarEditions' type="text" name="similarEditions" size="100"/></td></tr>
+
+                    <div>Work Type: <select ng-change="catalog.workTypeSelected()"
+                                                   ng-model="catalog.metadata.workType"
+                                                   ng-options="value[0] as value[1] for value in catalog.catalogFieldSpecs.workType.options"></select>
+                    </div>
+
+                    <!-- Start catalog fields -->
+                    <div id="catalogFields" style="display: none">
+                        <table style="table-layout:fixed">
+                            <tr ng-repeat="item in catalog.catalogFieldInfo">
+                                <td>{{item.name}}:<span ng-if="item.required"
+                                                        style="font-weight: bold;color:red">*</span>
+                                </td>
+                                <td style="height: 40px;width: 300px;word-wrap:break-word">
+                                    <textarea ng-if="item.type === 'text'" ng-model="catalog.metadata[item.id]"
+                                              style="width: 250px;height: 2em"></textarea>
+                                    <input ng-if="item.type === 'input'" ng-model="catalog.metadata[item.id]"
+                                              style="width: 250px;height: 2em"/>
+                                    <select ng-if="item.type === 'select'" ng-model="catalog.metadata[item.id]"
+                                            ng-options="value[0] as value[1] for value in item.options"></select>
+                                </td>
+                            </tr>
                         </table>
                     </div>
+                    <!-- End catalog fields -->
+
                     <!-- end of fields -->
                     <div class="errorMsg" ng-show="catalog.error">{{catalog.errorMsg}}</div>
-                    <div style="float: right">
+                    <div>
                         <!-- TODO replace submit with Save icon -->
                         <a style="margin: 1em" ng-click="catalog.submitMetadata()"
                            ng-disabled="!saveMetadataForm.$valid">
@@ -101,8 +68,10 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         </a>
                     <span>
                         <!-- TODO replace Search Similar with Search icon -->
-                        <a ng-click="catalog.searchCatalogOpen = true">Search Similar</a>
+                        <a ng-click="catalog.resetCatalogMetadata()">Clear</a>
+                        <!--<a ng-click="catalog.searchCatalogOpen = true">Clear</a>-->
                     </span>
+
                     </div>
                 </form>
             </div>
@@ -112,7 +81,8 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             <div style="margin-top: 2em"/>
             <form name="searchForm" novalidate> <!-- TODO replace button with search icon -->
                 <div>Search: <input ng-model="catalog.query.general" name="general" type="text" size="100"/></div>
-                <a style="float: right" ng-click="catalog.search()" ng-disabled="!searchForm.$valid || catalog.query.general === ''">
+                <a style="float: right" ng-click="catalog.search()"
+                   ng-disabled="!searchForm.$valid || catalog.query.general === ''">
                     Submit Search
                 </a>
             </form>
@@ -121,17 +91,17 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
     <!--<script>-->
-        <!--$(document).ready(function () {-->
+    <!--$(document).ready(function () {-->
 
-            <!--console.info("ABOUT TO CALL CONNECTSOCKETS FROM CATALOG.HTML");-->
-            <!--var foo = horaceApp.value();-->
-            <!--if (foo.connectSockets) {-->
-                <!--foo.connectSockets();-->
-                <!--console.info("RECONNECTED");-->
-            <!--} else {-->
-                <!--console.info("NO CONNECTSOCKETS");-->
-            <!--}-->
-        <!--});-->
+    <!--console.info("ABOUT TO CALL CONNECTSOCKETS FROM CATALOG.HTML");-->
+    <!--var foo = horaceApp.value();-->
+    <!--if (foo.connectSockets) {-->
+    <!--foo.connectSockets();-->
+    <!--console.info("RECONNECTED");-->
+    <!--} else {-->
+    <!--console.info("NO CONNECTSOCKETS");-->
+    <!--}-->
+    <!--});-->
 
     <!--</script>-->
 
@@ -227,34 +197,3 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     <!--});-->
     <!--</script>-->
 </div>
-
-
-<!--<tr><td>URN:</td><td><input ng-model='catalog.metadata.id' type="text" name="id" size="100" size="100"-->
-                            <!--value=''/></td></tr>-->
-<!--<tr><td>Title:</td><td><input ng-model='catalog.metadata.title' type="text" name="title" size="100"-->
-                              <!--size="100"-->
-                              <!--value='[{"en": "Poem 1"}]'/></td></tr>-->
-<!--<tr><td>Author:</td><td><input ng-model='catalog.metadata.baseAuthorNames' type="text"-->
-                               <!--name="baseAuthorNames"-->
-                               <!--size="100"-->
-                               <!--value="'Catullus, Gaius Valerius'"/></td></tr>-->
-<!--<tr><td>Publisher:</td><td><input ng-model='catalog.metadata.publisher' type="text"-->
-                                  <!--name="publisher"-->
-                                  <!--size="100"-->
-                                  <!--value='{"name": "Harvard University Press", city: "Cambridge", province: "MA", country: "USA"'/></td></tr>-->
-<!--<tr><td>Editor:</td><td><input ng-model='catalog.metadata.editors' type="text" name="editors"-->
-                               <!--size="100"-->
-                               <!--value="Merrill, Elmer Truesdell"/></td></tr>-->
-<!--<tr><td>Language:</td><td><input ng-model='catalog.metadata.lang' type="text" name="lang" size="100"-->
-                                 <!--value=""/></td></tr>-->
-<!--<tr><td>Subjects:</td><td><input ng-model='catalog.metadata.subjects' type="text" name="subjects"-->
-                                 <!--size="100"-->
-                                 <!--value='{"en": ["poetry"]}'/></td></tr>-->
-<!--<tr><td>Format:</td><td><input ng-model='catalog.metadata.contentFormat' type="text" name="contentFormat"-->
-                               <!--size="100"-->
-                               <!--value="raw"/></td></tr>-->
-<!--<tr><td>Editions:</td><td><input ng-model="catalog.metadata.baseEditions" type="text" name="editions" size="100" value='{"worldcat: "http://www.worldcat.org/title/catullus/oclc/8121753", "achiveOrg": "", "hathiTrust": "http://babel.hathitrust.org/cgi/pt?id=uc1.32106005763302;view=1up;seq=5"}'/> </td></tr>-->
-<!--<tr><td>Similar Editions:</td><td><input ng-model='catalog.metadata.similarEditions' type="text"-->
-                                         <!--name="similarEditions"-->
-                                         <!--size="100"-->
-                                         <!--value='{"archiveOrg": "https://archive.org/details/thepoemsandfragm18867gut"}'/></td></tr>-->

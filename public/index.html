@@ -120,14 +120,6 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
                 }
             });
         }
-//        console.info("ABOUT TO CALL CONNECTSOCKETS FROM INDEX.HTML");
-//       var foo = horaceApp.value();
-//        if (foo.connectSockets) {
-//            foo.connectSockets();
-//            console.info("RECONNECTED");
-//        } else {
-//            console.info("NO CONNECTSOCKETS");
-//        }
     });
 
 </script>
@@ -136,8 +128,10 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 <!-- Test -->
 <!--<div id="pageview"></div>-->
 
-<!-- Feedback messages from transactions for debugging only -->
-<div id="debuginfo"></div>
+<!-- Websocket messages from transactions for debugging only -->
+<div id="socketDebug">Socket Debug</div>
+<!-- Http response message debugging -->
+<div id="httpDebug">Http Debug</div>
 
 <div ng-controller="AppCtrl">
     <div ng-view></div>

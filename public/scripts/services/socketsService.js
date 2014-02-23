@@ -24,7 +24,10 @@
 
 'use strict';
 
+/* txSocket: the transactions socket */
 var txSocket;
+
+/* noteSocket: the notification socket */
 var noteSocket;
 
 /**
@@ -37,140 +40,131 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
         txSocket = io.connect('/tx');
         noteSocket = io.connect('/note');
 
-    // Transaction Socket -------------------------------------------------------------------------------------------
-//    var txSocket = io.connect(ConfigService.txSocketPath);
-    txSocket.on('connection', function (sock) {
-        alert('txSocket: Connected');
-        sock.on('connecting',function () {
-            alert('txSocket: Connecting...');
+        // Transaction Socket -------------------------------------------------------------------------------------------
+        txSocket.on('connection', function (sock) {
+            alert('txSocket: Connected');
+            sock.on('connecting', function () {
+                alert('txSocket: Connecting...');
+            });
+            sock.on('disconnect', function () {
+                console.info('txSocket: Disconnected');
+            });
+            sock.on('connect_failed', function () {
+                console.info('txSocket: Connect failed');
+            });
+            sock.on('reconnecting', function () {
+                console.info('txSocket: Reconnecting...');
+            });
+            sock.on('reconnect', function () {
+                console.info('txSocket: Reconnected');
+            });
+            sock.on('reconnect_failed', function () {
+                console.info('txSocket: Reconnect failed');
+            });
+            sock.on('error', function () {
+                console.info('txSocket: Some socket error');
+            });
         });
-        sock.on('disconnect', function () {
-            console.info('txSocket: Disconnected');
-        });
-        sock.on('connect_failed',function () {
-            console.info('txSocket: Connect failed');
-        });
-        sock.on('reconnecting',function () {
-            console.info('txSocket: Reconnecting...');
-        });
-        sock.on('reconnect',function () {
-            console.info('txSocket: Reconnected');
-        });
-        sock.on('reconnect_failed',function () {
-            console.info('txSocket: Reconnect failed');
-        });
-        sock.on('error', function () {
-            console.info('txSocket: Some socket error');
-        });
-    });
 
-    /**
-     * catalogTx: result of attempt to create or update a catalog item.
-     */
-    txSocket.on('catalog/submit/metadata', function(tx) {
-        var fback = jQuery('#debuginfo');
-        if (fback) {
-            if (tx.type === 'trans') {
-                fback.css('color', 'blue');
-            } else if (tx.type === 'ack') {
-                fback.css('color', 'green');
-            } else {
-                fback.css('color', 'red');
+        /**
+         * catalogTx: result of attempt to create or update a catalog item.
+         */
+        txSocket.on('catalog/submit/metadata', function (tx) {
+            var fback = jQuery('#socketDebug');
+            if (fback) {
+                if (tx.type === 'trans') {
+                    fback.css('color', 'blue');
+                } else if (tx.type === 'ack') {
+                    fback.css('color', 'green');
+                } else {
+                    fback.css('color', 'red');
+                }
+                fback[0].innerHTML = JSON.stringify(tx); // tx.type + ': ' + tx.msg + ' (txId=' + tx.txId + ')';
             }
-            fback[0].innerHTML = tx.type + ': ' + tx.msg + ' (txId=' + tx.txId + ')';
-        }
-    });
-
-
-
-    // Note Socket --------------------------------------------------------------------------------------------------
-    /** noteSocket Socket: socket used to communicate notifications from server */
-//    var noteSocket = io.connect(ConfigService.notificationSocketPath);
-
-    /* noteTitle: key := the notification type, value := the title to use in the notification */
-    var noteTitle = {trans: 'Technical Problem', error: 'Error', warn: 'Warning', ack: 'Note', note: 'Note'};
-
-    /**
-     * Returns an appropriate message for the specified notification
-     * @param note  The notification object
-     * @returns {string} The message text
-     */
-    noteSocket.makeMessage = function (note) {
-        var msg = note.msg;
-        if (note.type === 'fatal') {
-            msg = 'Our site is currently down for maintenance. Our apologies. Please try again later.';
-            console.error(note);
-        } else if (note.type === 'trans') {
-            msg = 'Due to a technical problem, your request was not fulfilled. Please try again.';
-            console.error(JSON.stringify(note));
-        }
-        return msg;
-    };
-
-    /**
-     * Returns an appropriate notification icon based on the specified notification type.
-     * @param noteType  The notification type.
-     * @returns {ConfigService.icon.notification|*}
-     */
-    noteSocket.getIcon = function (noteType) {
-        return ConfigService.icon.notification; // TODO create warning and error icons
-    };
-
-    noteSocket.on('connection', function (sock) {
-        console.info('noteSocket: Connected');
-        sock.on('connecting',function () {
-            console.info('noteSocket: Connecting...');
         });
-        sock.on('disconnect', function () {
-            console.info('noteSocket: Disconnected');
-        });
-        sock.on('connect_failed',function () {
-            console.info('noteSocket: Connect failed');
-        });
-        sock.on('reconnecting',function () {
-            console.info('noteSocket: Reconnecting...');
-        });
-        sock.on('reconnect',function () {
-            console.info('noteSocket: Reconnected');
-        });
-        sock.on('reconnect_failed',function () {
-            console.info('noteSocket: Reconnect failed');
-        });
-        sock.on('error', function () {
-            console.info('noteSocket: Some socket error');
-        });
-    });
-
-    /**
-     * Receives a notification from the server.
-     */
-    noteSocket.on('note', function (note) {
-        if (note && note.type && note.msg) {
-            var title = noteTitle[note.type] || 'Unknown Error';
-            var msg = noteSocket.makeMessage(note);
-            var icon = noteSocket.getIcon(note.type);
-            NotificationService.displayNotification(title, msg, icon, 0, undefined);
-        } else {
-            console.info('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
-        }
-    });
-
-        return {
-
-        noteSocket: noteSocket,
-        txSocket: txSocket
-        }
-
-    };
 
 
-        return {
-            connectSockets: connectSockets
+        // Note Socket --------------------------------------------------------------------------------------------------
+        /** noteSocket Socket: socket used to communicate notifications from server */
+
+        /* noteTitle: key := the notification type, value := the title to use in the notification */
+        var noteTitle = {trans: 'Technical Problem', error: 'Error', warn: 'Warning', ack: 'Note', note: 'Note'};
+
+        /**
+         * Returns an appropriate message for the specified notification
+         * @param note  The notification object
+         * @returns {string} The message text
+         */
+        noteSocket.makeMessage = function (note) {
+            var msg = note.msg;
+            if (note.type === 'fatal') {
+                msg = 'Our site is currently down for maintenance. Our apologies. Please try again later.';
+                console.error(note);
+            } else if (note.type === 'trans') {
+                msg = 'Due to a technical problem, your request was not fulfilled. Please try again.';
+                console.error(JSON.stringify(note));
+            }
+            return msg;
         };
-    // Return the socket service
-//    return {
-//        noteSocket: noteSocket,
-//        txSocket: txSocket
-//    };
 
+        /**
+         * Returns an appropriate notification icon based on the specified notification type.
+         * @param noteType  The notification type.
+         * @returns {ConfigService.icon.notification|*}
+         */
+        noteSocket.getIcon = function (noteType) {
+            return ConfigService.icon.notification; // TODO create warning and error icons
+        };
+
+        noteSocket.on('connection', function (sock) {
+            console.info('noteSocket: Connected');
+            sock.on('connecting', function () {
+                console.info('noteSocket: Connecting...');
+            });
+            sock.on('disconnect', function () {
+                console.info('noteSocket: Disconnected');
+            });
+            sock.on('connect_failed', function () {
+                console.info('noteSocket: Connect failed');
+            });
+            sock.on('reconnecting', function () {
+                console.info('noteSocket: Reconnecting...');
+            });
+            sock.on('reconnect', function () {
+                console.info('noteSocket: Reconnected');
+            });
+            sock.on('reconnect_failed', function () {
+                console.info('noteSocket: Reconnect failed');
+            });
+            sock.on('error', function () {
+                console.info('noteSocket: Some socket error');
+            });
+        });
+
+        /**
+         * Receives a notification from the server.
+         */
+        noteSocket.on('note', function (note) {
+            if (note && note.type && note.msg) {
+                var title = noteTitle[note.type] || 'Unknown Error';
+                var msg = noteSocket.makeMessage(note);
+                var icon = noteSocket.getIcon(note.type);
+                NotificationService.displayNotification(title, msg, icon, 0, undefined);
+            } else {
+                console.info('BAD SERVER NOTIFICATION: ' + JSON.stringify(note));
+            }
+        });
+
+        return {
+
+            noteSocket: noteSocket,
+            txSocket: txSocket
+        }
+
+    };
+
+
+    return {
+        connectSockets: connectSockets
+    };
 }]);
