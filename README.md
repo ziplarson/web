@@ -63,4 +63,8 @@ Server-side Websocket Management
 ================================
 
 Sockets are cached on a per-session basis to permit access
-to them at any time.
+to them at any time. This allows us to use socket communications in any context.
+
+TODO
+====
+- subject/keyword widget using typeahead for loosely constrained entries.

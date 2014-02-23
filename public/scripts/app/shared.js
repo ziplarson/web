@@ -54,6 +54,7 @@ var catalogFieldSpecs = {
     title: {id: 'title', required: true, name: 'Title', type: 'text'},
     lang: {id: 'lang', required: true, name: 'Language', type: 'select', options: langs},
     workType: {id: 'workType', required: true, name: 'Work Type', type: 'select', options: [
+        ['undefined', '---------------'],
         ['WebSite', 'Web Site'],
         ['WebPage', 'Web Page'],
         ['BookPoems', 'Book of Poems'],
@@ -76,14 +77,7 @@ var catalogFieldSpecs = {
     copyright: {id: 'copyright', name: 'Copyright', type: 'text'},
     subjects: {id: 'subjects', name: 'Subject(s)', type: 'text'} // TODO some kind of keyword widget?
 };
-catalogFieldSpecs.workType.options.codes = function() {
-    var i, codes = {};
-    for (i in this) {
-        var code = this[i][0];
-        codes[code] = code;
-    }
-    return codes;
-}
+catalogFieldSpecs.workType.options.codes = langs.codes;
 
 /** definitions: common constants */
 var definitions = {
@@ -121,7 +115,7 @@ var client = {
             this.id = undefined;
             this.title = undefined;
             this.lang = undefined;
-            this.workType = 'BookPoems'; // TODO make blank
+            this.workType = '---------------'; // TODO make blank
             this.authors = undefined;
             this.editors = undefined;
             this.edition = undefined;
