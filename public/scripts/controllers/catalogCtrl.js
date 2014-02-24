@@ -36,7 +36,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
     $scope.catalog = {
 
         // Accordion flags
-        openOneAtATime: true,
+        openOneAtATime: false,
         createCatalogOpen: true,
         searchCatalogOpen: true,
 
@@ -108,7 +108,6 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
             var query = $scope.catalog.query;
             $http.post('/catalog/search/query', query)
                 .success(function (res, status, headers, config) {
-                    console.info('Status ' + status);
                     if (status === 200) {
                         var dbg = $('#httpDebug');
                         if (('undefined' !== typeof dbg) && dbg.length !== 0) {
