@@ -43,6 +43,9 @@ function objectOverrides(obj, overrides) {
 }
 function makeRequired(obj) {
     var copy = shallowCopyObj(obj);
+    if (copy.description) {
+        copy.description = 'Required field. ' + copy.description;
+    }
     return objectOverrides(copy, {required: true});
 }
 
@@ -85,22 +88,23 @@ workTypes.codes = langs.codes;
  */
 var catalogFieldSpecs = { // TODO incorporate the value type (string/number/choice) and constraints (min/max size, etc)
     workType: {id: 'workType', required: true, name: 'Work Type', type: 'select', options: workTypes}, // always required
-    id: {id: 'id', name: 'Identifier', type: 'input', minLength: 8},
-    title: {id: 'title', name: 'Title', type: 'text', minLength: 1},
-    lang: {id: 'lang', name: 'Language', type: 'select', options: langs, minLength: 2},
-    authors: {id: 'authors', name: 'Author(s)', type: 'text'},
-    editors: {id: 'editors', name: 'Editor(s)', type: 'text'},
-    edition: {id: 'edition', name: 'Edition', type: 'input'}, // TODO a number wheel?
-    publisherName: {id: 'publisherName', name: 'Publisher', type: 'input', minLength: 1},
-    publisherCity: {id: 'publisherCity', name: 'Publisher City', type: 'input'},
-    publisherProvince: {id: 'publisherProvince', name: 'Publisher Province', type: 'input'},
-    publisherCountryISO: {id: 'publisherCountryISO', name: 'Publisher Country', type: 'input'},
-    copyright: {id: 'copyright', name: 'Copyright', type: 'text', minLength: 8},
-    subjects: {id: 'subjects', name: 'Subject(s)', type: 'text'}, // TODO some kind of keyword widget?
-    pageUrl: {id: 'pageUrl', name: 'Page URL', type: 'input', placeholder: 'http://', minLength: 10},
-    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://', minLength: 10} // TODO add placeholders for text/input fields
+    id: {id: '_id', name: 'Identifier', type: 'input', minLength: 8, description: 'Unique identifier for the catalog item'},
+    title: {id: 'title', name: 'Title', type: 'text', minLength: 1, description: "The work's title"},
+    lang: {id: 'lang', name: 'Language', type: 'select', options: langs, minLength: 2, description: 'The main language in which the work for this catalog item is written'},
+    authors: {id: 'authors', name: 'Author(s)', type: 'text', description: 'A list of the original author(s) of this work'},
+    editors: {id: 'editors', name: 'Editor(s)', type: 'text', description: 'For anthologies and other collections, this is a list of the original editor(s) of this work.'},
+    edition: {id: 'edition', name: 'Edition', type: 'input', description: 'The edition of this work. This must be a number.'}, // TODO a number wheel?
+    publisherName: {id: 'publisherName', name: 'Publisher', type: 'input', minLength: 1, description: "The name of this work's publisher"},
+    publisherCity: {id: 'publisherCity', name: 'Publisher City', type: 'input', description: "The publisher's city"},
+    publisherProvince: {id: 'publisherProvince', name: 'Publisher Province', type: 'input', description: "The publisher's province or state"},
+    publisherCountryISO: {id: 'publisherCountryISO', name: 'Publisher Country', type: 'input', description: "The publisher's country"},
+    copyright: {id: 'copyright', name: 'Copyright', type: 'text', minLength: 8, description: "A copyright description"},
+    subjects: {id: 'subjects', name: 'Subject(s)', type: 'text', description: "Subjects areas pertaining to this work"},
+    pageUrl: {id: 'pageUrl', name: 'Page URL', type: 'input', placeholder: 'http://', minLength: 10, description: "The URL to the page cited by this catalog item"},
+    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://', minLength: 10, description: "The URL to the home page cited by this catalog item"}
 };
 
+/** workTypeCatalogFieldSpecs: Each work type's set of field specs ordered for presentation. */
 var workTypeCatalogFieldSpecs = {
     BookPoems: [
         catalogFieldSpecs.id,

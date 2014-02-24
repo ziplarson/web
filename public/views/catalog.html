@@ -42,14 +42,18 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                     <!-- Start catalog fields -->
                     <div id="catalogFields" style="display: none">
                         <table style="table-layout:fixed">
-                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.metadata.workType]" ng-if="(item.id !== 'workType')">
-                                <td>{{item.name}}:<span ng-if="item.required"
-                                                        style="font-weight: bold;color:red">*</span>
+                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.metadata.workType]"
+                                ng-if="(item.id !== 'workType')">
+                                <td><span>{{item.name}}:</span><span ng-if="item.required"
+                                                                     style="font-weight: bold;color:red">*</span>
                                 </td>
+                                <td style="text-align: center;vertical-align: middle;width: 32px"><img
+                                        tooltip="{{item.description}}" src="images/help-icon-16.png"/></td>
                                 <td style="height: 40px;width: 300px;word-wrap:break-word">
                                     <textarea ng-if="item.type === 'text'" ng-model="catalog.metadata[item.id]"
                                               style="width: 250px;height: 2em"></textarea>
-                                    <input ng-if="item.type === 'input'" ng-model="catalog.metadata[item.id]" placeholder="{{item.placeholder}}"
+                                    <input ng-if="item.type === 'input'" ng-model="catalog.metadata[item.id]"
+                                           placeholder="{{item.placeholder}}"
                                            style="width: 250px;height: 2em"/>
                                     <select ng-if="item.type === 'select'" ng-model="catalog.metadata[item.id]"
                                             ng-options="value[0] as value[1] for value in item.options"></select>
@@ -78,11 +82,11 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             </div>
         </accordion-group>
 
-        <accordion-group style="margin-top: 1em" is-open="catalog.searchCatalogOpen" heading="Search Catalog">
+        <accordion-group style="margin-top: 1em" is-open="catalog.searchCatalogOpen" heading="Search">
             <div style="margin-top: 2em"/>
             <form name="searchForm" novalidate> <!-- TODO replace button with search icon -->
                 <div>Search: <input ng-model="catalog.query.general" name="general" type="text" size="100"/></div>
-                <a style="float: right" ng-click="catalog.search()"
+                <a ng-click="catalog.search()"
                    ng-disabled="!searchForm.$valid || catalog.query.general === ''">
                     Submit Search
                 </a>
