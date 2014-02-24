@@ -91,6 +91,11 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                     Submit Search
                 </a>
             </form>
+            <div id="searchResults" style="display: none">
+                   <div ng-repeat="result in catalog.searchResults"> Score {{result.score}}: {{result.obj}}</div>
+                <div>{obj}</div>
+                <br/>
+            </div>
         </accordion-group>
     </accordion>
 

@@ -31,7 +31,7 @@
  * Controls the catalog behavior (search, create, update).
  */
 
-horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) {
+horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $timeout, $upload) {
 
     $scope.catalog = {
 
@@ -46,6 +46,8 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
         workTypeOptions: client.workTypeOptions,
 
         metadata: undefined,
+
+        searchResults: undefined,
 
         /**
          * workTypeSelected: Called when a new work type is selected.
@@ -156,6 +158,11 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, $timeout, $upload) 
         }
     };
 
+
+    SocketsService.setCatalogSearchQueryListener(function (tx) {
+        $scope.catalog.searchResults = tx.data;
+        $('#searchResults').css('display', 'inline');
+    });
 
 });
 /* End of CatalogCtrl */
