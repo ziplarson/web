@@ -42,10 +42,10 @@ a {
 
 a:hover {
     color: red;
-    -webkit-transition:color .4s ease-in;
-    -moz-transition:color .4s ease-in;
-    -o-transition:color .4s ease-in;
-    transition:color .4s ease-in;
+    -webkit-transition: color .4s ease-in;
+    -moz-transition: color .4s ease-in;
+    -o-transition: color .4s ease-in;
+    transition: color .4s ease-in;
 }
 
 a.error {
@@ -87,22 +87,24 @@ div.headline {
     border-radius: 20px;
     -moz-border-radius: 20px;
 
-    -moz-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
-    -webkit-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
-    box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+    -moz-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+    -webkit-box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
+    box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
     /*box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);*/
     /*-webkit-border-radius: 20px;*/
     /*-moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);*/
     /*-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);*/
 }
-.left-column, .right-column{
-    float:left;
-    padding:10px;
+
+.left-column, .right-column {
+    float: left;
+    padding: 10px;
 }
-.right-column{
-    float:left;
-    padding:10px;
-    border:solid 1px black;
+
+.right-column {
+    float: left;
+    padding: 10px;
+    border: solid 1px black;
 }
 
 .newsAlert {
@@ -112,4 +114,9 @@ div.headline {
 
 div.errorMsg {
     color: red;
+}
+
+textarea, input, select .catalogField {
+    width: 300px;
+    height: 2em
 }

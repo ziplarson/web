@@ -33,16 +33,16 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 <form name="saveMetadataForm" novalidate>
 
                     <div>Work Type: <select ng-change="catalog.workTypeSelected()"
-                                            ng-model="catalog.metadata.workType"
+                                            ng-model="catalog.postData.metadata.workType"
                                             ng-options="value[0] as value[1] for value in catalog.workTypeOptions"></select>
                     </div>
 
-                    <input type="hidden" name="notify" value="true"/>
+                    <input type="hidden" ng-model="catalog.postData.notify"/>
 
                     <!-- Start catalog fields -->
                     <div id="catalogFields" style="display: none">
                         <table style="table-layout:fixed">
-                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.metadata.workType]"
+                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.postData.metadata.workType]"
                                 ng-if="(item.id !== 'workType')">
                                 <td><span>{{item.name}}:</span><span ng-if="item.required"
                                                                      style="font-weight: bold;color:red">*</span>
@@ -50,13 +50,27 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                 <td style="text-align: center;vertical-align: middle;width: 32px"><img
                                         tooltip="{{item.description}}" src="images/help-icon-16.png"/></td>
                                 <td style="height: 40px;width: 300px;word-wrap:break-word">
-                                    <textarea ng-if="item.type === 'text'" ng-model="catalog.metadata[item.id]"
-                                              style="width: 250px;height: 2em"></textarea>
-                                    <input ng-if="item.type === 'input'" ng-model="catalog.metadata[item.id]"
+                                    <textarea name="{{item.id}}" ng-if="item.type === 'text'"
+                                              ng-model="catalog.postData.metadata[item.id]"
+                                              class="catalogField"></textarea>
+                                    <input name="{{item.id}}" ng-if="item.type === 'input'"
+                                           ng-model="catalog.postData.metadata[item.id]"
                                            placeholder="{{item.placeholder}}"
-                                           style="width: 250px;height: 2em"/>
-                                    <select ng-if="item.type === 'select'" ng-model="catalog.metadata[item.id]"
+                                           class="catalogField"/>
+                                    <select name="{{item.id}}" ng-if="item.type === 'select'"
+                                            ng-model="catalog.postData.metadata[item.id]"
                                             ng-options="value[0] as value[1] for value in item.options"></select>
+
+                                    <div ng-if="item.id === 'publisherAddress'">
+                                        <input name="{{item.id}}" type="text" class="catalogField"
+                                               ng-model="asyncSelected"
+                                               placeholder="Type Publisher's Address"
+                                               typeahead="address.formatted_address for address in catalog.getAddress($viewValue) | filter:$viewValue"
+                                               typeahead-on-select="catalog.selectedAddress($item)"
+                                               typeahead-editable="false"
+                                               typeahead-loading="loadingLocations" class="form-control">
+                                        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -92,9 +106,9 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 </a>
             </form>
             <div id="searchResults" style="display: none">
-                   <div ng-repeat="result in catalog.searchResults"> Score {{result.score}}: {{result.obj}}</div>
-                <div>{obj}</div>
-                <br/>
+                <table>
+                   <a href="http://apple.com"><tr ng-repeat="result in catalog.searchResults"><td style="width: 200px">{{result.score}}</td><td>{{result.obj.title.title}}</td></tr></a>
+                </table>
             </div>
         </accordion-group>
     </accordion>

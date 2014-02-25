@@ -40,12 +40,14 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
         createCatalogOpen: true,
         searchCatalogOpen: true,
 
-//        catalogFieldInfo: client.catalogFieldInfo,
         workTypeCatalogFieldInfo: client.shared.workTypeCatalogFieldInfo,
 
         workTypeOptions: client.workTypeOptions,
 
-        metadata: undefined,
+        postData: {
+            metadata: undefined, // The catalog metadata
+            notify: true // eventually a user preference
+        },
 
         searchResults: undefined,
 
@@ -53,8 +55,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
          * workTypeSelected: Called when a new work type is selected.
          * This method displays the catalog fields for the selected type of work.
          */
-        workTypeSelected: function() {
-//            alert('worktype selected = ' + $scope.catalog.metadata.workType);
+        workTypeSelected: function () {
             $scope.catalog.resetCatalogMetadata();
             $('#catalogFields').css('display', 'inline');
         },
@@ -62,15 +63,70 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
         /**
          * resetCatalogMetadata: Clears the catalog metadata (and its corresponding fields)
          */
-        resetCatalogMetadata: function() {
-            var wt = $scope.catalog.metadata.workType;
-            $scope.catalog.metadata = new client.shared.makeClientCatalog(wt);
-            $scope.catalog.metadata.workType = wt;
+        resetCatalogMetadata: function () {
+            var wt = $scope.catalog.postData.metadata.workType;
+            $scope.catalog.postData.metadata = new client.shared.makeClientCatalog(wt);
+            $scope.catalog.postData.metadata.workType = wt;
+        },
+
+        /**
+         * Fetches a list of potential matches for an address from a user's typeahead input
+         * @param input   The user's current typed input
+         * @returns {!webdriver.promise.Promise}
+         */
+        getAddress: function (input) {
+            return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+                params: {
+                    address: input,
+                    sensor: false
+                }
+            }).then(function (res) {
+                    var addresses = [];
+                    angular.forEach(res.data.results, function (item) {
+//                        addresses.push(item.formatted_address);
+                        addresses.push(item);
+                    });
+                    return addresses;
+                });
+        },
+
+        /**
+         * selectedAddress: Called when the user has selected an address. The address
+         * is a location returned by the Google location service.
+         * @param address   Google location service object
+         */
+        selectedAddress: function (address) {
+            var city;
+            var province;
+            var country;
+            for (var i in address.address_components) {
+                var component = address.address_components[i];
+                if (component.types[0] === 'locality') {
+                    city = component.long_name;
+                } else if (component.types[0] === 'administrative_area_level_1') {
+                    province = component.long_name;
+                } else if (component.types[0] === 'country') {
+                    country = component.short_name;
+                }
+            }
+            if (address.formatted_address) {
+                $scope.catalog.postData.publisherAddress = address.formatted_address;
+            }
+            if (city) {
+                $scope.catalog.postData.publisherCity = city;
+            }
+            if (province) {
+                $scope.catalog.postData.publisherProvince = province;
+            }
+            if (country) {
+                $scope.catalog.postData.publisherCountry = country;
+            }
         },
 
         /* query: catalog search query fields TODO must conform to server-side schema.query! */
         query: {
-            general: null /* general: queries any metadata and content */
+            general: null, /* general: queries any metadata and content */
+            notify: true /* eventually part of user prefs */
         },
 
 //        /* goBrowse: Go browse TODO unfinished */
@@ -80,8 +136,8 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
 
         /* submitMetadata: creates or updates a catalog item's metadata using a form */
         submitMetadata: function () {
-            var metadata = $scope.catalog.metadata;
-            $http.post('/catalog/submit/metadata', metadata)
+            var postData = $scope.catalog.postData;
+            $http.post('/catalog/submit/metadata', postData)
                 .success(function (res, status, headers, config) {
                     if (status === 200) {
                         var dbg = $('#httpDebug');
@@ -106,7 +162,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
         },
 
         /* searchCatalog: searches catalog */
-        search: function() {
+        search: function () {
             var query = $scope.catalog.query;
             $http.post('/catalog/search/query', query)
                 .success(function (res, status, headers, config) {
