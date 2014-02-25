@@ -90,6 +90,10 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
                 });
         },
 
+        printMetadata: function() { // DBG
+            console.info($scope.catalog.postData.metadata);
+        },
+
         /**
          * selectedAddress: Called when the user has selected an address. The address
          * is a location returned by the Google location service.
@@ -110,16 +114,16 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
                 }
             }
             if (address.formatted_address) {
-                $scope.catalog.postData.publisherAddress = address.formatted_address;
+                $scope.catalog.postData.metadata.publisherAddress = address.formatted_address;
             }
             if (city) {
-                $scope.catalog.postData.publisherCity = city;
+                $scope.catalog.postData.metadata.publisherCity = city;
             }
             if (province) {
-                $scope.catalog.postData.publisherProvince = province;
+                $scope.catalog.postData.metadata.publisherProvince = province;
             }
             if (country) {
-                $scope.catalog.postData.publisherCountry = country;
+                $scope.catalog.postData.metadata.publisherCountry = country;
             }
         },
 

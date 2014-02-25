@@ -32,8 +32,7 @@
 horaceApp.controller('AppCtrl', function ($scope, SocketsService) {
 
     // Connect websockets when client is (re-)loaded
-    var service = SocketsService;
-    service.connectSockets();
+    SocketsService.connectSockets();
 
 });
 /* End AppCtrl */

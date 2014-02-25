@@ -65,7 +65,14 @@ Server-side Websocket Management
 Sockets are cached on a per-session basis to permit access
 to them at any time. This allows us to use socket communications in any context.
 
+Database
+========
+
+Values all stored as strings for now to simplify migration to other DBs
+and to use DBs as plugins.
+
 TODO
 ====
+- add publication date (day, month, year separately or partially)
 - search as a transaction
 - subject/keyword widget using typeahead for loosely constrained entries.
