@@ -144,10 +144,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
             $http.post('/catalog/submit/metadata', postData)
                 .success(function (res, status, headers, config) {
                     if (status === 200) {
-                        var dbg = $('#httpDebug');
-                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
-                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(res) + '</b>';
-                        }
+                        horaceApp.debug(res);
                     } else {
                         $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
                         $scope.catalog.error = true;
@@ -155,10 +152,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
                 })
                 .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
                     if (status !== 200) {
-                        var dbg = $('#httpDebug');
-                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
-                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(err) + '</b>';
-                        }
+                        horaceApp.debug(err);
                     }
                     $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
                     $scope.catalog.error = true;
@@ -171,10 +165,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
             $http.post('/catalog/search/query', query)
                 .success(function (res, status, headers, config) {
                     if (status === 200) {
-                        var dbg = $('#httpDebug');
-                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
-                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(res) + '</b>';
-                        }
+                        horaceApp.debug(res);
                     } else {
                         $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
 
@@ -183,10 +174,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
                 })
                 .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
                     if (status !== 200) {
-                        var dbg = $('#httpDebug');
-                        if (('undefined' !== typeof dbg) && dbg.length !== 0) {
-                            $('#httpDebug')[0].innerHTML = '<b>' + JSON.stringify(err) + '</b>';
-                        }
+                        horaceApp.debug(err);
                     }
                     $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + err + ')';
                     $scope.catalog.error = true;

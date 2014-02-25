@@ -1,5 +1,7 @@
 Design for Literature
-info@designforliterature.com
+=====================
+
+rk@designforliterature.com
 rk@post.harvard.edu
 
 
@@ -73,6 +75,10 @@ and to use DBs as plugins.
 
 TODO
 ====
+- pretty search results; customized to work type. Link to browse section
+  when work selected.
+- upload content
+- implement libraries with permissions, users, catalogs and content copies, etc.
+  libraries are distributed (library comm protocol)
 - add publication date (day, month, year separately or partially)
-- search as a transaction
 - subject/keyword widget using typeahead for loosely constrained entries.

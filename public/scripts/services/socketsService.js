@@ -35,23 +35,8 @@ var noteSocket;
  */
 horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', function (ConfigService, NotificationService) {
 
-
-    function printSocketDebugInfo(tx) {
-        var fback = jQuery('#socketDebug');
-        if (fback) {
-            if (tx.type === 'trans') {
-                fback.css('color', 'blue');
-            } else if (tx.type === 'ack') {
-                fback.css('color', 'green');
-            } else {
-                fback.css('color', 'red');
-            }
-            fback[0].innerHTML = JSON.stringify(tx); // tx.type + ': ' + tx.msg + ' (txId=' + tx.txId + ')';
-        }
-    }
-
     var onCatalogSearchQueryListener = function (tx) {
-        printSocketDebugInfo(tx);
+        horaceApp.debug(tx);
     };
 
     var setCatalogSearchQueryListener = function (listener) {
@@ -59,7 +44,7 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     }
 
     var onCatalogSubmitMetadataListener = function(tx) {
-        printSocketDebugInfo(tx);
+        horaceApp.debug(tx);
     }
 
     var setCatalogSubmitMetadataListener = function (listener) {

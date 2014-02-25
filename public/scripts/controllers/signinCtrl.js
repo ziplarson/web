@@ -41,16 +41,18 @@ horaceApp.controller('SigninCtrl', function ($scope, $http, $location) {
         var user = $scope.signin.user;
         $http.post('/login', user)
             .success(function (res) {
-                if (!res.error) {
+                horaceApp.debug(res);
+                if (res.type === 'ack') {
                     $location.path('browse');
                 } else {
                     $scope.signin.user.name = '';
                     $scope.signin.user.password = '';
-                    $scope.signin.msg = 'No such user: Try again';
+                    $scope.signin.msg = 'No such user. Try again';
                     $scope.signin.error = true;
                 }
             })
             .error(function (res) {
+                horaceApp.debug(res);
                 $scope.signin.msg = 'Technical Problem: Please retry';
                 $scope.signin.error = true;
             });

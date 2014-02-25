@@ -24,10 +24,60 @@
 // CLIENT SIDE --------------------------------------------------------------------------------------------
 
 /*
- * Directives used to validate signup and signin input fields.
+ * General-purpose directives.
  */
 'use strict';
 
+// Sets focus on specified element
+horaceApp.directive('dflSetFocus', function () {
+    return {
+        restrict: 'A', // matches attribute dfl-set-focus only
+        link: function (scope, element, attrs, ctrl) {
+            element[0].focus();
+        }
+    };
+});
+
+// A catalog search result item
+horaceApp.directive('dflCatSearchResult', function () {
+    return {
+        restrict: 'E', // matches only element dfl-cat-search-result only
+        template: 'openOneAtATime: {{catalog.openOneAtATime}}'
+    };
+});
+
+/***
+ * The following functionality is a custom-based poly-fill placeholder for AngularJS
+ * @example  <input id="weight" name="weight" type="number" default-text="lbs" min="50" max="500" required />
+ * For browsers lower than IE 10 the in-built placeholder functionality is used, otherwise
+ * the poly-fill is used
+ */
+horaceApp.directive('placeholder', function ($timeout) {
+    "use strict";
+    return {
+        link: function (scope, elm, attrs) {
+            if (attrs.type === 'password') {
+                return;
+            }
+            $timeout(function () {
+                $(elm).val(attrs.placeholder).focus(function () {
+                    if ($(this).val() === $(this).attr('placeholder')) {
+                        $(this).val('');
+                    }
+                }).blur(function () {
+                        if ($(this).val() === '') {
+                            $(this).val($(this).attr('placeholder'));
+                        }
+                    });
+            });
+        }
+    };
+});
+
+
+/*
+ * Directive used to validate signup and signin input fields.
+ */
 horaceApp.directive('signinField', function () {
 
     var USERNAME_REGEXP = /^[A-Za-z0-9\.\,\!\\@\#\$\%\^\&\*\(\)\-\_\+\=]{3,32}$/,
@@ -96,4 +146,3 @@ horaceApp.directive('signinField', function () {
         }
     };
 });
-

@@ -29,6 +29,24 @@
 
 'use strict';
 
+// DBG type := {true|false} true is http, false is sockets
+var debug = true;
+horaceApp.debug = function (obj, type) {
+    if (debug) {
+        var dbg = (typeof type === 'undefined' || type)? $('#httpDebug') : $('#socketDebug')
+        if ('undefined' !== typeof dbg) {
+            if (obj.type === 'trans') {
+                dbg.css('color', 'blue');
+            } else if (obj.type === 'ack') {
+                dbg.css('color', 'green');
+            } else {
+                dbg.css('color', 'red');
+            }
+            dbg[0].innerHTML = '<b>' + JSON.stringify(obj) + '</b>';
+        }
+    }
+};
+
 horaceApp.controller('AppCtrl', function ($scope, SocketsService) {
 
     // Connect websockets when client is (re-)loaded
