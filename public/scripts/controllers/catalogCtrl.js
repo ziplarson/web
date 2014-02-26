@@ -37,8 +37,8 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
 
         // Accordion flags
         openOneAtATime: false,
-        createCatalogOpen: true,
         searchCatalogOpen: true,
+        createCatalogOpen: false,
 
         workTypeCatalogFieldInfo: client.shared.workTypeCatalogFieldInfo,
 

@@ -46,7 +46,7 @@ error       An error for the client. The client should present the message as an
 warn        A warning for the client. The client may present the message payload
             as a warning notification.
 
-ack         An acknowledgement that a transaction has succeeded (used only for transaction sockets).
+ack         An acknowledgement that a socket transaction or any other http request has succeeded.
 
 note        A note for the client. The client may present the message as an
             informational notification.
@@ -75,8 +75,7 @@ and to use DBs as plugins.
 
 TODO
 ====
-- pretty search results; customized to work type. Link to browse section
-  when work selected.
+- Link to browse section when search result is selected.
 - upload content
 - implement libraries with permissions, users, catalogs and content copies, etc.
   libraries are distributed (library comm protocol)

@@ -40,36 +40,58 @@ horaceApp.directive('dflSetFocus', function () {
 
 // A catalog search result item
 horaceApp.directive('dflCatSearchResult', function () {
+
+    function makeSpan(name, value, delim, font) {
+        var span = '<span>';
+        if (font) {
+            span += '<' + font + '>' + name + ': ' + '</' + font + '>' + value;
+        } else {
+            span += name + ': ' + value;
+        }
+        if (delim) {
+            span += '; ';
+        }
+        return span + '</span>';
+    }
+
     return {
         restrict: 'E', // matches only element dfl-cat-search-result only
-        template: 'openOneAtATime: {{catalog.openOneAtATime}}'
-    };
-});
-
-/***
- * The following functionality is a custom-based poly-fill placeholder for AngularJS
- * @example  <input id="weight" name="weight" type="number" default-text="lbs" min="50" max="500" required />
- * For browsers lower than IE 10 the in-built placeholder functionality is used, otherwise
- * the poly-fill is used
- */
-horaceApp.directive('placeholder', function ($timeout) {
-    "use strict";
-    return {
-        link: function (scope, elm, attrs) {
-            if (attrs.type === 'password') {
-                return;
-            }
-            $timeout(function () {
-                $(elm).val(attrs.placeholder).focus(function () {
-                    if ($(this).val() === $(this).attr('placeholder')) {
-                        $(this).val('');
-                    }
-                }).blur(function () {
-                        if ($(this).val() === '') {
-                            $(this).val($(this).attr('placeholder'));
+//        template: 'openOneAtATime: {{catalog.openOneAtATime}}'
+//        templateUrl: 'template/catalogSearchResultTemplate.html',
+        link: function (scope, element, attrs) {
+            var specs = client.shared.catalogFieldSpecs;
+            var subSpecs = client.shared.catalogFieldSubSpecs;
+            var obj = scope.result.obj;
+            var html = '<div>';
+            var len = obj.len - 1; // minus _id
+            var count = 0;
+            for (var i in obj) {
+                if (i !== '_id') {
+                    var val = obj[i];
+                    if ($.isArray(val)) {
+                        var subHtml = '<span><b>' + specs[i].name + ': </b></span>';
+                        for (var j in val) {
+                            var subObj = val[j];
+                            for (var k in subObj) {
+                                var subSpec = subSpecs[k];
+                                subHtml += makeSpan(subSpec.subIdName || subSpec.name, subObj[k], true, 'i');
+                            }
                         }
-                    });
-            });
+                        html += subHtml;
+                    } else if (typeof val !== 'string') {
+                        var subHtml = '<span><b>' + subSpecs[i].name + ': </b></span>';
+                        for (var l in val) {
+                            subHtml += makeSpan(subSpecs[l].name, val[l], true, 'i');
+                        }
+                        html += subHtml;
+                    } else {
+                        html += makeSpan(specs[i].name, obj[i], true, 'b');
+                    }
+                    count += 1;
+                }
+            }
+            html += '</div>';
+            element[0].innerHTML = html;
         }
     };
 });
@@ -146,3 +168,26 @@ horaceApp.directive('signinField', function () {
         }
     };
 });
+
+
+//horaceApp.directive('placeholder', function ($timeout) {
+//    "use strict";
+//    return {
+//        link: function (scope, elm, attrs) {
+//            if (attrs.type === 'password') {
+//                return;
+//            }
+//            $timeout(function () {
+//                $(elm).val(attrs.placeholder).focus(function () {
+//                    if ($(this).val() === $(this).attr('placeholder')) {
+//                        $(this).val('');
+//                    }
+//                }).blur(function () {
+//                        if ($(this).val() === '') {
+//                            $(this).val($(this).attr('placeholder'));
+//                        }
+//                    });
+//            });
+//        }
+//    };
+//});

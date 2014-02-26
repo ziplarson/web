@@ -26,8 +26,6 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </div>
 <div class="right-column" style="width: 88%">
 
-    <dfl-cat-search-result></dfl-cat-search-result>
-
     <accordion close-others="catalog.openOneAtATime">
 
         <accordion-group is-open="catalog.createCatalogOpen" heading="Create/Update Catalog">
@@ -109,11 +107,13 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 </a>
             </form>
             <div id="searchResults" style="display: none">
-                <table>
-                   <a href="http://apple.com"><tr ng-repeat="result in catalog.searchResults"><td style="width: 200px">{{result.score}}</td><td>{{result.obj.title.title}}</td></tr></a>
-                </table>
+                <dfl-cat-search-result ng-repeat="result in catalog.searchResults"></dfl-cat-search-result>
+                <!--<table>-->
+                   <!--<a href="http://apple.com"><tr ><td style="width: 200px">{{result.score}}</td><td>{{result.obj.title.title}}</td></tr></a>-->
+                <!--</table>-->
             </div>
         </accordion-group>
+
     </accordion>
 
 

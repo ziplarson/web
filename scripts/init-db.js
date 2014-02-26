@@ -1,9 +1,9 @@
-db.catalog.ensureIndex({'title.title': 'text', authors: 'text', 'publisher.name': 'text', subjects: 'text'}, {
+db.catalog.ensureIndex({'title': 'text', authors: 'text', 'publisher.name': 'text', subjects: 'text'}, {
     name: "catalog_search",
     weight: {
-        'title.title': 3,
+        'title': 3,
+        authors: 2, // TODO won't work: authors is now an array, but of objects that include fullName with what we want
         subjects: 2,
-        authors: 1,
         'publisher.name': 1
     }
 });
