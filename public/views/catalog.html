@@ -22,205 +22,226 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 
 <!--<div class="left-column" style="width: 12%">-->
-    <!--<a onclick="document.location = 'index.html#/browse/';">Go Browse</a>-->
+<!--<a onclick="document.location = 'index.html#/browse/';">Go Browse</a>-->
 <!--</div>-->
 <div style="width: 88%">
 
-    <!-- TODO one controller per accordion group? -->
+<!-- TODO one controller per accordion group? -->
 
-    <accordion close-others="catalog.openOneAtATime">
+<accordion close-others="catalog.openOneAtATime">
 
-        <accordion-group is-open="catalog.createCatalogOpen" heading="Create Catalog">
+    <accordion-group is-open="catalog.createCatalogOpen" heading="Create Catalog">
 
-            <div class="yellowBox" ng-show="catalog.step === 2">
-                <div style="font-weight: bold;text-align: center;font-size: large">Step Two</div>
-                <div style="font-weight: bold;text-align: center">Upload your content</div>
-            </div>
+        <!--<div class="yellowBox" style="text-align: center" ng-show="catalog.createCatalogStep === 2">-->
+        <!--<div style="font-weight: bold;font-size: large">Step Two</div>-->
+        <!--<div style="font-weight: bold;">Upload your text</div>-->
 
-            <div class="yellowBox" ng-show="catalog.step === 1">
-                <div style="font-weight: bold;text-align: center;font-size: large">Step One</div>
-                <div style="font-weight: bold;text-align: center">Catalog your submission by entering some information</div>
-                <form name="saveMetadataForm" novalidate>
+        <!--<form enctype="multipart/form-data">-->
+        <!--<div><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
+        <!--<div><input id="saveContentButton" type="button" name="Submit" value="Submit"/></div>-->
+        <!--</form>-->
 
-                    <div style="font-weight: bold">Select Work Type: <select ng-change="catalog.workTypeSelected()"
-                                                                      ng-model="catalog.postData.metadata.workType"
-                                                                      ng-options="value[0] as value[1] for value in catalog.workTypeOptions"></select>
+        <!--</div>-->
+
+        <div class="yellowBox">
+            <form name="saveMetadataForm" novalidateenctype="multipart/form-data">
+
+                <div style="font-weight: bold">Select Work Type: <select ng-change="catalog.workTypeSelected()"
+                                                                         ng-model="catalog.postData.metadata.workType"
+                                                                         ng-options="value[0] as value[1] for value in catalog.workTypeOptions"></select>
+                </div>
+
+                <input type="hidden" ng-model="catalog.postData.notify"/>
+
+                <div id="catalogFields" style="display: none" ng-init="catalog.metatadaValid = false">
+                    <!-- Start catalog fields -->
+                    <table style="table-layout:fixed; vertical-align: middle;margin-left: 2em">
+                        <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.postData.metadata.workType]"
+                            ng-if="(item.id !== 'workType')">
+                            <td><span style="font-weight: bold">{{item.name}}:</span><span ng-if="item.required"
+                                                                                           style="font-weight: bold;color:red">*</span>
+                            </td>
+                            <td style="text-align: center;vertical-align: middle;width: 32px"><img
+                                    tooltip="{{item.description}}" src="images/help-icon-24.png"/></td>
+                            <td style="height: 40px;width: 300px;word-wrap:break-word">
+                                <textarea catalog-field name="{{item.id}}" ng-if="item.type === 'text'"
+                                          ng-model="catalog.postData.metadata[item.id]"
+                                          class="catalogField"></textarea>
+                                <input catalog-field name="{{item.id}}" ng-if="item.type === 'input'"
+                                       ng-model="catalog.postData.metadata[item.id]"
+                                       placeholder="{{item.placeholder}}"
+                                       class="catalogField"/>
+                                <select catalog-field name="{{item.id}}" ng-if="item.type === 'select'"
+                                        ng-model="catalog.postData.metadata[item.id]"
+                                        ng-options="value[0] as value[1] for value in item.options"></select>
+
+                                <div ng-if="item.id === 'publisherAddress'">
+                                    <input catalog-field name="{{item.id}}" type="text" class="catalogField"
+                                           ng-model="asyncSelected"
+                                           placeholder="Type Publisher's Address"
+                                           typeahead="address.formatted_address for address in catalog.getAddress($viewValue) | filter:$viewValue"
+                                           typeahead-on-select="catalog.selectedAddress($item)"
+                                           typeahead-editable="false"
+                                           typeahead-loading="loadingLocations" class="form-control">
+                                    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- End catalog fields -->
+
+                    <!--<div style="margin-left:2em"><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
+                    <div class="lightGrayBoundedBox">
+                        <span>Content File Type:
+                            <select ng-disabled="true">
+                                <option value="raw" selected="selected">Raw Text</option>
+                            </select>
+                            <input type="file" ng-file-select="catalog.fileSelected($files)"/>
+                        </span>
                     </div>
 
-                    <input type="hidden" ng-model="catalog.postData.notify"/>
-
-                    <div id="catalogFields" style="display: none" ng-init="catalog.metatadaValid = false">
-                        <!-- Start catalog fields -->
-                        <table style="table-layout:fixed; vertical-align: middle;margin-left: 2em">
-                            <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.postData.metadata.workType]"
-                                ng-if="(item.id !== 'workType')">
-                                <td><span style="font-weight: bold">{{item.name}}:</span><span ng-if="item.required"
-                                                                     style="font-weight: bold;color:red">*</span>
-                                </td>
-                                <td style="text-align: center;vertical-align: middle;width: 32px"><img
-                                        tooltip="{{item.description}}" src="images/help-icon-24.png"/></td>
-                                <td style="height: 40px;width: 300px;word-wrap:break-word">
-                                    <textarea catalog-field name="{{item.id}}" ng-if="item.type === 'text'"
-                                              ng-model="catalog.postData.metadata[item.id]"
-                                              class="catalogField"></textarea>
-                                    <input catalog-field name="{{item.id}}" ng-if="item.type === 'input'"
-                                           ng-model="catalog.postData.metadata[item.id]"
-                                           placeholder="{{item.placeholder}}"
-                                           class="catalogField"/>
-                                    <select catalog-field name="{{item.id}}" ng-if="item.type === 'select'"
-                                            ng-model="catalog.postData.metadata[item.id]"
-                                            ng-options="value[0] as value[1] for value in item.options"></select>
-
-                                    <div ng-if="item.id === 'publisherAddress'">
-                                        <input catalog-field name="{{item.id}}" type="text" class="catalogField"
-                                               ng-model="asyncSelected"
-                                               placeholder="Type Publisher's Address"
-                                               typeahead="address.formatted_address for address in catalog.getAddress($viewValue) | filter:$viewValue"
-                                               typeahead-on-select="catalog.selectedAddress($item)"
-                                               typeahead-editable="false"
-                                               typeahead-loading="loadingLocations" class="form-control">
-                                        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                        <!-- End catalog fields -->
-                        <div class="errorMsg" ng-show="catalog.error">{{catalog.errorMsg}}</div>
-                        <div style="margin: 1em">
-                            <img ng-click="catalog.saveMetadata()" tooltip="Save catalog information"
-                                 src="images/save-icon-32.png" ng-show="catalog.metatadaValid"/>
-                            <img src="images/save-icon-disabled-32.png" tooltip="Complete required catalog fields to save catalog information" ng-show="!catalog.metatadaValid"/>
-                            <img style="margin-left: 2em" ng-click="catalog.resetCatalogMetadata()"
-                                 src="images/clear-icon-32.png"/><span></span>
-                        </div>
+                    <div class="errorMsg" ng-show="catalog.error">{{catalog.errorMsg}}</div>
+                    <div style="margin: 1em">
+                        <img ng-click="catalog.saveMetadata()"
+                             tooltip="Save catalog information"
+                             src="images/save-icon-32.png" ng-show="catalog.metatadaValid"/>
+                        <img src="images/save-icon-disabled-32.png"
+                             tooltip="Complete required catalog fields to save catalog information"
+                             ng-show="!catalog.metatadaValid"/>
+                        <img style="margin-left: 2em" ng-click="catalog.resetCatalogMetadata()"
+                             tooltip="Clear Fields"
+                             src="images/clear-icon-32.png"/><span></span>
+                        <button style="margin-left: 2em" tooltip="Cancel file upload" ng-click="upload.abort()"><img src="images/cancel-icon-32.png"/></button>
                     </div>
-                </form>
-            </div>
-        </accordion-group>
-
-        <br/>
-
-        <accordion-group is-open="catalog.searchCatalogOpen" heading="Search">
-            <div class="yellowBox"/>
-            <form name="searchForm" novalidate> <!-- TODO replace button with search icon -->
-                <div><span style="font-weight: bold">Search: </span><input ng-keypress="catalog.search($event)" dfl-set-focus
-                                                                           ng-model="catalog.query.general"
-                                                                           name="general" type="text" size="100"/> <img
-                        tooltip="Search" ng-click="catalog.search()" src="images/search-icon-24.png"/></div>
+                </div>
             </form>
-            <div id="searchResults" style="display: none">
-                <dfl-cat-search-result ng-repeat="result in catalog.searchResults"></dfl-cat-search-result>
-                <div id="searchMsg" style="margin-top: 1em"></div>
-            </div>
-        </accordion-group>
+        </div>
+    </accordion-group>
 
-    </accordion>
+    <br/>
+
+    <accordion-group is-open="catalog.searchCatalogOpen" heading="Search">
+        <div class="yellowBox"/>
+        <form name="searchForm" novalidate> <!-- TODO replace button with search icon -->
+            <div><span style="font-weight: bold">Search: </span><input ng-keypress="catalog.search($event)"
+                                                                       dfl-set-focus
+                                                                       ng-model="catalog.query.general"
+                                                                       name="general" type="text" size="100"/> <img
+                    tooltip="Search" ng-click="catalog.search()" src="images/search-icon-24.png"/></div>
+        </form>
+        <div id="searchResults" style="display: none">
+            <dfl-cat-search-result ng-repeat="result in catalog.searchResults"></dfl-cat-search-result>
+            <div id="searchMsg" style="margin-top: 1em"></div>
+        </div>
+    </accordion-group>
+
+</accordion>
 
 
-    <!--<script>-->
-    <!--$(document).ready(function () {-->
+<!--<script>-->
+<!--$(document).ready(function () {-->
 
-    <!--console.info("ABOUT TO CALL CONNECTSOCKETS FROM CATALOG.HTML");-->
-    <!--var foo = horaceApp.value();-->
-    <!--if (foo.connectSockets) {-->
-    <!--foo.connectSockets();-->
-    <!--console.info("RECONNECTED");-->
-    <!--} else {-->
-    <!--console.info("NO CONNECTSOCKETS");-->
-    <!--}-->
-    <!--});-->
+<!--console.info("ABOUT TO CALL CONNECTSOCKETS FROM CATALOG.HTML");-->
+<!--var foo = horaceApp.value();-->
+<!--if (foo.connectSockets) {-->
+<!--foo.connectSockets();-->
+<!--console.info("RECONNECTED");-->
+<!--} else {-->
+<!--console.info("NO CONNECTSOCKETS");-->
+<!--}-->
+<!--});-->
 
-    <!--</script>-->
+<!--</script>-->
 
-    <!--<br/><br/>-->
+<!--<br/><br/>-->
 
-    <!--<h4>UploadContent</h4>-->
+<!--<h4>UploadContent</h4>-->
 
-    <!--<form enctype="multipart/form-data">-->
-    <!--<br/>-->
+<!--<form enctype="multipart/form-data">-->
+<!--<br/>-->
 
-    <!--<div><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
-    <!--<br/>-->
+<!--<div><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
+<!--<br/>-->
 
-    <!--<div><input id="saveContentButton" type="button" name="Submit" value="Submit"/></div>-->
-    <!--<br/>-->
+<!--<div><input id="saveContentButton" type="button" name="Submit" value="Submit"/></div>-->
+<!--<br/>-->
 
-    <!--<input type="hidden" name="notify" value="true"/> &lt;!&ndash; Request notifications for this tx &ndash;&gt;-->
-    <!--&lt;!&ndash; TODO name fields should be angular inserts from model &ndash;&gt;-->
-    <!--<div style="font-weight: bold">Id: <input type="text" name="id" size="100" size="100" value=''/></div>-->
-    <!--</form>-->
-    <!--<script>-->
-    <!--// TODO move this script code to a controller-->
+<!--<input type="hidden" name="notify" value="true"/> &lt;!&ndash; Request notifications for this tx &ndash;&gt;-->
+<!--&lt;!&ndash; TODO name fields should be angular inserts from model &ndash;&gt;-->
+<!--<div style="font-weight: bold">Id: <input type="text" name="id" size="100" size="100" value=''/></div>-->
+<!--</form>-->
+<!--<script>-->
+<!--// TODO move this script code to a controller-->
 
-    <!--function progressHandlingFunction(e) {-->
-    <!--if (e.lengthComputable) {-->
-    <!--console.log('Upload progress: ' + e.loaded);-->
-    <!--}-->
-    <!--}-->
-    <!--$('#thefile').change(function () {-->
-    <!--var file = this.files[0];-->
-    <!--var name = file.name;-->
-    <!--var size = file.size;-->
-    <!--var type = file.type;-->
-    <!--//Your validation-->
-    <!--console.log('File ' + name + ' size=' + size + ' type=' + type);-->
-    <!--});-->
+<!--function progressHandlingFunction(e) {-->
+<!--if (e.lengthComputable) {-->
+<!--console.log('Upload progress: ' + e.loaded);-->
+<!--}-->
+<!--}-->
+<!--$('#thefile').change(function () {-->
+<!--var file = this.files[0];-->
+<!--var name = file.name;-->
+<!--var size = file.size;-->
+<!--var type = file.type;-->
+<!--//Your validation-->
+<!--console.log('File ' + name + ' size=' + size + ' type=' + type);-->
+<!--});-->
 
-    <!--//        $('#saveMetadataButton').click(function () {-->
-    <!--//            var formData = new FormData($('form')[0]);-->
-    <!--//            $.ajax({-->
-    <!--//                url: 'catalog/submit/metadata',-->
-    <!--//                type: 'POST',-->
-    <!--//-->
-    <!--//                //Ajax events-->
-    <!--//                success: function (x) {-->
-    <!--//                    console.log('Metadata received by server: ' + JSON.stringify(x));-->
-    <!--//                },-->
-    <!--//                error: function (err) {-->
-    <!--//                    console.error('Metadata save error: ' + err);-->
-    <!--//                },-->
-    <!--//                // Form data-->
-    <!--//                data: formData,-->
-    <!--//-->
-    <!--//                //Options to tell jQuery not to process data or worry about content-type.-->
-    <!--//                cache: false,-->
-    <!--//                contentType: false,-->
-    <!--//                processData: false-->
-    <!--//            });-->
-    <!--//        });-->
+<!--//        $('#saveMetadataButton').click(function () {-->
+<!--//            var formData = new FormData($('form')[0]);-->
+<!--//            $.ajax({-->
+<!--//                url: 'catalog/submit/metadata',-->
+<!--//                type: 'POST',-->
+<!--//-->
+<!--//                //Ajax events-->
+<!--//                success: function (x) {-->
+<!--//                    console.log('Metadata received by server: ' + JSON.stringify(x));-->
+<!--//                },-->
+<!--//                error: function (err) {-->
+<!--//                    console.error('Metadata save error: ' + err);-->
+<!--//                },-->
+<!--//                // Form data-->
+<!--//                data: formData,-->
+<!--//-->
+<!--//                //Options to tell jQuery not to process data or worry about content-type.-->
+<!--//                cache: false,-->
+<!--//                contentType: false,-->
+<!--//                processData: false-->
+<!--//            });-->
+<!--//        });-->
 
-    <!--$('#saveContentButton').click(function () {-->
-    <!--var formData = new FormData($('form')[0]);-->
-    <!--$.ajax({-->
-    <!--url: 'catalog/submit/content',-->
-    <!--type: 'POST',-->
-    <!--xhr: function () {  // Custom XMLHttpRequest-->
-    <!--var myXhr = $.ajaxSettings.xhr();-->
-    <!--if (myXhr.upload) { // Check if upload property exists-->
-    <!--myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload-->
-    <!--}-->
-    <!--return myXhr;-->
-    <!--},-->
-    <!--//Ajax events-->
-    <!--beforeSend: function (x) {-->
-    <!--//                    console.log('Before ' + JSON.stringify(x));-->
-    <!--},-->
-    <!--success: function (txId) { // Returns transaction id-->
-    <!--// TODO remember id and match it with responses for tracking transaction history in session-->
-    <!--// TODO server could store the full transaction history for use between sessions-->
-    <!--console.log('Upload succeeded with txId ' + txId);-->
-    <!--},-->
-    <!--error: function (err) {-->
-    <!--console.error('Upload error: ' + err);-->
-    <!--},-->
-    <!--// Form data-->
-    <!--data: formData,-->
+<!--$('#saveContentButton').click(function () {-->
+<!--var formData = new FormData($('form')[0]);-->
+<!--$.ajax({-->
+<!--url: 'catalog/submit/content',-->
+<!--type: 'POST',-->
+<!--xhr: function () {  // Custom XMLHttpRequest-->
+<!--var myXhr = $.ajaxSettings.xhr();-->
+<!--if (myXhr.upload) { // Check if upload property exists-->
+<!--myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload-->
+<!--}-->
+<!--return myXhr;-->
+<!--},-->
+<!--//Ajax events-->
+<!--beforeSend: function (x) {-->
+<!--//                    console.log('Before ' + JSON.stringify(x));-->
+<!--},-->
+<!--success: function (txId) { // Returns transaction id-->
+<!--// TODO remember id and match it with responses for tracking transaction history in session-->
+<!--// TODO server could store the full transaction history for use between sessions-->
+<!--console.log('Upload succeeded with txId ' + txId);-->
+<!--},-->
+<!--error: function (err) {-->
+<!--console.error('Upload error: ' + err);-->
+<!--},-->
+<!--// Form data-->
+<!--data: formData,-->
 
-    <!--//Options to tell jQuery not to process data or worry about content-type.-->
-    <!--cache: false,-->
-    <!--contentType: false,-->
-    <!--processData: false-->
-    <!--});-->
-    <!--});-->
-    <!--</script>-->
+<!--//Options to tell jQuery not to process data or worry about content-type.-->
+<!--cache: false,-->
+<!--contentType: false,-->
+<!--processData: false-->
+<!--});-->
+<!--});-->
+<!--</script>-->
 </div>

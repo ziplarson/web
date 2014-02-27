@@ -35,6 +35,8 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
 
     var defaultNotify = false;
 
+    $('input[type=file]').css('background-color','red');
+
     $scope.catalog = {
 
         // Accordion flags
@@ -45,7 +47,15 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
         /** userLang: the client's current language */
         clientLang: window.navigator.userLanguage || window.navigator.language,
 
-        step: 1,
+
+        /** contentFile: content file to upload */
+        contentFile: undefined,
+        /** fileSelected: called with content file selected by user */
+        fileSelected: function($files) {
+            $scope.catalog.contentFile = $files[0];
+        },
+
+//        createCatalogStep: 1,
 
         workTypeCatalogFieldInfo: client.shared.workTypeCatalogFieldInfo,
 
@@ -150,25 +160,59 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
         /* saveMetadata: creates or updates a catalog item's metadata using a form */
         saveMetadata: function () {
             if ($scope.catalog.metatadaValid) { // save button disabled
+
                 var postData = $scope.catalog.postData;
-                $http.post('/catalog/submit/metadata', postData)
-                    .success(function (res, status, headers, config) {
-                        if (status === 200) {
-                            $scope.catalog.step = 2;
-                            horaceApp.debug(res);
-                            $scope.catalog.metatadaValid = false;
-                        } else {
-                            $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
+
+                if (typeof $scope.catalog.contentFile === 'undefined') {
+
+                    $http.post('/catalog/submit/metadata', postData)
+                        .success(function (res, status, headers, config) {
+                            if (status === 200) {
+                                horaceApp.debug(res);
+                                $scope.catalog.metatadaValid = false;
+                            } else {
+                                $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
+                                $scope.catalog.error = true;
+                            }
+                        })
+                        .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
+                            if (status !== 200) {
+                                horaceApp.debug(err);
+                            }
+                            $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
                             $scope.catalog.error = true;
-                        }
-                    })
-                    .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
-                        if (status !== 200) {
-                            horaceApp.debug(err);
-                        }
-                        $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
-                        $scope.catalog.error = true;
-                    });
+                        });
+
+                } else {
+                    $scope.upload = $upload.upload({
+
+                        url: '/catalog/submit/metadata', //upload.php script, node.js route, or servlet url
+                        // method: POST or PUT,
+                        // headers: {'headerKey': 'headerValue'},
+                        // withCredentials: true,
+                        data: postData, // TODO this is going across as a string!
+                        file: $scope.catalog.contentFile
+                        // file: $files, //upload multiple files, this feature only works in HTML5 FromData browsers
+                        /* set file formData name for 'Content-Desposition' header. Default: 'file' */
+                        //fileFormDataName: myFile, //OR for HTML5 multiple upload only a list: ['name1', 'name2', ...]
+                        /* customize how data is added to formData. See #40#issuecomment-28612000 for example */
+                        //formDataAppender: function(formData, key, val){} //#40#issuecomment-28612000
+                    }).progress(function(evt) {
+                            console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                        }).success(function(data, status, headers, config) {
+                            // file is uploaded successfully
+                            console.log(data);
+                            if (status === 200) {
+                                horaceApp.debug(data);
+                                $scope.catalog.metatadaValid = false;
+                            } else {
+                                $scope.catalog.errorMsg = 'Error: Try again. (' + data.error + ')';
+                                $scope.catalog.error = true;
+                            }
+                        });
+
+                }
+
             }
         },
 
