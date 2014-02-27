@@ -118,5 +118,6 @@ div.errorMsg {
 
 textarea, input, select .catalogField {
     width: 300px;
-    height: 2em
+    height: 2em;
+    font-family: 'American Typewriter'
 }

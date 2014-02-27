@@ -31,9 +31,15 @@
 
 // DBG type := {true|false} true is http, false is sockets
 var debug = true;
+if (debug) {
+    $('#httpDebug').css('display', 'inline');
+    $('#socketDebug').css('display', 'inline');
+}
+
 horaceApp.debug = function (obj, type) {
     if (debug) {
-        var dbg = (typeof type === 'undefined' || type)? $('#httpDebug') : $('#socketDebug')
+        var dbg = (typeof type === 'undefined' || type) ? $('#httpDebug') : $('#socketDebug')
+        dbg.css('display', 'inline');
         if ('undefined' !== typeof dbg) {
             if (obj.type === 'trans') {
                 dbg.css('color', 'blue');

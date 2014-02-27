@@ -36,7 +36,7 @@ var horaceApp = angular.module('horaceApp', [
     'ui.bootstrap'
 ]); /* End horaceApp module */
 
-horaceApp.config(function ($routeProvider) {
+horaceApp.config(function ($routeProvider, $locationProvider) {
 
     $routeProvider
         .when('/', {
@@ -62,13 +62,8 @@ horaceApp.config(function ($routeProvider) {
         .otherwise({
             redirectTo: '/'
         });
+
+    // configure html5 to get links working on jsfiddle
+//    $locationProvider.html5Mode(true);
+
 }); /* End horaceApp Route Config */
-
-
-// Keep for reference if I decide to later use the route segment provider.
-//horaceApp.config(function ($routeSegmentProvider, $routeProvider) {
-//
-//    $routeSegmentProvider
-//        .when('/', 'index')
-//        .segment('index', {templateUrl: 'views/main.html', controller: 'SignInCtrl'});
-//});

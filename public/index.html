@@ -60,6 +60,7 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
     <script src="scripts/vendor/angular/angular.js"></script>
     <!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.13/angular-route.js"></script>-->
     <script src="scripts/vendor/angular-route/angular-route.js"></script>
+    <script src="scripts/vendor/angular-animate/angular-animate.min.js"></script>
     <script src="scripts/vendor/angular-ui/angular-ui.js"></script>
     <!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>-->
     <script src="scripts/vendor/angular-ui/ui-bootstrap.js"></script>
@@ -115,17 +116,14 @@ Note: Using <% and %> as Hogan delimiters instead of mustaches (mustaches reserv
 </script>
 <body ng-app="horaceApp">
 
-<!-- Test -->
-<!--<div id="pageview"></div>-->
-
-<!-- Websocket messages from transactions for debugging only -->
-<div id="socketDebug">Socket Debug</div>
-<!-- Http response message debugging -->
-<div id="httpDebug">Http Debug</div>
-
 <div ng-controller="AppCtrl">
     <div ng-view></div>
 </div>
+
+<!-- Websocket messages from transactions for debugging only -->
+<div id="socketDebug" style="display: none">Socket Debug</div>
+<!-- Http response message debugging -->
+<div id="httpDebug" style="display: none">Http Debug</div>
 
 </body>
 </html>

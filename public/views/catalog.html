@@ -21,48 +21,58 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 
-<div class="left-column" style="width: 12%">
-    <a onclick="document.location = 'index.html#/browse/';">Go Browse</a>
-</div>
-<div class="right-column" style="width: 88%">
+<!--<div class="left-column" style="width: 12%">-->
+    <!--<a onclick="document.location = 'index.html#/browse/';">Go Browse</a>-->
+<!--</div>-->
+<div style="width: 88%">
+
+    <!-- TODO one controller per accordion group? -->
 
     <accordion close-others="catalog.openOneAtATime">
 
-        <accordion-group is-open="catalog.createCatalogOpen" heading="Create/Update Catalog">
-            <div class="yellowBox">
+        <accordion-group is-open="catalog.createCatalogOpen" heading="Create Catalog">
+
+            <div class="yellowBox" ng-show="catalog.step === 2">
+                <div style="font-weight: bold;text-align: center;font-size: large">Step Two</div>
+                <div style="font-weight: bold;text-align: center">Upload your content</div>
+            </div>
+
+            <div class="yellowBox" ng-show="catalog.step === 1">
+                <div style="font-weight: bold;text-align: center;font-size: large">Step One</div>
+                <div style="font-weight: bold;text-align: center">Catalog your submission by entering some information</div>
                 <form name="saveMetadataForm" novalidate>
 
-                    <div>Work Type: <select ng-change="catalog.workTypeSelected()"
-                                            ng-model="catalog.postData.metadata.workType"
-                                            ng-options="value[0] as value[1] for value in catalog.workTypeOptions"></select>
+                    <div style="font-weight: bold">Select Work Type: <select ng-change="catalog.workTypeSelected()"
+                                                                      ng-model="catalog.postData.metadata.workType"
+                                                                      ng-options="value[0] as value[1] for value in catalog.workTypeOptions"></select>
                     </div>
 
                     <input type="hidden" ng-model="catalog.postData.notify"/>
 
-                    <!-- Start catalog fields -->
-                    <div id="catalogFields" style="display: none">
-                        <table style="table-layout:fixed">
+                    <div id="catalogFields" style="display: none" ng-init="catalog.metatadaValid = false">
+                        <!-- Start catalog fields -->
+                        <table style="table-layout:fixed; vertical-align: middle;margin-left: 2em">
                             <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.postData.metadata.workType]"
                                 ng-if="(item.id !== 'workType')">
-                                <td><span>{{item.name}}:</span><span ng-if="item.required"
+                                <td><span style="font-weight: bold">{{item.name}}:</span><span ng-if="item.required"
                                                                      style="font-weight: bold;color:red">*</span>
                                 </td>
                                 <td style="text-align: center;vertical-align: middle;width: 32px"><img
-                                        tooltip="{{item.description}}" src="images/help-icon-16.png"/></td>
+                                        tooltip="{{item.description}}" src="images/help-icon-24.png"/></td>
                                 <td style="height: 40px;width: 300px;word-wrap:break-word">
-                                    <textarea name="{{item.id}}" ng-if="item.type === 'text'"
+                                    <textarea catalog-field name="{{item.id}}" ng-if="item.type === 'text'"
                                               ng-model="catalog.postData.metadata[item.id]"
                                               class="catalogField"></textarea>
-                                    <input name="{{item.id}}" ng-if="item.type === 'input'"
+                                    <input catalog-field name="{{item.id}}" ng-if="item.type === 'input'"
                                            ng-model="catalog.postData.metadata[item.id]"
                                            placeholder="{{item.placeholder}}"
                                            class="catalogField"/>
-                                    <select name="{{item.id}}" ng-if="item.type === 'select'"
+                                    <select catalog-field name="{{item.id}}" ng-if="item.type === 'select'"
                                             ng-model="catalog.postData.metadata[item.id]"
                                             ng-options="value[0] as value[1] for value in item.options"></select>
 
                                     <div ng-if="item.id === 'publisherAddress'">
-                                        <input name="{{item.id}}" type="text" class="catalogField"
+                                        <input catalog-field name="{{item.id}}" type="text" class="catalogField"
                                                ng-model="asyncSelected"
                                                placeholder="Type Publisher's Address"
                                                typeahead="address.formatted_address for address in catalog.getAddress($viewValue) | filter:$viewValue"
@@ -74,43 +84,33 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                 </td>
                             </tr>
                         </table>
-                    </div>
-                    <!-- End catalog fields -->
-
-                    <!-- end of fields -->
-                    <div class="errorMsg" ng-show="catalog.error">{{catalog.errorMsg}}</div>
-                    <div>
-                        <!-- TODO replace submit with Save icon -->
-                        <a style="margin: 1em" ng-click="catalog.submitMetadata()"
-                           ng-disabled="!saveMetadataForm.$valid">
-                            Create
-                        </a>
-                    <span>
-                        <!-- TODO replace Search Similar with Search icon -->
-                        <a ng-click="catalog.resetCatalogMetadata()">Clear</a>
-                        <a ng-click="catalog.printMetadata()">Print</a>
-                        <!--<a ng-click="catalog.searchCatalogOpen = true">Clear</a>-->
-                    </span>
-
+                        <!-- End catalog fields -->
+                        <div class="errorMsg" ng-show="catalog.error">{{catalog.errorMsg}}</div>
+                        <div style="margin: 1em">
+                            <img ng-click="catalog.saveMetadata()" tooltip="Save catalog information"
+                                 src="images/save-icon-32.png" ng-show="catalog.metatadaValid"/>
+                            <img src="images/save-icon-disabled-32.png" tooltip="Complete required catalog fields to save catalog information" ng-show="!catalog.metatadaValid"/>
+                            <img style="margin-left: 2em" ng-click="catalog.resetCatalogMetadata()"
+                                 src="images/clear-icon-32.png"/><span></span>
+                        </div>
                     </div>
                 </form>
             </div>
         </accordion-group>
 
-        <accordion-group style="margin-top: 1em" is-open="catalog.searchCatalogOpen" heading="Search">
-            <div style="margin-top: 2em"/>
+        <br/>
+
+        <accordion-group is-open="catalog.searchCatalogOpen" heading="Search">
+            <div class="yellowBox"/>
             <form name="searchForm" novalidate> <!-- TODO replace button with search icon -->
-                <div>Search: <input ng-model="catalog.query.general" name="general" type="text" size="100"/></div>
-                <a ng-click="catalog.search()"
-                   ng-disabled="!searchForm.$valid || catalog.query.general === ''">
-                    Submit Search
-                </a>
+                <div><span style="font-weight: bold">Search: </span><input ng-keypress="catalog.search($event)" dfl-set-focus
+                                                                           ng-model="catalog.query.general"
+                                                                           name="general" type="text" size="100"/> <img
+                        tooltip="Search" ng-click="catalog.search()" src="images/search-icon-24.png"/></div>
             </form>
             <div id="searchResults" style="display: none">
                 <dfl-cat-search-result ng-repeat="result in catalog.searchResults"></dfl-cat-search-result>
-                <!--<table>-->
-                   <!--<a href="http://apple.com"><tr ><td style="width: 200px">{{result.score}}</td><td>{{result.obj.title.title}}</td></tr></a>-->
-                <!--</table>-->
+                <div id="searchMsg" style="margin-top: 1em"></div>
             </div>
         </accordion-group>
 

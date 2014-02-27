@@ -75,8 +75,8 @@ and to use DBs as plugins.
 
 TODO
 ====
-- Link to browse section when search result is selected.
 - upload content
+- Link to browse section when search result is selected.
 - implement libraries with permissions, users, catalogs and content copies, etc.
   libraries are distributed (library comm protocol)
 - add publication date (day, month, year separately or partially)

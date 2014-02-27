@@ -43,12 +43,12 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
         onCatalogSearchQueryListener = listener;
     }
 
-    var onCatalogSubmitMetadataListener = function(tx) {
+    var onCatalogSaveMetadataListener = function(tx) {
         horaceApp.debug(tx);
     }
 
-    var setCatalogSubmitMetadataListener = function (listener) {
-        onCatalogSubmitMetadataListener = listener;
+    var setCatalogSaveMetadataListener = function (listener) {
+        onCatalogSaveMetadataListener = listener;
     }
 
 //    horaceApp.connectSockets();
@@ -86,7 +86,7 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
          * result of attempt to create or update a catalog item.
          */
         txSocket.on('catalog/submit/metadata', function (tx) {
-            onCatalogSubmitMetadataListener(tx);
+            onCatalogSaveMetadataListener(tx);
         });
 
         /**
@@ -180,6 +180,6 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
     return {
         connectSockets: connectSockets,
         setCatalogSearchQueryListener: setCatalogSearchQueryListener,
-        setCatalogSubmitMetadataListener: setCatalogSubmitMetadataListener
+        setCatalogSaveMetadataListener: setCatalogSaveMetadataListener
     };
 }]);

@@ -62,7 +62,7 @@ horaceApp.directive('dflCatSearchResult', function () {
             var specs = client.shared.catalogFieldSpecs;
             var subSpecs = client.shared.catalogFieldSubSpecs;
             var obj = scope.result.obj;
-            var html = '<div>';
+            var html = '<div style="margin-top: .5em">';
             var len = obj.len - 1; // minus _id
             var count = 0;
             for (var i in obj) {
@@ -96,6 +96,42 @@ horaceApp.directive('dflCatSearchResult', function () {
     };
 });
 
+/*
+ * Directive used to validate catalog metadata form
+ */
+horaceApp.directive('catalogField', function () {
+//    function validate(scope, ctrl, fieldName, text) {
+//
+//    }
+
+    function checkRequired(scope, fieldId, fieldValue) {
+        var specs = client.shared.workTypeCatalogFieldInfo[scope.catalog.postData.metadata.workType];
+        var valid = true;
+        for (var i in specs) {
+            var spec = specs[i];
+            if (spec.required) {
+                var id = specs[i].id;
+                var value = (id === fieldId)? fieldValue : scope.catalog.postData.metadata[id];
+                if (typeof value === 'undefined' || value.length === 0) {
+                    valid = false;
+                }
+            }
+        }
+        if (scope.catalog.metatadaValid !== valid) { // prevent unnecessary trigger
+            scope.catalog.metatadaValid = valid;
+        }
+    }
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            ctrl.$parsers.unshift(
+                function (fieldValue) {
+                    checkRequired(scope, attrs.name, fieldValue);
+                    return fieldValue;
+                });
+        }
+    }
+});
 
 /*
  * Directive used to validate signup and signin input fields.

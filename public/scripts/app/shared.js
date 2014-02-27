@@ -44,7 +44,7 @@ function objectOverrides(obj, overrides) {
 function makeRequired(obj) {
     var copy = shallowCopyObj(obj);
     if (copy.description) {
-        copy.description = 'Required field. ' + copy.description;
+        copy.description = 'REQUIRED FIELD. ' + copy.description;
     }
     return objectOverrides(copy, {required: true});
 }

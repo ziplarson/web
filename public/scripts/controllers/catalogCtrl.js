@@ -33,20 +33,29 @@
 
 horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $timeout, $upload) {
 
+    var defaultNotify = false;
+
     $scope.catalog = {
 
         // Accordion flags
         openOneAtATime: false,
         searchCatalogOpen: true,
-        createCatalogOpen: false,
+        createCatalogOpen: true,
+
+        /** userLang: the client's current language */
+        clientLang: window.navigator.userLanguage || window.navigator.language,
+
+        step: 1,
 
         workTypeCatalogFieldInfo: client.shared.workTypeCatalogFieldInfo,
 
         workTypeOptions: client.workTypeOptions,
 
+        metatadaValid: false,
+
         postData: {
             metadata: undefined, // The catalog metadata
-            notify: true // eventually a user preference
+            notify: defaultNotify // eventually a user preference
         },
 
         searchResults: undefined,
@@ -130,7 +139,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
         /* query: catalog search query fields TODO must conform to server-side schema.query! */
         query: {
             general: null, /* general: queries any metadata and content */
-            notify: true /* eventually part of user prefs */
+            notify: defaultNotify /* eventually part of user prefs */
         },
 
 //        /* goBrowse: Go browse TODO unfinished */
@@ -138,37 +147,52 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
 //            document.location = 'index.html#/browse/';
 //        },
 
-        /* submitMetadata: creates or updates a catalog item's metadata using a form */
-        submitMetadata: function () {
-            var postData = $scope.catalog.postData;
-            $http.post('/catalog/submit/metadata', postData)
-                .success(function (res, status, headers, config) {
-                    if (status === 200) {
-                        horaceApp.debug(res);
-                    } else {
-                        $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
+        /* saveMetadata: creates or updates a catalog item's metadata using a form */
+        saveMetadata: function () {
+            if ($scope.catalog.metatadaValid) { // save button disabled
+                var postData = $scope.catalog.postData;
+                $http.post('/catalog/submit/metadata', postData)
+                    .success(function (res, status, headers, config) {
+                        if (status === 200) {
+                            $scope.catalog.step = 2;
+                            horaceApp.debug(res);
+                            $scope.catalog.metatadaValid = false;
+                        } else {
+                            $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
+                            $scope.catalog.error = true;
+                        }
+                    })
+                    .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
+                        if (status !== 200) {
+                            horaceApp.debug(err);
+                        }
+                        $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
                         $scope.catalog.error = true;
-                    }
-                })
-                .error(function (err, status, headers, config) { // TODO should be either 400 or 500 page
-                    if (status !== 200) {
-                        horaceApp.debug(err);
-                    }
-                    $scope.catalog.errorMsg = 'Technical Problem: Please retry. (' + status + ')';
-                    $scope.catalog.error = true;
-                });
+                    });
+            }
         },
 
         /* searchCatalog: searches catalog */
-        search: function () {
+        search: function (event) {
             var query = $scope.catalog.query;
+            if ((typeof query === 'undefined') || (typeof event !== 'undefined' && event.keyCode !== 13)) {
+                return;
+            }
+            $scope.catalog.searchResults = [];
+            var searchMsg = $('#searchMsg')[0];
+            searchMsg.innerHTML = '';
+            $('#searchResults').css('display', 'inline');
             $http.post('/catalog/search/query', query)
                 .success(function (res, status, headers, config) {
                     if (status === 200) {
                         horaceApp.debug(res);
+                        if (typeof res.data === 'undefined' || res.data.length === 0) {
+                            searchMsg.innerHTML = res.msg;
+                        } else {
+                            $scope.catalog.searchResults = res.data;
+                        }
                     } else {
                         $scope.catalog.errorMsg = 'Error: Try again. (' + res.error + ')';
-
                         $scope.catalog.error = true;
                     }
                 })
@@ -205,12 +229,6 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
             });
         }
     };
-
-
-    SocketsService.setCatalogSearchQueryListener(function (tx) {
-        $scope.catalog.searchResults = tx.data;
-        $('#searchResults').css('display', 'inline');
-    });
 
 });
 /* End of CatalogCtrl */
