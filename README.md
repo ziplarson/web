@@ -1,12 +1,10 @@
-Design for Literature
-=====================
+# Design for Literature
 
 rk@designforliterature.com
 rk@post.harvard.edu
 
 
-HIRA Model RESTful web service and User Interface Reference Implementations
-===========================================================================
+## HIRA Model RESTful service and UI Reference Implementations
 
 This is a RESTful service implemented in node.js/express and an user interface
 implemented in HTML5/CSS3/Javascript/Angularjs using MongoDB as a plugin database.
@@ -19,8 +17,7 @@ is not intended to be used in production environments. However, it is available 
 Github repository to provide transparency to and facilitate
 communication with collaborators.
 
-Notifications
-=============
+## Notifications
 
 Notifications for clients are sent through the noteSocket websocket
 and are objects with the following minimum fields:
@@ -51,30 +48,27 @@ ack         An acknowledgement that a socket transaction or any other http reque
 note        A note for the client. The client may present the message as an
             informational notification.
 
-Server-side Errors
-==================
+## Server-side Errors
 
-Thrown errors must have a type and msg field (as in notifications).
+> Thrown errors must have a type and msg field (as in notifications).
 All errors of type 'fatal' and 'trans' must be caught and logged; all
 other errors must be delivered to the client through the notification
 or some other client-facing mechanism.
 
 The try/catch mechanism should expect only error types 'fatal', 'trans' and 'error'.
 
-Server-side Websocket Management
-================================
+## Server-side Websocket Management
 
-Sockets are cached on a per-session basis to permit access
+> Sockets are cached on a per-session basis to permit access
 to them at any time. This allows us to use socket communications in any context.
 
-Database
-========
+## Database
 
-Values all stored as strings for now to simplify migration to other DBs
-and to use DBs as plugins.
+> Values all stored as strings for now to simplify migration to other DBs
+and to use DBs as plugins. To facilitate prototyping the first version,
+we're now using MongoDB and will migrate to HBase at a later time.
 
-TODO
-====
+### TODO
 - upload content
 - Link to browse section when search result is selected.
 - implement libraries with permissions, users, catalogs and content copies, etc.

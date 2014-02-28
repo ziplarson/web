@@ -314,7 +314,7 @@ var isoLangs = {
     },
     "ie":{
         "name":"Interlingue",
-        "nativeName":"Originally called Occidental; then Interlingue after WWII"
+        "nativeName":"Occidental/Interlingue"
     },
     "ga":{
         "name":"Irish",
@@ -795,21 +795,11 @@ function getLangs() {
     var langs = [];
     for (var i in isoLangs) {
         var lang = isoLangs[i];
-        langs.push([i, lang.nativeName])
+        langs.push([i, lang.name])
     }
     return langs;
 }
 var langs = getLangs();
-//[
-//    ['zh', 'Chinese (zh)'],
-//    ['en', 'English (en)'],
-//    ['es', 'Spanish (es)'],
-//    ['fr', 'French (fr)'],
-//    ['grc', 'Ancient Greek (grc)'],
-//    ['de', 'German (de)'],
-//    ['la', 'Latin (la)'],
-//    ['ru', 'Russian (ru)']
-//];
 
 function getCodes(obj) {
     var i, codes = {};
