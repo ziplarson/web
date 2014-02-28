@@ -30,8 +30,8 @@ communication with collaborators.
 
 > http responses and websocket messages bound to clients are JSON objects
  with the following fields:
-- type := A string code indicating whether the transaction was successful or not.
-- msg := A readable message indicating the specific error. This is only used for debugging at present.
+- `<type>` := A string code indicating whether the transaction was successful or not.
+- `<msg>` := A readable message indicating the specific error. This is only used for debugging at present.
 
 
 > Type:
