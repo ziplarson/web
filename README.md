@@ -1,5 +1,5 @@
 # Design for Literature
-
+![Design For Literature](public/images/dfl-icon-250.png "Design For Literature")
 >Currently working on the first version (0.1.0). Aiming for a demo of some of the
 features by April 7, 2014.
 
@@ -30,30 +30,30 @@ communication with collaborators.
 
 > http responses and websocket messages bound to clients are JSON objects
  with the following fields:
-- <type> := A string code indicating whether the transaction was successful or not.
-- <msg> := A readable message indicating the specific error. This is only used for debugging at present.
+- type := A string code indicating whether the transaction was successful or not.
+- msg := A readable message indicating the specific error. This is only used for debugging at present.
 
 
 > Type:
 
-- <fatal>:     A fatal server-side system error. The message is for debugging use only; clients
+- fatal:     A fatal server-side system error. The message is for debugging use only; clients
             should be given an appropriate, simple message. The message should be logged
             to the console to facilitate client-side debugging.
 
-- <trans>:     A possibly transient server-side system error. The message is for debugging use only; clients
+- trans:     A possibly transient server-side system error. The message is for debugging use only; clients
             should be told that they should try the operation again or later. The message should be logged
             to the console to facilitate client-side debugging.
 
-- <error>:     An error for the client. The client should present the message as an error notification
+- error:     An error for the client. The client should present the message as an error notification
             to the user who may need to take some corrective action. The message should be logged
             to the console to facilitate client-side debugging.
 
-- <warn>:      A warning for the client. The client may present the message payload
+- warn:      A warning for the client. The client may present the message payload
             as a warning notification.
 
-- <ack>:       An acknowledgement that a socket transaction or any other http request has succeeded.
+- ack:       An acknowledgement that a socket transaction or any other http request has succeeded.
 
-- <note>:      A note for the client. The client may present the message as an
+- note:      A note for the client. The client may present the message as an
             informational notification.
 
 ## Server-side Errors
