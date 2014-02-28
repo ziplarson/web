@@ -1,18 +1,20 @@
 # Design for Literature
 
-rk@designforliterature.com
-rk@post.harvard.edu
+>Currently working on the first version (0.1.0). Aiming for a demo of some of the
+features by April 7, 2014.
 
+>Information about this project: <info@designforliterature.com>
+To contact me: <rk@post.harvard.edu>
 
 ## HIRA Model RESTful service and UI Reference Implementations
 
-This is a RESTful service implemented in node.js/express and an user interface
+> This is a RESTful service implemented in node.js/express and an user interface
 implemented in HTML5/CSS3/Javascript/Angularjs using MongoDB as a plugin database.
 
-The reference model is used to guide and evaluate the HIRA spec. The first
+> The reference model is used to guide and evaluate the HIRA spec. The first
 draft version of HIRA will be published in the Spring of 2014.
 
-Most of the features implemented here are still experimental and the system
+> Most of the features implemented here are still experimental and the system
 is not intended to be used in production environments. However, it is available in this open
 Github repository to provide transparency to and facilitate
 communication with collaborators.
@@ -66,7 +68,7 @@ to them at any time. This allows us to use socket communications in any context.
 
 > Values all stored as strings for now to simplify migration to other DBs
 and to use DBs as plugins. To facilitate prototyping the first version,
-we're now using MongoDB and will migrate to HBase at a later time.
+we're now using MongoDB and will migrate to HBase or Cassandra at a later time.
 
 ### TODO
 - upload content
