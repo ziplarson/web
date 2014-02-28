@@ -7,9 +7,9 @@
 Currently working on the first version (0.1.0). Aiming for a demo of some of the
 features by April 7, 2014. (See *Roadmap*, below.)
 
- About this project: http://designforliterature.com or <info@designforliterature.com>.
+About this project: http://designforliterature.com or <info@designforliterature.com>.
 
- To contact Ruben Kleiman: <rk@post.harvard.edu>.
+To contact Ruben Kleiman: <rk@post.harvard.edu>.
 
 
 ## HIRA Reference Implementation
@@ -19,16 +19,17 @@ draft version of HIRA will be published by mid-2014.
 
 All components communicate via a `RESTful` protocol.
 
-Each `RESTful` service is implemented in node.js/express. Clients are
+When possible, a `RESTful` service is implemented in node.js/express. Clients are
 implemented in `HTML5/CSS3/Javascript/Angularjs`. For more sophisticated
-search and analytics, services will be provided in Scala/Finnagle.
+search and analytics, services will be provided in Scala/Finnagle and SOLR
+(simply because nodejs doesn't have good implementations of some needed libraries).
 
 We consider DBs as plugins. Initially, the reference implementation
 uses `MongoDB` because it helps to do rapid development, though for
-production reasons we will probably move to `HBase` or `Cassandra` within
+production reasons we will move to `HBase` or `Cassandra` within
 a few months.
 
-Most of the features implemented here are still experimental and the system
+Most of the features implemented here are work-in-progress and until the version 0.1.0 release the system
 is not intended to be used in production environments. However, it is available in this open
 Github repository to provide transparency to and facilitate
 communication with collaborators.

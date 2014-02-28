@@ -66,7 +66,7 @@ horaceApp.directive('dflCatSearchResult', function () {
             var len = obj.len - 1; // minus _id
             var count = 0;
             for (var i in obj) {
-                if (i !== '_id') {
+                if (i !== '_id' && i !== 'content') { // TODO remove 'content' when content is moved to the works collection
                     var val = obj[i];
                     if ($.isArray(val)) {
                         var subHtml = '<span><b>' + specs[i].name + ': </b></span>';
