@@ -20,35 +20,40 @@ is not intended to be used in production environments. However, it is available 
 Github repository to provide transparency to and facilitate
 communication with collaborators.
 
-## Notifications
+## Web Socket and HTTP Connection Management
 
-> Notifications for clients are sent through the noteSocket websocket
-and are objects with the following minimum fields:
+> Web socket connections are used in a variety of ways:
+1. To receive notifications from servers.
+2. To receive transaction completion messages from servers for long running transactions.
+3. To handle messaging within users of a "library" (a group of owners and editors of that library)
+4. To handle messaging in chat rooms.
 
-- type := A string code indicating the severity and nature of the error.
-- msg := A readable message indicating the specific error
+> http responses and websocket messages bound to clients are JSON objects
+ with the following fields:
+- <type> := A string code indicating whether the transaction was successful or not.
+- <msg> := A readable message indicating the specific error. This is only used for debugging at present.
 
 
-> Notification types:
+> Type:
 
-- fatal       A fatal server-side system error. The message is for debugging use only; clients
+- <fatal>:     A fatal server-side system error. The message is for debugging use only; clients
             should be given an appropriate, simple message. The message should be logged
             to the console to facilitate client-side debugging.
 
-- trans       A possibly transient server-side system error. The message is for debugging use only; clients
+- <trans>:     A possibly transient server-side system error. The message is for debugging use only; clients
             should be told that they should try the operation again or later. The message should be logged
             to the console to facilitate client-side debugging.
 
-- error       An error for the client. The client should present the message as an error notification
+- <error>:     An error for the client. The client should present the message as an error notification
             to the user who may need to take some corrective action. The message should be logged
             to the console to facilitate client-side debugging.
 
-- warn        A warning for the client. The client may present the message payload
+- <warn>:      A warning for the client. The client may present the message payload
             as a warning notification.
 
-- ack         An acknowledgement that a socket transaction or any other http request has succeeded.
+- <ack>:       An acknowledgement that a socket transaction or any other http request has succeeded.
 
-- note        A note for the client. The client may present the message as an
+- <note>:      A note for the client. The client may present the message as an
             informational notification.
 
 ## Server-side Errors
