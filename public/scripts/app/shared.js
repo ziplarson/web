@@ -812,6 +812,11 @@ function getCodes(obj) {
 
 langs.codes = getCodes(langs);
 
+// contentFormats: formats for uploaded content
+var contentFormats = [
+    ['raw', 'Raw Text']
+];
+
 // workTypes: work type dropdown (TODO should come from server)
 var workTypes = [
     ['WebSite', 'Web Site'],
@@ -860,7 +865,7 @@ var catalogFieldSpecs = { // TODO incorporate the value type (string/number/choi
     lang: {id: 'lang', name: 'Language', type: 'select', options: langs, min: 2, max: 8, description: 'The main language in which the work for this catalog item is written', validator: 'string', xformer: 'set'},
     authors: {id: 'authors', subId: 'fullName', subIdName: 'Name', name: 'Author(s)', type: 'text', description: 'A list of the original author(s) of this work', validator: 'string', xformer: 'push'},
     editors: {id: 'editors', subId: 'fullName', subIdName: 'Name', name: 'Editor(s)', type: 'text', description: 'For anthologies and other collections, this is a list of the original editor(s) of this work.', validator: 'string', xformer: 'push'},
-    edition: {id: 'edition', name: 'Edition', type: 'input', description: 'The edition of this work. This must be a number.', validator: 'integer', min: 1, max: 1000, xformer: 'set'}, // TODO a number wheel?
+    edition: {id: 'edition', name: 'Edition', type: 'input', description: 'The edition of this work. This must be a number.', validator: 'integer', min: 1, max: 1000, xformer: 'set'}, // TODO present a number wheel?
     publisherAddress: {id: 'publisherAddress', toId: 'publisher', 'subId': 'address', subIdName: 'Full Address', name: "Publisher Address", type: 'typeahead', description: "The address of this work's publisher", validator: 'string', xformer: 'construct'},
     publisherName: {id: 'publisherName', toId: 'publisher', 'subId': 'name', name: 'Publisher Name', type: 'input', min: 1, description: "The name of this work's publisher", xform: 'map', xformer: 'construct', validator: 'string'},
     publisherCity: {id: 'publisherCity', toId: 'publisher', 'subId': 'city', name: 'Publisher City', type: 'input', description: "The publisher's city", xform: 'map', xformer: 'construct', validator: 'string'},
@@ -869,7 +874,8 @@ var catalogFieldSpecs = { // TODO incorporate the value type (string/number/choi
     copyright: {id: 'copyright', name: 'Copyright', type: 'text', min: 8, description: "A copyright description", validator: 'string', xformer: 'set'},
     subjects: {id: 'subjects', subId: 'name', name: 'Subject(s)', type: 'text', description: "Subjects areas pertaining to this work", validator: 'string', xformer: 'push'},
     pageUrl: {id: 'pageUrl', name: 'Page URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the page cited by this catalog item", validator: 'url', xformer: 'set'},
-    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the home page cited by this catalog item", validator: 'url', xformer: 'set'}
+    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the home page cited by this catalog item", validator: 'url', xformer: 'set'},
+    contentFormat: {id: 'contentFormat', name: 'Content Format', type: 'select', description: "The format of an uploaded content file", validator: 'noop', xformer: 'set'} // TODO set to appropriate validator instead of noop
 };
 
 /**
@@ -903,7 +909,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     WebSite: [
         catalogFieldSpecs.id,
@@ -911,7 +918,8 @@ var workTypeCatalogFieldSpecs = {
         makeRequired(catalogFieldSpecs.websiteUrl),
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     WebPage: [
         catalogFieldSpecs.id,
@@ -919,7 +927,8 @@ var workTypeCatalogFieldSpecs = {
         makeRequired(catalogFieldSpecs.pageUrl),
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     Poem: [
         catalogFieldSpecs.id,
@@ -935,7 +944,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     BookNovel: [
         catalogFieldSpecs.id,
@@ -951,7 +961,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     BookNonFiction: [
         catalogFieldSpecs.id,
@@ -967,7 +978,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     BookShortStories: [
         catalogFieldSpecs.id,
@@ -983,7 +995,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     ShortStory: [
         catalogFieldSpecs.id,
@@ -999,7 +1012,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     JournalArticle: [
         catalogFieldSpecs.id,
@@ -1015,7 +1029,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ],
     Unknown: [
         catalogFieldSpecs.id,
@@ -1031,7 +1046,8 @@ var workTypeCatalogFieldSpecs = {
         catalogFieldSpecs.publisherCountry ,
         catalogFieldSpecs.copyright ,
         catalogFieldSpecs.subjects,
-        catalogFieldSpecs.workType
+        catalogFieldSpecs.workType,
+        catalogFieldSpecs.contentFormat
     ]
 };
 
@@ -1059,6 +1075,8 @@ var client = {
             },
 
             workType: workTypes,
+
+            contentFormats: contentFormats,
 
             /* The content formats for CatalogOptions.contentFormat */
             contentFormatRaw: 'raw',

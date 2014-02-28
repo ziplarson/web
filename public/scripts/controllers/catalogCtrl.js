@@ -59,6 +59,8 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
 
         workTypeCatalogFieldInfo: client.shared.workTypeCatalogFieldInfo,
 
+        contentFormatOptions: client.shared.definitions.contentFormats,
+
         workTypeOptions: client.workTypeOptions,
 
         metatadaValid: false,

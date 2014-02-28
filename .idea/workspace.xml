@@ -7,7 +7,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="34fe100a-3868-4462-bc09-7260d92943e7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/cancel-icon-32.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/views/catalog.html" afterPath="$PROJECT_DIR$/public/views/catalog.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/routes/catalog.js" afterPath="$PROJECT_DIR$/lib/routes/catalog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/controllers/catalogCtrl.js" afterPath="$PROJECT_DIR$/public/scripts/controllers/catalogCtrl.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/db/index.js" afterPath="$PROJECT_DIR$/lib/db/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/model/schema.js" afterPath="$PROJECT_DIR$/lib/model/schema.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/app/shared.js" afterPath="$PROJECT_DIR$/public/scripts/app/shared.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/store/storeManager.js" afterPath="$PROJECT_DIR$/lib/store/storeManager.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="web.iws" />
@@ -34,26 +41,10 @@
       <file leaf-file-name="catalog.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/views/catalog.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="86" selection-start="7012" selection-end="7012" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="3795">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/styles/app.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="0" selection-start="2516" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1320" max-vertical-offset="2250">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="63" selection-start="3251" selection-end="3251" vertical-scroll-proportion="0.0" vertical-offset="579" max-vertical-offset="1920">
-              <folding />
+            <state line="95" column="92" selection-start="5865" selection-end="5865" vertical-scroll-proportion="-32.125" vertical-offset="654" max-vertical-offset="3795">
+              <folding>
+                <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#accordion-group#0;n#accordion#0;n#div#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -61,47 +52,73 @@
       <file leaf-file-name="catalogCtrl.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/scripts/controllers/catalogCtrl.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="187" column="0" selection-start="7323" selection-end="7323" vertical-scroll-proportion="0.0" vertical-offset="2805" max-vertical-offset="4890">
+            <state line="61" column="64" selection-start="2249" selection-end="2249" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="4920">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="shared.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/scripts/app/shared.js">
+      <file leaf-file-name="schema.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/model/schema.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="758" column="6" selection-start="16296" selection-end="16296" vertical-scroll-proportion="0.0" vertical-offset="11370" max-vertical-offset="16575">
+            <state line="231" column="111" selection-start="9402" selection-end="9402" vertical-scroll-proportion="0.0" vertical-offset="2160" max-vertical-offset="4305">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LICENSE" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/LICENSE">
+      <file leaf-file-name="index.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/db/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="55" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+            <state line="276" column="57" selection-start="9204" selection-end="9204" vertical-scroll-proportion="0.56278026" vertical-offset="3323" max-vertical-offset="4215">
               <folding />
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="66" selection-start="1703" selection-end="1703" vertical-scroll-proportion="0.3127506" vertical-offset="240" max-vertical-offset="1695">
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="MarkdownPreviewEditor">
-            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="catalog.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/routes/catalog.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="163" column="19" selection-start="7034" selection-end="7034" vertical-scroll-proportion="0.0" vertical-offset="2445" max-vertical-offset="3585">
+            <state line="158" column="0" selection-start="6931" selection-end="6931" vertical-scroll-proportion="0.0" vertical-offset="1773" max-vertical-offset="3945">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="socketsService.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/scripts/services/socketsService.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="117" column="25" selection-start="4693" selection-end="4693" vertical-scroll-proportion="0.0" vertical-offset="1158" max-vertical-offset="2550">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="catalogService.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/services/catalogService.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="107" column="0" selection-start="4132" selection-end="4132" vertical-scroll-proportion="0.0" vertical-offset="908" max-vertical-offset="1800">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="storeManager.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/store/storeManager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="49" column="0" selection-start="2118" selection-end="2118" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="poemMethods.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/services/methods/poemMethods.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="126" column="0" selection-start="4610" selection-end="4610" vertical-scroll-proportion="0.0" vertical-offset="1208" max-vertical-offset="2100">
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -167,12 +184,7 @@
         <option value="$PROJECT_DIR$/public/template/catalogSearchResultTemplate.html" />
         <option value="$PROJECT_DIR$/scripts/init-db.js" />
         <option value="$PROJECT_DIR$/public/template/accordion/accordion-group.html" />
-        <option value="$PROJECT_DIR$/lib/db/index.js" />
-        <option value="$PROJECT_DIR$/lib/store/storeManager.js" />
-        <option value="$PROJECT_DIR$/lib/services/catalogService.js" />
-        <option value="$PROJECT_DIR$/lib/routes/catalog.js" />
         <option value="$PROJECT_DIR$/public/scripts/controllers/appCtrl.js" />
-        <option value="$PROJECT_DIR$/lib/model/schema.js" />
         <option value="$PROJECT_DIR$/public/scripts/services/socketsService.js" />
         <option value="localhost:3000/scripts/vendor/angular/angular.js" />
         <option value="$PROJECT_DIR$/public/scripts/directives/dflDirectives.js" />
@@ -184,11 +196,16 @@
         <option value="$PROJECT_DIR$/public/scripts/app/appModule.js" />
         <option value="$PROJECT_DIR$/public/styles/app.css" />
         <option value="$PROJECT_DIR$/public/index.html" />
-        <option value="$PROJECT_DIR$/public/views/catalog.html" />
-        <option value="$PROJECT_DIR$/public/scripts/controllers/catalogCtrl.js" />
-        <option value="$PROJECT_DIR$/public/scripts/app/shared.js" />
         <option value="$PROJECT_DIR$/LICENSE" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/public/scripts/controllers/catalogCtrl.js" />
+        <option value="$PROJECT_DIR$/public/views/catalog.html" />
+        <option value="$PROJECT_DIR$/lib/model/schema.js" />
+        <option value="$PROJECT_DIR$/public/scripts/app/shared.js" />
+        <option value="$PROJECT_DIR$/lib/store/storeManager.js" />
+        <option value="$PROJECT_DIR$/lib/services/catalogService.js" />
+        <option value="$PROJECT_DIR$/lib/routes/catalog.js" />
+        <option value="$PROJECT_DIR$/lib/db/index.js" />
       </list>
     </option>
   </component>
@@ -306,7 +323,65 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="styles" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -346,6 +421,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="images" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -360,7 +457,183 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="connection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mongodb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="collection" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="store" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="methods" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -379,6 +652,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="routes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -450,14 +759,6 @@
       <ConfigurationWrapper RunnerId="NodeJS.run" />
       <method />
     </configuration>
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -468,15 +769,23 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
       <setting name="configLocationType" value="CONFIG_FILE" />
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="CHROME" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
@@ -753,7 +1062,11 @@
       <created>1393551782317</created>
       <updated>1393551782318</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="node modules&#10;">
+      <created>1393552462881</created>
+      <updated>1393552462881</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -778,14 +1091,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="287" y="22" width="2210" height="1418" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33018124" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32923076" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943925" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27419356" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24890591" sideWeight="0.600624" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17496574" sideWeight="0.8440208" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29384616" sideWeight="0.49929774" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29339477" sideWeight="0.49929774" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34775087" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26728112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -793,11 +1107,10 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27461538" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32923076" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3031652" sideWeight="0.600624" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39937598" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3031652" sideWeight="0.600624" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -815,9 +1128,9 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24890591" sideWeight="0.600624" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17496574" sideWeight="0.8440208" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39937598" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3031652" sideWeight="0.600624" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26728112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3031652" sideWeight="0.600624" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39937598" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -866,39 +1179,20 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/lib/routes/catalog.js</url>
-          <line>146</line>
-          <option name="timeStamp" value="966" />
+          <line>209</line>
+          <option name="timeStamp" value="991" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="967" />
+      <option name="time" value="998" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/scripts/app/shared.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="6" selection-start="2110" selection-end="2110" vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="16725">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/routes/catalog.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="0" selection-start="6090" selection-end="6090" vertical-scroll-proportion="0.0" vertical-offset="2190" max-vertical-offset="3285">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/routes/sockets.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="2" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3210" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/services/methods/poemMethods.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="2" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2100" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/session/index.js">
@@ -949,11 +1243,6 @@
     <entry file="file://$PROJECT_DIR$/lib/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="3" column="1" selection-start="29" selection-end="29" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1155" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/connection/base.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="241" column="0" selection-start="6220" selection-end="6220" vertical-scroll-proportion="0.0" vertical-offset="3365" max-vertical-offset="7635" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/utilities/generalUtils.js">
@@ -1011,21 +1300,6 @@
         <state line="4" column="19" selection-start="186" selection-end="186" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="210" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/db/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="231" column="41" selection-start="7475" selection-end="7475" vertical-scroll-proportion="0.0" vertical-offset="2780" max-vertical-offset="4155" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/store/storeManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="29" selection-start="2082" selection-end="2082" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="555" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/services/catalogService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="22" selection-start="2103" selection-end="2103" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="2100" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/template/accordion/accordion.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90" />
@@ -1056,16 +1330,6 @@
         <state line="55" column="0" selection-start="1521" selection-end="1521" vertical-scroll-proportion="0.33333334" vertical-offset="575" max-vertical-offset="1545" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/model/schema.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="0" selection-start="3490" selection-end="3490" vertical-scroll-proportion="0.0" vertical-offset="760" max-vertical-offset="3735" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/services/socketsService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="12" selection-start="6834" selection-end="6834" vertical-scroll-proportion="0.0" vertical-offset="1635" max-vertical-offset="2550" />
-      </provider>
-    </entry>
     <entry file="http://localhost:3000/scripts/vendor/angular/angular.js">
       <provider selected="true" editor-type-id="httpFileEditor">
         <state />
@@ -1086,13 +1350,6 @@
         <state line="69" column="0" selection-start="2364" selection-end="2364" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="1125" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/styles/app.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="0" selection-start="2516" selection-end="2516" vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="2250">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/vendor/ng-file-upload/angular-file-upload-html5-shim.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="737" />
@@ -1105,54 +1362,126 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/views/catalog.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="86" selection-start="7012" selection-end="7012" vertical-scroll-proportion="0.0" vertical-offset="1080" max-vertical-offset="3795">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/vendor/ng-file-upload/angular-file-upload-shim.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="20" selection-start="985" selection-end="985" vertical-scroll-proportion="0.0" vertical-offset="290" max-vertical-offset="4575" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/app/shared.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="758" column="6" selection-start="16296" selection-end="16296" vertical-scroll-proportion="0.0" vertical-offset="10965" max-vertical-offset="16260">
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/routes/catalog.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="163" column="19" selection-start="7034" selection-end="7034" vertical-scroll-proportion="0.0" vertical-offset="1990" max-vertical-offset="3285">
+        <state line="42" column="66" selection-start="1703" selection-end="1703" vertical-scroll-proportion="0.45191193" vertical-offset="240" max-vertical-offset="1695">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="55" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
+        <state line="0" column="0" selection-start="0" selection-end="55" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/styles/app.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="139" column="24" selection-start="3667" selection-end="3667" vertical-scroll-proportion="0.0" vertical-offset="1358" max-vertical-offset="2250">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/scripts/controllers/catalogCtrl.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="187" column="0" selection-start="7323" selection-end="7323" vertical-scroll-proportion="0.0" vertical-offset="2145" max-vertical-offset="4890">
+        <state line="61" column="64" selection-start="2249" selection-end="2249" vertical-scroll-proportion="0.0" vertical-offset="151" max-vertical-offset="4920">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://$PROJECT_DIR$/public/views/catalog.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="66" selection-start="1703" selection-end="1703" vertical-scroll-proportion="0.3127506" vertical-offset="240" max-vertical-offset="1695">
+        <state line="95" column="92" selection-start="5865" selection-end="5865" vertical-scroll-proportion="-32.125" vertical-offset="654" max-vertical-offset="3795">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#form#0;n#div#0;n#accordion-group#0;n#accordion#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/model/schema.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="231" column="111" selection-start="9402" selection-end="9402" vertical-scroll-proportion="0.0" vertical-offset="2820" max-vertical-offset="4305">
           <folding />
         </state>
       </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/app/shared.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="867" column="200" selection-start="20913" selection-end="20913" vertical-scroll-proportion="-16.076923" vertical-offset="12272" max-vertical-offset="16530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/services/methods/poemMethods.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="126" column="0" selection-start="4610" selection-end="4610" vertical-scroll-proportion="0.0" vertical-offset="1208" max-vertical-offset="2100">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/connection/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="484" column="0" selection-start="19722" selection-end="19722" vertical-scroll-proportion="0.33333334" vertical-offset="6967" max-vertical-offset="14190">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/connection/base.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="441" column="0" selection-start="12371" selection-end="12371" vertical-scroll-proportion="0.33295965" vertical-offset="6318" max-vertical-offset="7635">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/mongodb/lib/mongodb/collection/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="632" column="0" selection-start="22279" selection-end="22279" vertical-scroll-proportion="0.33295965" vertical-offset="9183" max-vertical-offset="10980">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/services/catalogService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="0" selection-start="4132" selection-end="4132" vertical-scroll-proportion="0.0" vertical-offset="908" max-vertical-offset="1800">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/store/storeManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="2118" selection-end="2118" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/services/socketsService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="25" selection-start="4693" selection-end="4693" vertical-scroll-proportion="0.0" vertical-offset="1158" max-vertical-offset="2550">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/routes/catalog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="158" column="0" selection-start="6931" selection-end="6931" vertical-scroll-proportion="0.0" vertical-offset="1773" max-vertical-offset="3945">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/db/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="276" column="57" selection-start="9204" selection-end="9204" vertical-scroll-proportion="0.56278026" vertical-offset="3323" max-vertical-offset="4215">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

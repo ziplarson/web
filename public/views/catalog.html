@@ -93,8 +93,8 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                     <!--<div style="margin-left:2em"><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
                     <div class="lightGrayBoundedBox">
                         <span>Content File Type:
-                            <select ng-disabled="true">
-                                <option value="raw" selected="selected">Raw Text</option>
+                            <select ng-disabled="false" ng-model="catalog.postData.metadata.contentFormat" ng-options="value[0] as value[1] for value in catalog.contentFormatOptions">
+                                <!--<option value="raw" selected="selected">Raw Text</option>-->
                             </select>
                             <input type="file" ng-file-select="catalog.fileSelected($files)"/>
                         </span>
