@@ -88,7 +88,7 @@
       <file leaf-file-name="README.md" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="36" selection-start="235" selection-end="235" vertical-scroll-proportion="0.072289154" vertical-offset="0" max-vertical-offset="1275">
+            <state line="5" column="67" selection-start="202" selection-end="202" vertical-scroll-proportion="0.060240965" vertical-offset="0" max-vertical-offset="1290">
               <folding />
             </state>
           </provider>
@@ -721,7 +721,11 @@
       <created>1393549310608</created>
       <updated>1393549310608</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="node modules&#10;">
+      <created>1393549524329</created>
+      <updated>1393549524329</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TodoView" selected-index="2">
@@ -1121,7 +1125,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="36" selection-start="235" selection-end="235" vertical-scroll-proportion="0.072289154" vertical-offset="0" max-vertical-offset="1275">
+        <state line="5" column="67" selection-start="202" selection-end="202" vertical-scroll-proportion="0.060240965" vertical-offset="0" max-vertical-offset="1290">
           <folding />
         </state>
       </provider>

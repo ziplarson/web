@@ -3,8 +3,9 @@
 >Currently working on the first version (0.1.0). Aiming for a demo of some of the
 features by April 7, 2014.
 
->Information about this project: <info@designforliterature.com>
-To contact me: <rk@post.harvard.edu>
+> Information about this project: http://designforliterature.com or <info@designforliterature.com>.
+> To contact me: <rk@post.harvard.edu>.
+>
 
 ## HIRA Model RESTful service and UI Reference Implementations
 
