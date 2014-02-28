@@ -19,33 +19,33 @@ communication with collaborators.
 
 ## Notifications
 
-Notifications for clients are sent through the noteSocket websocket
+> Notifications for clients are sent through the noteSocket websocket
 and are objects with the following minimum fields:
 
- type := A string code indicating the severity and nature of the error.
- msg := A readable message indicating the specific error
+- type := A string code indicating the severity and nature of the error.
+- msg := A readable message indicating the specific error
 
 
-Notification types:
+> Notification types:
 
-fatal       A fatal server-side system error. The message is for debugging use only; clients
+- fatal       A fatal server-side system error. The message is for debugging use only; clients
             should be given an appropriate, simple message. The message should be logged
             to the console to facilitate client-side debugging.
 
-trans       A possibly transient server-side system error. The message is for debugging use only; clients
+- trans       A possibly transient server-side system error. The message is for debugging use only; clients
             should be told that they should try the operation again or later. The message should be logged
             to the console to facilitate client-side debugging.
 
-error       An error for the client. The client should present the message as an error notification
+- error       An error for the client. The client should present the message as an error notification
             to the user who may need to take some corrective action. The message should be logged
             to the console to facilitate client-side debugging.
 
-warn        A warning for the client. The client may present the message payload
+- warn        A warning for the client. The client may present the message payload
             as a warning notification.
 
-ack         An acknowledgement that a socket transaction or any other http request has succeeded.
+- ack         An acknowledgement that a socket transaction or any other http request has succeeded.
 
-note        A note for the client. The client may present the message as an
+- note        A note for the client. The client may present the message as an
             informational notification.
 
 ## Server-side Errors
@@ -55,7 +55,7 @@ All errors of type 'fatal' and 'trans' must be caught and logged; all
 other errors must be delivered to the client through the notification
 or some other client-facing mechanism.
 
-The try/catch mechanism should expect only error types 'fatal', 'trans' and 'error'.
+>The try/catch mechanism should expect only error types 'fatal', 'trans' and 'error'.
 
 ## Server-side Websocket Management
 
