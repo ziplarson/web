@@ -1,10 +1,15 @@
 # Design for Literature
-![Design For Literature](public/images/dfl-icon-250.png "Design For Literature")
-Currently working on the first version (0.1.0). Aiming for a demo of some of the
-features by April 7, 2014.
+#### The MIT License (MIT)
+#### Copyright (c) 2014 Ruben Kleiman
 
- Information about this project: http://designforliterature.com or <info@designforliterature.com>.
- To contact me: <rk@post.harvard.edu>.
+![Design For Literature](public/images/dfl-icon-250.png "Design For Literature")
+
+Currently working on the first version (0.1.0). Aiming for a demo of some of the
+features by April 7, 2014. (See *Roadmap*, below.)
+
+ About this project: http://designforliterature.com or <info@designforliterature.com>.
+
+ To contact Ruben Kleiman: <rk@post.harvard.edu>.
 
 
 ## HIRA Reference Implementation
@@ -29,13 +34,13 @@ Github repository to provide transparency to and facilitate
 communication with collaborators.
 
 ## Roadmap
-1. Demo milestone (see Demo Wishlist, below): April 7, 2014 (with an update available every other week thereafter).
-2. First release: 0.1.0 (date TBD)
+- `April 7, 2014`: Demo milestone (see Demo Wishlist, below) (with an update available every other week thereafter).
+- `Date TBD`: First release: 0.1.0
 
 The demo milestone is a tool for showing some of the ideas while recruiting
 volunteers and obtaining funding.
 
-The first release will be gated by volunteers and/or funding resources.
+The first release is gated by volunteers and/or funding resources.
 
 ## Technology Notes
 ### Web Socket and HTTP Connection Management
@@ -44,10 +49,10 @@ Sockets are cached on a per-session basis to permit access
 to them in *any* context.
 
  Web socket connections are used in a variety of ways:
-1. To receive notifications from servers.
-2. To receive transaction completion messages from servers for long running transactions.
-3. To handle messaging within users of a "library" (a group of owners and editors of that library)
-4. To handle messaging in chat rooms.
+- To receive notifications from servers.
+- To receive transaction completion messages from servers for long running transactions.
+- To handle messaging within users of a "library" (a group of owners and editors of that library)
+- To handle messaging in chat rooms.
 
  http responses and websocket messages bound to clients are JSON objects
  with the following fields:
