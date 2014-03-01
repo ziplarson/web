@@ -263,7 +263,7 @@ horaceApp.controller('CatalogCtrl', function ($scope, $http, SocketsService, $ti
                     console.log('Metadata received by server: ' + JSON.stringify(x));
                 },
                 error: function (err) { // TODO should be either 400 or 500 page
-                    console.error('Metadata save error: ' + err);
+                    console.trace('Metadata save error: ' + err);
                 },
                 // Form data
                 data: formData,

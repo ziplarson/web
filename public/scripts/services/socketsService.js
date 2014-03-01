@@ -112,10 +112,10 @@ horaceApp.service('SocketsService', ['ConfigService', 'NotificationService', fun
             var msg = note.msg;
             if (note.type === 'fatal') {
                 msg = 'Our site is currently down for maintenance. Our apologies. Please try again later.';
-                console.error(note);
+                console.trace(note);
             } else if (note.type === 'trans') {
                 msg = 'Due to a technical problem, your request was not fulfilled. Please try again.';
-                console.error(JSON.stringify(note));
+                console.trace(note);
             }
             return msg;
         };

@@ -32,17 +32,6 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     <accordion-group is-open="catalog.createCatalogOpen" heading="Create Catalog">
 
-        <!--<div class="yellowBox" style="text-align: center" ng-show="catalog.createCatalogStep === 2">-->
-        <!--<div style="font-weight: bold;font-size: large">Step Two</div>-->
-        <!--<div style="font-weight: bold;">Upload your text</div>-->
-
-        <!--<form enctype="multipart/form-data">-->
-        <!--<div><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
-        <!--<div><input id="saveContentButton" type="button" name="Submit" value="Submit"/></div>-->
-        <!--</form>-->
-
-        <!--</div>-->
-
         <div class="yellowBox">
             <form name="saveMetadataForm" novalidateenctype="multipart/form-data">
 
@@ -56,8 +45,8 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 <div id="catalogFields" style="display: none" ng-init="catalog.metatadaValid = false">
                     <!-- Start catalog fields -->
                     <table style="table-layout:fixed; vertical-align: middle;margin-left: 2em">
-                        <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.postData.metadata.workType]"
-                            ng-if="(item.id !== 'workType')">
+                        <tr ng-repeat="item in catalog.workTypeCatalogFieldInfo[catalog.postData.metadata.workType] | filter: {inForm: true}">
+                            <!--ng-if="(item.id !== 'workType')">-->
                             <td><span style="font-weight: bold">{{item.name}}:</span><span ng-if="item.required"
                                                                                            style="font-weight: bold;color:red">*</span>
                             </td>
@@ -136,112 +125,4 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     </accordion-group>
 
 </accordion>
-
-
-<!--<script>-->
-<!--$(document).ready(function () {-->
-
-<!--console.info("ABOUT TO CALL CONNECTSOCKETS FROM CATALOG.HTML");-->
-<!--var foo = horaceApp.value();-->
-<!--if (foo.connectSockets) {-->
-<!--foo.connectSockets();-->
-<!--console.info("RECONNECTED");-->
-<!--} else {-->
-<!--console.info("NO CONNECTSOCKETS");-->
-<!--}-->
-<!--});-->
-
-<!--</script>-->
-
-<!--<br/><br/>-->
-
-<!--<h4>UploadContent</h4>-->
-
-<!--<form enctype="multipart/form-data">-->
-<!--<br/>-->
-
-<!--<div><input id="thefile" type="file" name="work" accept="text/plain"/></div>-->
-<!--<br/>-->
-
-<!--<div><input id="saveContentButton" type="button" name="Submit" value="Submit"/></div>-->
-<!--<br/>-->
-
-<!--<input type="hidden" name="notify" value="true"/> &lt;!&ndash; Request notifications for this tx &ndash;&gt;-->
-<!--&lt;!&ndash; TODO name fields should be angular inserts from model &ndash;&gt;-->
-<!--<div style="font-weight: bold">Id: <input type="text" name="id" size="100" size="100" value=''/></div>-->
-<!--</form>-->
-<!--<script>-->
-<!--// TODO move this script code to a controller-->
-
-<!--function progressHandlingFunction(e) {-->
-<!--if (e.lengthComputable) {-->
-<!--console.log('Upload progress: ' + e.loaded);-->
-<!--}-->
-<!--}-->
-<!--$('#thefile').change(function () {-->
-<!--var file = this.files[0];-->
-<!--var name = file.name;-->
-<!--var size = file.size;-->
-<!--var type = file.type;-->
-<!--//Your validation-->
-<!--console.log('File ' + name + ' size=' + size + ' type=' + type);-->
-<!--});-->
-
-<!--//        $('#saveMetadataButton').click(function () {-->
-<!--//            var formData = new FormData($('form')[0]);-->
-<!--//            $.ajax({-->
-<!--//                url: 'catalog/submit/metadata',-->
-<!--//                type: 'POST',-->
-<!--//-->
-<!--//                //Ajax events-->
-<!--//                success: function (x) {-->
-<!--//                    console.log('Metadata received by server: ' + JSON.stringify(x));-->
-<!--//                },-->
-<!--//                error: function (err) {-->
-<!--//                    console.error('Metadata save error: ' + err);-->
-<!--//                },-->
-<!--//                // Form data-->
-<!--//                data: formData,-->
-<!--//-->
-<!--//                //Options to tell jQuery not to process data or worry about content-type.-->
-<!--//                cache: false,-->
-<!--//                contentType: false,-->
-<!--//                processData: false-->
-<!--//            });-->
-<!--//        });-->
-
-<!--$('#saveContentButton').click(function () {-->
-<!--var formData = new FormData($('form')[0]);-->
-<!--$.ajax({-->
-<!--url: 'catalog/submit/content',-->
-<!--type: 'POST',-->
-<!--xhr: function () {  // Custom XMLHttpRequest-->
-<!--var myXhr = $.ajaxSettings.xhr();-->
-<!--if (myXhr.upload) { // Check if upload property exists-->
-<!--myXhr.upload.addEventListener('progress', progressHandlingFunction, false); // For handling the progress of the upload-->
-<!--}-->
-<!--return myXhr;-->
-<!--},-->
-<!--//Ajax events-->
-<!--beforeSend: function (x) {-->
-<!--//                    console.log('Before ' + JSON.stringify(x));-->
-<!--},-->
-<!--success: function (txId) { // Returns transaction id-->
-<!--// TODO remember id and match it with responses for tracking transaction history in session-->
-<!--// TODO server could store the full transaction history for use between sessions-->
-<!--console.log('Upload succeeded with txId ' + txId);-->
-<!--},-->
-<!--error: function (err) {-->
-<!--console.error('Upload error: ' + err);-->
-<!--},-->
-<!--// Form data-->
-<!--data: formData,-->
-
-<!--//Options to tell jQuery not to process data or worry about content-type.-->
-<!--cache: false,-->
-<!--contentType: false,-->
-<!--processData: false-->
-<!--});-->
-<!--});-->
-<!--</script>-->
 </div>

@@ -51,6 +51,12 @@ console.info('Environment: %s\nLocation: %s\nConfiguration:\n',
 // Configure express for all environments
 app.configure(function () {
     if (env === 'development') {
+
+        // long stack traces
+//        var longjohn = require('longjohn'); // TODO not sure yet whether this works or not
+//        longjohn.async_trace_limit = 20;  // defaults to 10 unlimited: -1;
+//        longjohn.empty_frame = 'ASYNC CALLBACK';
+
         app.use(express.errorHandler({
             dumpExceptions: true,
             showStack: true

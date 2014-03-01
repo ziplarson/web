@@ -861,23 +861,23 @@ workTypes.codes = getCodes(workTypes);
  */
 
 var catalogFieldSpecs = { // TODO incorporate the value type (string/number/choice) and constraints (min/max size, etc)
-    workType: {id: 'workType', required: true, name: 'Work Type', type: 'select', options: workTypes, validator: 'string', xformer: 'set'}, // always required
-    id: {id: '_id', name: 'Identifier', type: 'input', description: 'Unique identifier for the catalog item', min: 36, max: 36, validator: 'string', xformer: 'set'},
-    title: {id: 'title', name: 'Title', type: 'text', min: 1, description: "The work's original title", validator: 'string', xformer: 'set'},
-    lang: {id: 'lang', name: 'Language', type: 'select', options: langs, min: 2, max: 8, description: 'The main language in which the work for this catalog item is written', validator: 'string', xformer: 'set'},
-    authors: {id: 'authors', subId: 'fullName', subIdName: 'Name', name: 'Author(s)', type: 'text', description: 'A list of the original author(s) of this work', validator: 'string', xformer: 'push'},
-    editors: {id: 'editors', subId: 'fullName', subIdName: 'Name', name: 'Editor(s)', type: 'text', description: 'For anthologies and other collections, this is a list of the original editor(s) of this work.', validator: 'string', xformer: 'push'},
-    edition: {id: 'edition', name: 'Edition', type: 'input', description: 'The edition of this work. This must be a number.', validator: 'integer', min: 1, max: 1000, xformer: 'set'}, // TODO present a number wheel?
-    publisherAddress: {id: 'publisherAddress', toId: 'publisher', 'subId': 'address', subIdName: 'Full Address', name: "Publisher Address", type: 'typeahead', description: "The address of this work's publisher", validator: 'string', xformer: 'construct'},
-    publisherName: {id: 'publisherName', toId: 'publisher', 'subId': 'name', name: 'Publisher Name', type: 'input', min: 1, description: "The name of this work's publisher", xform: 'map', xformer: 'construct', validator: 'string'},
-    publisherCity: {id: 'publisherCity', toId: 'publisher', 'subId': 'city', name: 'Publisher City', type: 'input', description: "The publisher's city", xform: 'map', xformer: 'construct', validator: 'string'},
-    publisherProvince: {id: 'publisherProvince', toId: 'publisher', 'subId': 'province', name: 'Publisher Province', type: 'input', description: "The publisher's province or state", xform: 'map', xformer: 'construct', validator: 'string'},
-    publisherCountry: {id: 'publisherCountry', toId: 'publisher', 'subId': 'country', name: 'Publisher Country', type: 'input', description: "The publisher's country", xform: 'map', xformer: 'construct', validator: 'string'},
-    copyright: {id: 'copyright', name: 'Copyright', type: 'text', min: 8, description: "A copyright description", validator: 'string', xformer: 'set'},
-    subjects: {id: 'subjects', subId: 'name', name: 'Subject(s)', type: 'text', description: "Subjects areas pertaining to this work", validator: 'string', xformer: 'push'},
-    pageUrl: {id: 'pageUrl', name: 'Page URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the page cited by this catalog item", validator: 'url', xformer: 'set'},
-    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the home page cited by this catalog item", validator: 'url', xformer: 'set'},
-    contentFormat: {id: 'contentFormat', name: 'Content Format', type: 'select', description: "The format of an uploaded content file", validator: 'noop', xformer: 'set'} // TODO set to appropriate validator instead of noop
+    workType: {id: 'workType', required: true, name: 'Work Type', type: 'select', options: workTypes, validator: 'string', xformer: 'set', inForm: false}, // always required
+    id: {id: '_id', name: 'Identifier', type: 'input', description: 'Unique identifier for the catalog item', min: 36, max: 36, validator: 'string', xformer: 'set', inForm: true},
+    title: {id: 'title', name: 'Title', type: 'text', min: 1, description: "The work's original title", validator: 'string', xformer: 'set', inForm: true},
+    lang: {id: 'lang', name: 'Language', type: 'select', options: langs, min: 2, max: 8, description: 'The main language in which the work for this catalog item is written', validator: 'string', xformer: 'set', inForm: true},
+    authors: {id: 'authors', subId: 'fullName', subIdName: 'Name', name: 'Author(s)', type: 'text', description: 'A list of the original author(s) of this work', validator: 'string', xformer: 'push', inForm: true},
+    editors: {id: 'editors', subId: 'fullName', subIdName: 'Name', name: 'Editor(s)', type: 'text', description: 'For anthologies and other collections, this is a list of the original editor(s) of this work.', validator: 'string', xformer: 'push', inForm: true},
+    edition: {id: 'edition', name: 'Edition', type: 'input', description: 'The edition of this work. This must be a number.', validator: 'integer', min: 1, max: 1000, xformer: 'set', inForm: true}, // TODO present a number wheel?
+    publisherAddress: {id: 'publisherAddress', toId: 'publisher', 'subId': 'address', subIdName: 'Full Address', name: "Publisher Address", type: 'typeahead', description: "The address of this work's publisher", validator: 'string', xformer: 'construct', inForm: true},
+    publisherName: {id: 'publisherName', toId: 'publisher', 'subId': 'name', name: 'Publisher Name', type: 'input', min: 1, description: "The name of this work's publisher", xform: 'map', xformer: 'construct', validator: 'string', inForm: true},
+    publisherCity: {id: 'publisherCity', toId: 'publisher', 'subId': 'city', name: 'Publisher City', type: 'input', description: "The publisher's city", xform: 'map', xformer: 'construct', validator: 'string', inForm: true},
+    publisherProvince: {id: 'publisherProvince', toId: 'publisher', 'subId': 'province', name: 'Publisher Province', type: 'input', description: "The publisher's province or state", xform: 'map', xformer: 'construct', validator: 'string', inForm: true},
+    publisherCountry: {id: 'publisherCountry', toId: 'publisher', 'subId': 'country', name: 'Publisher Country', type: 'input', description: "The publisher's country", xform: 'map', xformer: 'construct', validator: 'string', inForm: true},
+    copyright: {id: 'copyright', name: 'Copyright', type: 'text', min: 8, description: "A copyright description", validator: 'string', xformer: 'set', inForm: true},
+    subjects: {id: 'subjects', subId: 'name', name: 'Subject(s)', type: 'text', description: "Subjects areas pertaining to this work", validator: 'string', xformer: 'push', inForm: true},
+    pageUrl: {id: 'pageUrl', name: 'Page URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the page cited by this catalog item", validator: 'url', xformer: 'set', inForm: true},
+    websiteUrl: {id: 'websiteUrl', name: 'Website URL', type: 'input', placeholder: 'http://', min: 10, description: "The URL to the home page cited by this catalog item", validator: 'url', xformer: 'set', inForm: true},
+    contentFormat: {id: 'contentFormat', name: 'Content Format', type: 'select', description: "The format of an uploaded content file", validator: 'noop', xformer: 'set', inForm: false} // TODO set to appropriate validator instead of noop
 };
 
 /**

@@ -61,7 +61,7 @@ horaceApp.service('NotificationService', function () {
                     }
                 });
             } catch (reqErr) {
-                console.error(reqErr);
+                console.trace(reqErr);
                 alert('Sorry, but your browser settings do not support notifications.');
             }
         }
