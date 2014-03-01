@@ -821,15 +821,17 @@ var contentFormats = [
 var workTypes = [
     ['WebSite', 'Web Site'],
     ['WebPage', 'Web Page'],
-    ['BookPoems', 'Book of Poems'],
+    ['BookPoetry', 'Poetry (Book)'],
     ['Poem', 'Poem'],
+    ['BookDrama', 'Drama (Book)'],
     ['BookNovel', 'Novel (Book)'],
     ['BookNonFiction', 'Non-Fiction (Book)'],
+    ['BookFiction', 'Fiction (Book)'],
     ['BookShortStories', 'Short Stories (Book)'],
     ['ShortStory', 'Short Story'],
     ['JournalArticle', 'Article (Journal)'],
     ['MagazineArticle', 'Article (Magazine)'],
-    ['Unknown', 'Other (Unknown Corpus)']
+    ['Text', 'Other (Text)']
 ];
 
 workTypes.codes = getCodes(workTypes);
@@ -895,7 +897,7 @@ var catalogFieldSubSpecs = {
 
 /** workTypeCatalogFieldSpecs: Each work type's set of field specs ordered for presentation. */
 var workTypeCatalogFieldSpecs = {
-    BookPoems: [
+    BookPoetry: [
         catalogFieldSpecs.id,
         makeRequired(catalogFieldSpecs.title),
         makeRequired(catalogFieldSpecs.lang),
@@ -1077,6 +1079,9 @@ var client = {
             workType: workTypes,
 
             contentFormats: contentFormats,
+
+            /* The size in characters allowed in each content chunk */
+            chunkSize: 40, // TODO make this 4096 (or more) for production
 
             /* The content formats for CatalogOptions.contentFormat */
             contentFormatRaw: 'raw',
