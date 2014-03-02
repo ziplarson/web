@@ -22,8 +22,11 @@
  */
 
 
+/* To tweak V8:
+ *  node --v8-options
+ */
+
 /**
- * Created by Ruben Kleiman (rk@post.harvard.edu) on 11/11/13.
  * web app entry point.
  */
 "use strict";
@@ -62,7 +65,6 @@ app.configure(function () {
             showStack: true
         }));
     }
-
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 //    app.use(express.logger());
@@ -89,7 +91,8 @@ app.configure(function () {
                     throw {type: 'fatal', msg: 'Routes not created: ' + err};
                 }
             });
-            require('./lib/routes/sockets.js').init(app, sessionSockets, httpServer); // Open websocket communications
+            var ioLogLevel = {error: 0, warn: 1, info: 2, debug: 3}.warn; // Set socket.io lib log level
+            require('./lib/routes/sockets.js').init(app, sessionSockets, httpServer, ioLogLevel); // Open websocket communications
         }
     });
 });

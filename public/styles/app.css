@@ -96,11 +96,10 @@ div.headline {
     /*-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);*/
 }
 
-.lightGrayBoundedBox {
+.chooseFileBox {
     font-weight: bold;
     margin-left: 2em;
-    width: 30%;
-    /*margin: auto;*/
+    width: 225px;
     line-height: 2em;
     padding: .5em;
 
